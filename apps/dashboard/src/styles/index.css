@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@import '@eul/ui/theme.css';
+
+@source '../';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
