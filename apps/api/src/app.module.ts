@@ -15,6 +15,8 @@ import { NotificationsModule } from './notifications/email-queue';
 import { PaymentsModule } from './payments/payments.module';
 import { QuotesModule } from './quotes/quotes.module';
 import { CheckoutsModule } from './checkouts/checkouts.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { SparesModule } from './dispatch/spares';
 import { HealthModule } from './health/health.controller';
 import { PrismaModule } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
@@ -61,6 +63,8 @@ const isDev = process.env.NODE_ENV !== 'production';
     PricingModule,
     QuotesModule,
     CheckoutsModule,
+    BookingsModule,
+    SparesModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ErrorFilter },
