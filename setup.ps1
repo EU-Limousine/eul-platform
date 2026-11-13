@@ -39,7 +39,7 @@ Install @('-w', '@eul/api',
   '@nestjs/common', '@nestjs/core', '@nestjs/platform-express', '@nestjs/config', '@nestjs/swagger',
   '@nestjs/passport', '@nestjs/jwt', '@nestjs/terminus', '@nestjs/throttler',
   'passport', 'passport-jwt', 'class-validator', 'class-transformer', 'cookie-parser', 'argon2',
-  'nestjs-pino', 'pino-http', 'reflect-metadata', 'rxjs')
+  'nestjs-pino', 'pino-http', 'reflect-metadata', 'rxjs', '@nestjs/bullmq', 'bullmq', 'ioredis')
 Install @('-w', '@eul/api', '-D',
   '@nestjs/cli', '@nestjs/schematics', '@nestjs/testing', '@types/express', '@types/cookie-parser',
   '@types/passport-jwt', 'jest', 'ts-jest', '@types/jest', 'supertest', '@types/supertest', 'pino-pretty')

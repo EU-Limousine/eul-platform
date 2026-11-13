@@ -31,6 +31,7 @@ export type CheckoutSessionMinAggregateOutputType = {
   status: $Enums.CheckoutStatus | null
   provider: string | null
   providerPaymentId: string | null
+  redirectUrl: string | null
   customerEmail: string | null
   customerName: string | null
   customerPhone: string | null
@@ -52,6 +53,7 @@ export type CheckoutSessionMaxAggregateOutputType = {
   status: $Enums.CheckoutStatus | null
   provider: string | null
   providerPaymentId: string | null
+  redirectUrl: string | null
   customerEmail: string | null
   customerName: string | null
   customerPhone: string | null
@@ -73,6 +75,7 @@ export type CheckoutSessionCountAggregateOutputType = {
   status: number
   provider: number
   providerPaymentId: number
+  redirectUrl: number
   customerEmail: number
   customerName: number
   customerPhone: number
@@ -96,6 +99,7 @@ export type CheckoutSessionMinAggregateInputType = {
   status?: true
   provider?: true
   providerPaymentId?: true
+  redirectUrl?: true
   customerEmail?: true
   customerName?: true
   customerPhone?: true
@@ -117,6 +121,7 @@ export type CheckoutSessionMaxAggregateInputType = {
   status?: true
   provider?: true
   providerPaymentId?: true
+  redirectUrl?: true
   customerEmail?: true
   customerName?: true
   customerPhone?: true
@@ -138,6 +143,7 @@ export type CheckoutSessionCountAggregateInputType = {
   status?: true
   provider?: true
   providerPaymentId?: true
+  redirectUrl?: true
   customerEmail?: true
   customerName?: true
   customerPhone?: true
@@ -232,6 +238,7 @@ export type CheckoutSessionGroupByOutputType = {
   status: $Enums.CheckoutStatus
   provider: string
   providerPaymentId: string | null
+  redirectUrl: string | null
   customerEmail: string
   customerName: string
   customerPhone: string | null
@@ -274,6 +281,7 @@ export type CheckoutSessionWhereInput = {
   status?: Prisma.EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
   provider?: Prisma.StringFilter<"CheckoutSession"> | string
   providerPaymentId?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
+  redirectUrl?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
   customerEmail?: Prisma.StringFilter<"CheckoutSession"> | string
   customerName?: Prisma.StringFilter<"CheckoutSession"> | string
   customerPhone?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
@@ -297,6 +305,7 @@ export type CheckoutSessionOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerPaymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  redirectUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -324,6 +333,7 @@ export type CheckoutSessionWhereUniqueInput = Prisma.AtLeast<{
   quoteId?: Prisma.UuidFilter<"CheckoutSession"> | string
   status?: Prisma.EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
   provider?: Prisma.StringFilter<"CheckoutSession"> | string
+  redirectUrl?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
   customerEmail?: Prisma.StringFilter<"CheckoutSession"> | string
   customerName?: Prisma.StringFilter<"CheckoutSession"> | string
   customerPhone?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
@@ -346,6 +356,7 @@ export type CheckoutSessionOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerPaymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  redirectUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -373,6 +384,7 @@ export type CheckoutSessionScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumCheckoutStatusWithAggregatesFilter<"CheckoutSession"> | $Enums.CheckoutStatus
   provider?: Prisma.StringWithAggregatesFilter<"CheckoutSession"> | string
   providerPaymentId?: Prisma.StringNullableWithAggregatesFilter<"CheckoutSession"> | string | null
+  redirectUrl?: Prisma.StringNullableWithAggregatesFilter<"CheckoutSession"> | string | null
   customerEmail?: Prisma.StringWithAggregatesFilter<"CheckoutSession"> | string
   customerName?: Prisma.StringWithAggregatesFilter<"CheckoutSession"> | string
   customerPhone?: Prisma.StringNullableWithAggregatesFilter<"CheckoutSession"> | string | null
@@ -393,6 +405,7 @@ export type CheckoutSessionCreateInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -415,6 +428,7 @@ export type CheckoutSessionUncheckedCreateInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -435,6 +449,7 @@ export type CheckoutSessionUpdateInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -457,6 +472,7 @@ export type CheckoutSessionUncheckedUpdateInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -478,6 +494,7 @@ export type CheckoutSessionCreateManyInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -498,6 +515,7 @@ export type CheckoutSessionUpdateManyMutationInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -518,6 +536,7 @@ export type CheckoutSessionUncheckedUpdateManyInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -549,6 +568,7 @@ export type CheckoutSessionCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerPaymentId?: Prisma.SortOrder
+  redirectUrl?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -570,6 +590,7 @@ export type CheckoutSessionMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerPaymentId?: Prisma.SortOrder
+  redirectUrl?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -591,6 +612,7 @@ export type CheckoutSessionMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerPaymentId?: Prisma.SortOrder
+  redirectUrl?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -694,6 +716,7 @@ export type CheckoutSessionCreateWithoutQuoteInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -714,6 +737,7 @@ export type CheckoutSessionUncheckedCreateWithoutQuoteInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -764,6 +788,7 @@ export type CheckoutSessionScalarWhereInput = {
   status?: Prisma.EnumCheckoutStatusFilter<"CheckoutSession"> | $Enums.CheckoutStatus
   provider?: Prisma.StringFilter<"CheckoutSession"> | string
   providerPaymentId?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
+  redirectUrl?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
   customerEmail?: Prisma.StringFilter<"CheckoutSession"> | string
   customerName?: Prisma.StringFilter<"CheckoutSession"> | string
   customerPhone?: Prisma.StringNullableFilter<"CheckoutSession"> | string | null
@@ -784,6 +809,7 @@ export type CheckoutSessionCreateWithoutBookingInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -805,6 +831,7 @@ export type CheckoutSessionUncheckedCreateWithoutBookingInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -840,6 +867,7 @@ export type CheckoutSessionUpdateWithoutBookingInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -861,6 +889,7 @@ export type CheckoutSessionUncheckedUpdateWithoutBookingInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -880,6 +909,7 @@ export type CheckoutSessionCreateManyQuoteInput = {
   status?: $Enums.CheckoutStatus
   provider: string
   providerPaymentId?: string | null
+  redirectUrl?: string | null
   customerEmail: string
   customerName: string
   customerPhone?: string | null
@@ -900,6 +930,7 @@ export type CheckoutSessionUpdateWithoutQuoteInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -920,6 +951,7 @@ export type CheckoutSessionUncheckedUpdateWithoutQuoteInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -940,6 +972,7 @@ export type CheckoutSessionUncheckedUpdateManyWithoutQuoteInput = {
   status?: Prisma.EnumCheckoutStatusFieldUpdateOperationsInput | $Enums.CheckoutStatus
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   providerPaymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redirectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -963,6 +996,7 @@ export type CheckoutSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   status?: boolean
   provider?: boolean
   providerPaymentId?: boolean
+  redirectUrl?: boolean
   customerEmail?: boolean
   customerName?: boolean
   customerPhone?: boolean
@@ -986,6 +1020,7 @@ export type CheckoutSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   status?: boolean
   provider?: boolean
   providerPaymentId?: boolean
+  redirectUrl?: boolean
   customerEmail?: boolean
   customerName?: boolean
   customerPhone?: boolean
@@ -1009,6 +1044,7 @@ export type CheckoutSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   status?: boolean
   provider?: boolean
   providerPaymentId?: boolean
+  redirectUrl?: boolean
   customerEmail?: boolean
   customerName?: boolean
   customerPhone?: boolean
@@ -1032,6 +1068,7 @@ export type CheckoutSessionSelectScalar = {
   status?: boolean
   provider?: boolean
   providerPaymentId?: boolean
+  redirectUrl?: boolean
   customerEmail?: boolean
   customerName?: boolean
   customerPhone?: boolean
@@ -1046,7 +1083,7 @@ export type CheckoutSessionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CheckoutSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "idempotencyKey" | "status" | "provider" | "providerPaymentId" | "customerEmail" | "customerName" | "customerPhone" | "passengerName" | "passengerPhone" | "flightNumber" | "notes" | "language" | "bookingId" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["checkoutSession"]>
+export type CheckoutSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "idempotencyKey" | "status" | "provider" | "providerPaymentId" | "redirectUrl" | "customerEmail" | "customerName" | "customerPhone" | "passengerName" | "passengerPhone" | "flightNumber" | "notes" | "language" | "bookingId" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["checkoutSession"]>
 export type CheckoutSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   booking?: boolean | Prisma.CheckoutSession$bookingArgs<ExtArgs>
@@ -1073,6 +1110,7 @@ export type $CheckoutSessionPayload<ExtArgs extends runtime.Types.Extensions.Int
     status: $Enums.CheckoutStatus
     provider: string
     providerPaymentId: string | null
+    redirectUrl: string | null
     customerEmail: string
     customerName: string
     customerPhone: string | null
@@ -1516,6 +1554,7 @@ export interface CheckoutSessionFieldRefs {
   readonly status: Prisma.FieldRef<"CheckoutSession", 'CheckoutStatus'>
   readonly provider: Prisma.FieldRef<"CheckoutSession", 'String'>
   readonly providerPaymentId: Prisma.FieldRef<"CheckoutSession", 'String'>
+  readonly redirectUrl: Prisma.FieldRef<"CheckoutSession", 'String'>
   readonly customerEmail: Prisma.FieldRef<"CheckoutSession", 'String'>
   readonly customerName: Prisma.FieldRef<"CheckoutSession", 'String'>
   readonly customerPhone: Prisma.FieldRef<"CheckoutSession", 'String'>
