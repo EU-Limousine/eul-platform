@@ -15,16 +15,19 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "db:seed": "npm run seed -w @eul/db",
-    "api:generate": "npm run generate -w @eul/api-client",
+    "format": "prettier --write .",
     "db:generate": "npm run generate -w @eul/db --",
     "db:migrate": "npm run migrate -w @eul/db --",
+    "db:migrate:deploy": "npm run migrate:deploy -w @eul/db",
     "db:migrate:status": "npm run migrate:status -w @eul/db",
-    "db:studio": "npm run studio -w @eul/db"
+    "db:seed": "npm run seed -w @eul/db",
+    "db:studio": "npm run studio -w @eul/db",
+    "api:generate": "npm run generate -w @eul/api-client"
   },
   "devDependencies": {
-    "prettier": "^3.9.10",
-    "turbo": "^2.11.9",
-    "typescript": "^6.0.0"
+    "@types/node": "^22.20.5",
+    "prettier": "^3.10.1",
+    "turbo": "^2.11.11",
+    "typescript": "~6.0.0"
   }
 }

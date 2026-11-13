@@ -1,0 +1,32 @@
+{
+  "brand": "EU Limousine",
+  "login": {
+    "title": "Operations Dashboard",
+    "subtitle": "Sign in to continue",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "errorGeneric": "Could not sign in. Please try again."
+  },
+  "nav": {
+    "overview": "Overview",
+    "bookings": "Bookings",
+    "dispatch": "Dispatch",
+    "drivers": "Drivers",
+    "vehicles": "Vehicles",
+    "pricing": "Pricing",
+    "users": "Users",
+    "audit": "Audit log",
+    "logout": "Log out",
+    "mainMenu": "Main menu"
+  },
+  "common": {
+    "notBuilt": "This screen is not built yet.",
+    "loading": "Loading…"
+  },
+  "overview": {
+    "title": "Overview",
+    "welcome": "Welcome, {{name}}"
+  }
+}

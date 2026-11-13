@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@import '@eul/ui/theme.css';
+
+body {
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
