@@ -12,6 +12,9 @@ import { validateEnv } from './config/env';
 import { HealthModule } from './health/health.controller';
 import { PrismaModule } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
+import { VehiclesModule } from './vehicles/vehicles.module';
+import { DriversModule } from './drivers/drivers.module';
+import { PricingModule } from './pricing/pricing.module';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -39,6 +42,9 @@ const isDev = process.env.NODE_ENV !== 'production';
     HealthModule,
     AuthModule,
     UsersModule,
+    VehiclesModule,
+    DriversModule,
+    PricingModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ErrorFilter },
