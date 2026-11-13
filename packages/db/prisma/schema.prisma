@@ -341,6 +341,7 @@ model CheckoutSession {
   status            CheckoutStatus @default(PENDING)
   provider          String
   providerPaymentId String?        @unique @map("provider_payment_id")
+  redirectUrl       String?        @map("redirect_url") // replayed on a repeated idempotency key
   customerEmail     String         @map("customer_email")
   customerName      String         @map("customer_name")
   customerPhone     String?        @map("customer_phone")

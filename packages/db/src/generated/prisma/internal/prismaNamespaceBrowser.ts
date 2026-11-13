@@ -269,6 +269,7 @@ export const CheckoutSessionScalarFieldEnum = {
   status: 'status',
   provider: 'provider',
   providerPaymentId: 'providerPaymentId',
+  redirectUrl: 'redirectUrl',
   customerEmail: 'customerEmail',
   customerName: 'customerName',
   customerPhone: 'customerPhone',

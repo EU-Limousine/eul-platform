@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
@@ -8,7 +9,12 @@ import { AuditModule } from './audit/audit.service';
 import { JwtAuthGuard, PermissionsGuard } from './auth/guards';
 import { AuthModule } from './auth/auth.module';
 import { ErrorFilter } from './common/error.filter';
-import { validateEnv } from './config/env';
+import { validateEnv, type Env } from './config/env';
+import { redisConnection } from './common/redis';
+import { NotificationsModule } from './notifications/email-queue';
+import { PaymentsModule } from './payments/payments.module';
+import { QuotesModule } from './quotes/quotes.module';
+import { CheckoutsModule } from './checkouts/checkouts.module';
 import { HealthModule } from './health/health.controller';
 import { PrismaModule } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
@@ -37,14 +43,24 @@ const isDev = process.env.NODE_ENV !== 'production';
       },
     }),
     ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 300 }]),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<Env, true>) => ({
+        connection: redisConnection(config.get('REDIS_URL', { infer: true })),
+      }),
+    }),
     PrismaModule,
     AuditModule,
+    NotificationsModule,
+    PaymentsModule,
     HealthModule,
     AuthModule,
     UsersModule,
     VehiclesModule,
     DriversModule,
     PricingModule,
+    QuotesModule,
+    CheckoutsModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ErrorFilter },
