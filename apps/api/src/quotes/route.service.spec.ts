@@ -1,4 +1,4 @@
-import { estimateRoute, haversineMeters } from './route.service';
+import { estimateRoute, haversineMeters } from './route-estimate';
 
 // Copenhagen Airport (CPH) and Copenhagen Central Station — public coordinates, test only.
 const CPH = { lat: 55.618, lng: 12.6476 };
