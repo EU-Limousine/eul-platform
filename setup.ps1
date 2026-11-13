@@ -47,7 +47,7 @@ Install @('-w', '@eul/api', '-D',
 Step 'Worker'
 Install @('-w', '@eul/worker',
   '@nestjs/common', '@nestjs/core', '@nestjs/platform-express', '@nestjs/config', '@nestjs/bullmq',
-  '@nestjs/terminus', 'bullmq', 'nodemailer', 'nestjs-pino', 'pino-http', 'reflect-metadata', 'rxjs')
+  '@nestjs/terminus', 'bullmq', 'ioredis', 'nodemailer', 'nestjs-pino', 'pino-http', 'reflect-metadata', 'rxjs')
 Install @('-w', '@eul/worker', '-D', '@nestjs/cli', '@nestjs/schematics', '@types/nodemailer', 'pino-pretty')
 
 Step 'API client (Orval)'
