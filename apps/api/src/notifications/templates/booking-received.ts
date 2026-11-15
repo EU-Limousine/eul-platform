@@ -27,8 +27,13 @@ export function renderBookingReceived(d: BookingReceivedData): { subject: string
   const locale = d.language === 'en' ? 'en-GB' : d.language;
   const when = new Intl.DateTimeFormat(locale, {
     timeZone: TIME_ZONE,
-    dateStyle: 'full',
-    timeStyle: 'short',
+    // dateStyle/timeStyle cannot be combined with timeZoneName, so list the parts.
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
     timeZoneName: 'short',
   }).format(d.pickupAt);
   const amount = new Intl.NumberFormat(locale, { style: 'currency', currency: d.currency }).format(d.amountMinor / 100);
