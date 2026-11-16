@@ -13,7 +13,8 @@ export default defineConfig({
       override: {
         mutator: { path: 'src/http.ts', name: 'http' },
         fetch: { includeHttpResponseReturnType: false },
-        query: { useQuery: true, useMutation: true },
+        // No `query` override on purpose: Orval's default is GET → useQuery, POST/PATCH/DELETE → useMutation.
+        // Forcing useQuery/useMutation here makes newer Orval versions generate both kinds for every endpoint.
       },
     },
   },
