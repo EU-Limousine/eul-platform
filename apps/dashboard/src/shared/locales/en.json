@@ -19,7 +19,8 @@
     "users": "Users",
     "audit": "Audit log",
     "logout": "Log out",
-    "mainMenu": "Main menu"
+    "mainMenu": "Main menu",
+    "spares": "Spare drivers"
   },
   "common": {
     "notBuilt": "This screen is not built yet.",
@@ -33,7 +34,15 @@
     "pagination": "Pages",
     "pageOf": "Page {{page}} of {{pages}} · {{total}} total",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "save": "Save",
+    "saving": "Saving…",
+    "choose": "Choose…",
+    "edit": "Edit",
+    "active": "Active",
+    "inactive": "Inactive",
+    "confirmed": "Confirmed",
+    "unconfirmed": "Not confirmed"
   },
   "overview": {
     "title": "Overview",
@@ -140,5 +149,96 @@
     "confirm": "Assign",
     "assigning": "Assigning…",
     "conflict": "This ride is no longer available. It was assigned or changed by someone else."
+  },
+  "vehicles": {
+    "title": "Vehicles",
+    "categories": "Vehicle classes",
+    "fleet": "Fleet",
+    "add": "Add vehicle",
+    "edit": "Edit vehicle",
+    "search": "Search vehicles",
+    "searchPlaceholder": "Plate, make or model",
+    "empty": "No vehicles yet. Add your first vehicle.",
+    "cols": {
+      "example": "Example model",
+      "seats": "Seats",
+      "luggage": "Luggage",
+      "vehicles": "Vehicles",
+      "data": "Fleet data",
+      "vehicle": "Vehicle"
+    },
+    "fields": {
+      "category": "Class",
+      "make": "Make",
+      "model": "Model",
+      "plate": "Plate",
+      "color": "Colour",
+      "notes": "Notes",
+      "active": "Active (can be used for rides)"
+    }
+  },
+  "drivers": {
+    "title": "Drivers",
+    "add": "Add driver",
+    "edit": "Edit driver",
+    "addHint": "Creates the driver's login for the driver app and their profile.",
+    "search": "Search drivers",
+    "searchPlaceholder": "Name, email or phone",
+    "empty": "No drivers yet. Add your first driver.",
+    "onDuty": "On duty",
+    "offDuty": "Off duty",
+    "noVehicle": "No default vehicle",
+    "passwordHint": "At least 12 characters. Share it with the driver securely.",
+    "phoneHint": "Work phone. Customers receive it in the confirmation email.",
+    "types": {
+      "EMPLOYEE": "Employee",
+      "CONTRACTOR": "Contractor"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email (login)",
+      "password": "Password",
+      "workPhone": "Work phone",
+      "type": "Type",
+      "vehicle": "Default vehicle",
+      "active": "Active (receives rides)"
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Price = base fare + per km + per minute, never below the minimum fare. Changes affect new quotes only.",
+    "empty": "No pricing rules yet.",
+    "class": "Class",
+    "status": "Status",
+    "baseFare": "Base fare",
+    "perKm": "Per km",
+    "perMinute": "Per minute",
+    "minimumFare": "Minimum fare",
+    "editTitle": "Edit prices: {{category}}",
+    "editHint": "Bookings already made keep the price they were sold at.",
+    "activeHint": "Active (used for new quotes)",
+    "confirmedHint": "Prices confirmed by management",
+    "check": "Price check",
+    "distanceKm": "Distance (km)",
+    "minutes": "Duration (minutes)",
+    "distancePart": "Distance",
+    "timePart": "Time",
+    "total": "Total",
+    "minimumApplied": "minimum fare applied"
+  },
+  "spares": {
+    "title": "Spare drivers",
+    "subtitle": "Choose who is spare on each date. If no regular driver accepts a ride, it is offered to these drivers from the top of the list, a few at a time. Spare drivers get no regular offers that day.",
+    "date": "Date",
+    "listTitle_one": "{{count}} spare driver",
+    "listTitle_other": "{{count}} spare drivers",
+    "empty": "No spare drivers for this date.",
+    "copyPrevious": "Copy from previous day",
+    "addDriver": "Add",
+    "chooseDriver": "Choose a driver…",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "remove": "Remove",
+    "unsaved": "Unsaved changes"
   }
 }

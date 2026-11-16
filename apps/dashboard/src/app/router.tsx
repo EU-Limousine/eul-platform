@@ -4,7 +4,12 @@ import { ensureSession } from '@/features/auth/session';
 import { BookingDetailPage } from '@/features/bookings/booking-detail-page';
 import { BookingsPage } from '@/features/bookings/bookings-page';
 import { validateBookingsSearch } from '@/features/bookings/bookings-search';
+import { DriversPage } from '@/features/drivers/drivers-page';
 import { OverviewPage } from '@/features/overview/overview-page';
+import { PricingPage } from '@/features/pricing/pricing-page';
+import { SparesPage } from '@/features/spares/spares-page';
+import { VehiclesPage } from '@/features/vehicles/vehicles-page';
+import { validateListSearch } from '@/shared/lib/list-search';
 import { NotBuilt } from '@/shared/ui/not-built';
 import { AppLayout } from './layouts/app-layout';
 
@@ -50,16 +55,46 @@ const bookingDetailRoute = createRoute({
   },
 });
 
+const driversRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/drivers',
+  validateSearch: validateListSearch,
+  component: function DriversRoute() {
+    return <DriversPage search={driversRoute.useSearch()} />;
+  },
+});
+
+const vehiclesRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/vehicles',
+  validateSearch: validateListSearch,
+  component: function VehiclesRoute() {
+    return <VehiclesPage search={vehiclesRoute.useSearch()} />;
+  },
+});
+
+const sparesRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/spares',
+  validateSearch: (raw: Record<string, unknown>): { date?: string } => ({
+    date: typeof raw.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.date) ? raw.date : undefined,
+  }),
+  component: function SparesRoute() {
+    return <SparesPage date={sparesRoute.useSearch().date} />;
+  },
+});
+
 const routeTree = rootRoute.addChildren([
   loginRoute,
   appRoute.addChildren([
     createRoute({ getParentRoute: () => appRoute, path: '/', component: OverviewPage }),
     bookingsRoute,
     bookingDetailRoute,
+    driversRoute,
+    vehiclesRoute,
+    sparesRoute,
+    createRoute({ getParentRoute: () => appRoute, path: '/pricing', component: PricingPage }),
     page('/dispatch', 'nav.dispatch'),
-    page('/drivers', 'nav.drivers'),
-    page('/vehicles', 'nav.vehicles'),
-    page('/pricing', 'nav.pricing'),
     page('/users', 'nav.users'),
     page('/audit', 'nav.audit'),
   ]),
