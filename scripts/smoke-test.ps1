@@ -16,6 +16,8 @@ function Pass($text) { Write-Host "  PASS  $text" -ForegroundColor Green }
 function Fail($text) { Write-Host "  FAIL  $text" -ForegroundColor Red; $script:failed++ }
 function Step($text) { Write-Host "`n== $text" -ForegroundColor Cyan }
 function Check($ok, $text) { if ($ok) { Pass $text } else { Fail $text } }
+# Creating something answers 201 Created (some endpoints answer 200); both are success.
+function Created($status) { return $status -in 200, 201 }
 
 # Read the admin login from .env
 $envFile = Get-Content .env | Where-Object { $_ -match '^\s*[A-Z_]+=' }
@@ -76,7 +78,7 @@ $checkoutBody = @{
   language = 'en'
 }
 $checkout = Call POST '/public/checkouts' $checkoutBody @{ 'Idempotency-Key' = $key }
-Check ($checkout.Status -eq 200 -and $checkout.Body.redirectUrl) "Checkout created ($($checkout.Status))"
+Check ((Created $checkout.Status) -and $checkout.Body.redirectUrl) "Checkout created ($($checkout.Status))"
 $again = Call POST '/public/checkouts' $checkoutBody @{ 'Idempotency-Key' = $key }
 Check ($again.Body.checkoutId -eq $checkout.Body.checkoutId) 'Same Idempotency-Key → same checkout'
 
@@ -99,16 +101,16 @@ Check ($detail.Body.history.Count -ge 1) 'Status history recorded'
 Step '7. Driver and manual assignment'
 $plate = "SMK $(Get-Random -Minimum 1000 -Maximum 9999)"
 $vehicle = Call POST '/vehicles' @{ categoryId = $option.category.id; make = 'Test'; model = 'Smoke'; plate = $plate } $auth
-Check ($vehicle.Status -eq 200) "Test vehicle created ($plate)"
+Check (Created $vehicle.Status) "Test vehicle created ($plate, $($vehicle.Status))"
 $driverEmail = "smoke-driver-$(Get-Random)@example.com"
 $driver = Call POST '/drivers' @{ email = $driverEmail; name = 'Smoke Driver'; password = 'smoke-test-password-1'; workPhone = '+45 87654321'; vehicleId = $vehicle.Body.id } $auth
-Check ($driver.Status -eq 200) 'Test driver created'
+Check (Created $driver.Status) "Test driver created ($($driver.Status))"
 
 $candidates = Call GET "/bookings/$($booking.id)/driver-candidates" $null $auth
 Check (($candidates.Body | Where-Object driverId -eq $driver.Body.id)) 'Driver appears in candidates'
 
 $assign = Call POST "/bookings/$($booking.id)/assign" @{ driverId = $driver.Body.id } $auth
-Check ($assign.Status -eq 200 -and $assign.Body.status -eq 'ASSIGNED') "Assigned ($($assign.Status))"
+Check ((Created $assign.Status) -and $assign.Body.status -eq 'ASSIGNED') "Assigned ($($assign.Status))"
 $assign2 = Call POST "/bookings/$($booking.id)/assign" @{ driverId = $driver.Body.id } $auth
 Check ($assign2.Status -eq 409) "Second assignment → 409 'no longer available' ($($assign2.Status))"
 
