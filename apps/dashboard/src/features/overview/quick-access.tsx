@@ -31,7 +31,9 @@ export function QuickAccess() {
   return (
     <Card className="gap-4">
       <CardHeader>
-        <CardTitle className="text-lg">{t('quick.title')}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{t('quick.title')}</h2>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">

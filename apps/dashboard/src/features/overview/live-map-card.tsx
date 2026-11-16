@@ -11,7 +11,9 @@ export function LiveMapCard() {
   return (
     <Card className="gap-3">
       <CardHeader>
-        <CardTitle className="text-lg">{t('overview.liveMap.title')}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{t('overview.liveMap.title')}</h2>
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex-1">
         <div className="grid h-full min-h-48 place-items-center rounded-lg border border-dashed bg-muted/50 p-6 text-center">

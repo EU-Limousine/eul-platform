@@ -24,7 +24,9 @@ export function BookingsChart({ series }: { series: Overview['bookings']['series
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">{t('overview.chart.title')}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{t('overview.chart.title')}</h2>
+        </CardTitle>
         <CardDescription>{t('overview.last7Days')}</CardDescription>
       </CardHeader>
       <CardContent>

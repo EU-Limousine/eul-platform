@@ -23,7 +23,9 @@ export function StatusDonut({ title, totalLabel, slices }: { title: string; tota
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{title}</h2>
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-6 sm:flex-row">
         <ChartContainer config={config} className="aspect-square h-44 shrink-0">

@@ -12,7 +12,9 @@ export function RecentBookings({ rows }: { rows: Overview['recentBookings'] }) {
   return (
     <Card className="gap-3">
       <CardHeader>
-        <CardTitle className="text-lg">{t('overview.recentBookings')}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{t('overview.recentBookings')}</h2>
+        </CardTitle>
         <CardAction>
           <Link to="/bookings" className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground">
             {t('overview.viewAll')} <ArrowRight size={14} aria-hidden />

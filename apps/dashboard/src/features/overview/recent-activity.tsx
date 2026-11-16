@@ -41,7 +41,9 @@ export function RecentActivity({ items }: { items: NonNullable<Overview['activit
   return (
     <Card className="gap-3">
       <CardHeader>
-        <CardTitle className="text-lg">{t('overview.activity.title')}</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg">{t('overview.activity.title')}</h2>
+        </CardTitle>
         {canAudit && (
           <CardAction>
             <Link to="/audit" className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground">
