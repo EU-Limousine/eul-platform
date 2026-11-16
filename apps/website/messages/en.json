@@ -5,10 +5,123 @@
   },
   "header": {
     "brand": "EU Limousine",
-    "language": "Language"
+    "language": "Language",
+    "book": "Book now"
   },
   "home": {
     "title": "Premium chauffeur service in Copenhagen",
-    "subtitle": "Airport transfers, business travel and chauffeur by the hour in Copenhagen and CPH."
+    "subtitle": "Airport transfers, business travel and chauffeur by the hour in Copenhagen and CPH.",
+    "cta": "Book your ride"
+  },
+  "booking": {
+    "title": "Book a chauffeur",
+    "steps": {
+      "label": "Booking steps",
+      "stepOf": "Step {step} of {total}:",
+      "journey": "Journey",
+      "vehicle": "Vehicle",
+      "details": "Details",
+      "payment": "Payment",
+      "confirmation": "Confirmation"
+    },
+    "journey": {
+      "title": "Where and when?",
+      "pickup": "Pickup",
+      "dropoff": "Drop-off",
+      "addressPlaceholder": "Search address, hotel or airport",
+      "date": "Date",
+      "time": "Pickup time",
+      "timeHint": "Copenhagen time",
+      "passengers": "Passengers",
+      "submit": "See prices",
+      "loading": "Getting prices…",
+      "noResults": "No addresses found.",
+      "searchFailed": "Address search is not available right now. Please try again.",
+      "errors": {
+        "pickup": "Choose a pickup address from the list.",
+        "dropoff": "Choose a drop-off address from the list.",
+        "same": "Pickup and drop-off must be different.",
+        "date": "Choose a date.",
+        "time": "Choose a time.",
+        "passengers": "Enter 1 to 60 passengers.",
+        "noVehicles": "No vehicle fits this number of passengers. Please contact us.",
+        "generic": "We could not get prices. Please try again."
+      }
+    },
+    "vehicle": {
+      "title": "Choose your vehicle",
+      "trip": "{km} km · about {duration}",
+      "orSimilar": "{model} or similar",
+      "seats": "Up to {count} passengers",
+      "priceNote": "Prices are fixed and include the whole trip.",
+      "expired": "These prices have expired. Please get new prices.",
+      "refresh": "Get new prices",
+      "back": "Back",
+      "continue": "Continue"
+    },
+    "details": {
+      "title": "Your details",
+      "name": "Full name",
+      "email": "Email",
+      "emailHint": "We send your booking details here.",
+      "phone": "Mobile phone",
+      "someoneElse": "I am booking for someone else",
+      "passengerName": "Passenger name",
+      "passengerPhone": "Passenger phone",
+      "flight": "Flight number (optional)",
+      "flightHint": "For airport pickups, e.g. SK1234.",
+      "notes": "Notes for the chauffeur (optional)",
+      "back": "Back",
+      "continue": "Continue to payment",
+      "errors": {
+        "name": "Enter your name.",
+        "email": "Enter a valid email address.",
+        "phone": "Enter a valid phone number, e.g. +45 12 34 56 78.",
+        "passengerName": "Enter the passenger's name.",
+        "flight": "Flight number looks wrong, e.g. SK1234."
+      }
+    },
+    "payment": {
+      "title": "Review and pay",
+      "pickupTime": "Pickup",
+      "from": "From",
+      "to": "To",
+      "vehicle": "Vehicle",
+      "passengers": "Passengers",
+      "name": "Name",
+      "contact": "Contact",
+      "flight": "Flight",
+      "total": "Total",
+      "howItWorks": "You pay the full price now. You will get an email straight away, and a second email with your chauffeur's name, phone and vehicle once a chauffeur is assigned.",
+      "accept": "I accept the booking terms and cancellation policy.",
+      "pay": "Pay {amount}",
+      "redirecting": "Opening payment…",
+      "back": "Back",
+      "getNewPrice": "Get a new price",
+      "errors": {
+        "generic": "We could not start the payment. Please try again."
+      }
+    },
+    "confirmation": {
+      "checking": "Checking your payment…",
+      "checkingHint": "This takes a few seconds. Please keep this page open.",
+      "title": "Booking received",
+      "subtitle": "Your payment was successful.",
+      "reference": "Booking reference",
+      "pickupTime": "Pickup",
+      "from": "From",
+      "to": "To",
+      "vehicle": "Vehicle",
+      "paid": "Paid",
+      "nextSteps": "We have emailed your booking details. Once a chauffeur is assigned, you will receive a second email with your chauffeur's name, phone number and vehicle.",
+      "home": "Back to the home page",
+      "failedTitle": "Payment not completed",
+      "failedHint": "No money was taken. You can try again.",
+      "tryAgain": "Try again",
+      "pendingTitle": "We are still confirming your payment",
+      "pendingHint": "You will receive an email as soon as it is confirmed. You do not need to pay again.",
+      "notFound": "We could not find this booking.",
+      "startBooking": "Start a new booking"
+    }
   }
 }

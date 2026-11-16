@@ -4,10 +4,123 @@
     "description": "Chaufførservice i København og Københavns Lufthavn (CPH)."
   },
   "header": {
-    "language": "Sprog"
+    "language": "Sprog",
+    "book": "Book nu"
   },
   "home": {
     "title": "Førsteklasses chaufførservice i København",
-    "subtitle": "Lufthavnstransfer, forretningsrejser og chauffør på timebasis i København og CPH."
+    "subtitle": "Lufthavnstransfer, forretningsrejser og chauffør på timebasis i København og CPH.",
+    "cta": "Book din tur"
+  },
+  "booking": {
+    "title": "Book en chauffør",
+    "steps": {
+      "label": "Bookingtrin",
+      "stepOf": "Trin {step} af {total}:",
+      "journey": "Rejse",
+      "vehicle": "Bil",
+      "details": "Oplysninger",
+      "payment": "Betaling",
+      "confirmation": "Bekræftelse"
+    },
+    "journey": {
+      "title": "Hvor og hvornår?",
+      "pickup": "Afhentning",
+      "dropoff": "Destination",
+      "addressPlaceholder": "Søg adresse, hotel eller lufthavn",
+      "date": "Dato",
+      "time": "Afhentningstid",
+      "timeHint": "Dansk tid",
+      "passengers": "Passagerer",
+      "submit": "Se priser",
+      "loading": "Henter priser…",
+      "noResults": "Ingen adresser fundet.",
+      "searchFailed": "Adressesøgning er ikke tilgængelig lige nu. Prøv igen.",
+      "errors": {
+        "pickup": "Vælg en afhentningsadresse fra listen.",
+        "dropoff": "Vælg en destination fra listen.",
+        "same": "Afhentning og destination skal være forskellige.",
+        "date": "Vælg en dato.",
+        "time": "Vælg et tidspunkt.",
+        "passengers": "Angiv 1 til 60 passagerer.",
+        "noVehicles": "Ingen bil passer til dette antal passagerer. Kontakt os venligst.",
+        "generic": "Vi kunne ikke hente priser. Prøv igen."
+      }
+    },
+    "vehicle": {
+      "title": "Vælg din bil",
+      "trip": "{km} km · ca. {duration}",
+      "orSimilar": "{model} eller lignende",
+      "seats": "Op til {count} passagerer",
+      "priceNote": "Priserne er faste og dækker hele turen.",
+      "expired": "Priserne er udløbet. Hent venligst nye priser.",
+      "refresh": "Hent nye priser",
+      "back": "Tilbage",
+      "continue": "Fortsæt"
+    },
+    "details": {
+      "title": "Dine oplysninger",
+      "name": "Fulde navn",
+      "email": "E-mail",
+      "emailHint": "Vi sender din booking hertil.",
+      "phone": "Mobilnummer",
+      "someoneElse": "Jeg booker for en anden",
+      "passengerName": "Passagerens navn",
+      "passengerPhone": "Passagerens telefon",
+      "flight": "Flynummer (valgfrit)",
+      "flightHint": "Ved afhentning i lufthavnen, f.eks. SK1234.",
+      "notes": "Besked til chaufføren (valgfrit)",
+      "back": "Tilbage",
+      "continue": "Fortsæt til betaling",
+      "errors": {
+        "name": "Angiv dit navn.",
+        "email": "Angiv en gyldig e-mailadresse.",
+        "phone": "Angiv et gyldigt telefonnummer, f.eks. +45 12 34 56 78.",
+        "passengerName": "Angiv passagerens navn.",
+        "flight": "Flynummeret ser forkert ud, f.eks. SK1234."
+      }
+    },
+    "payment": {
+      "title": "Gennemse og betal",
+      "pickupTime": "Afhentning",
+      "from": "Fra",
+      "to": "Til",
+      "vehicle": "Bil",
+      "passengers": "Passagerer",
+      "name": "Navn",
+      "contact": "Kontakt",
+      "flight": "Fly",
+      "total": "I alt",
+      "howItWorks": "Du betaler hele beløbet nu. Du får straks en e-mail, og en ny e-mail med chaufførens navn, telefon og bil, når en chauffør er tildelt.",
+      "accept": "Jeg accepterer bookingbetingelserne og afbestillingsreglerne.",
+      "pay": "Betal {amount}",
+      "redirecting": "Åbner betaling…",
+      "back": "Tilbage",
+      "getNewPrice": "Hent en ny pris",
+      "errors": {
+        "generic": "Vi kunne ikke starte betalingen. Prøv igen."
+      }
+    },
+    "confirmation": {
+      "checking": "Vi tjekker din betaling…",
+      "checkingHint": "Det tager et par sekunder. Hold siden åben.",
+      "title": "Booking modtaget",
+      "subtitle": "Din betaling er gennemført.",
+      "reference": "Bookingnummer",
+      "pickupTime": "Afhentning",
+      "from": "Fra",
+      "to": "Til",
+      "vehicle": "Bil",
+      "paid": "Betalt",
+      "nextSteps": "Vi har sendt dine bookingoplysninger på e-mail. Når en chauffør er tildelt, får du en ny e-mail med chaufførens navn, telefonnummer og bil.",
+      "home": "Tilbage til forsiden",
+      "failedTitle": "Betalingen blev ikke gennemført",
+      "failedHint": "Der er ikke trukket penge. Du kan prøve igen.",
+      "tryAgain": "Prøv igen",
+      "pendingTitle": "Vi bekræfter stadig din betaling",
+      "pendingHint": "Du får en e-mail, så snart den er bekræftet. Du skal ikke betale igen.",
+      "notFound": "Vi kunne ikke finde denne booking.",
+      "startBooking": "Start en ny booking"
+    }
   }
 }

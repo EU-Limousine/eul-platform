@@ -11,10 +11,15 @@ export function SiteHeader() {
         <Link href="/" className="font-display text-xl font-semibold">
           {t('brand')}
         </Link>
-        {/* Suspense: the switcher reads the query string (useSearchParams) */}
-        <Suspense fallback={null}>
-          <LanguageSwitcher />
-        </Suspense>
+        <div className="flex items-center gap-4">
+          {/* Suspense: the switcher reads the query string (useSearchParams) */}
+          <Suspense fallback={null}>
+            <LanguageSwitcher />
+          </Suspense>
+          <Link href="/book" className="rounded-control bg-brand-gold px-4 py-2 text-sm font-medium text-brand-black">
+            {t('book')}
+          </Link>
+        </div>
       </div>
     </header>
   );
