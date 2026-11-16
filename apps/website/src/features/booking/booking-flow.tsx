@@ -50,7 +50,7 @@ export function BookingFlow() {
         {!draft ? (
           <div className="h-64 animate-pulse rounded-card bg-canvas" aria-busy="true" />
         ) : step === 'journey' ? (
-          <StepJourney draft={draft} update={update} next={() => go('vehicle')} />
+          <StepJourney draft={draft} update={update} next={() => go('vehicle')} autoSubmit={params.get('auto') === '1'} />
         ) : step === 'vehicle' ? (
           <StepVehicle draft={draft} update={update} next={() => go('details')} back={() => go('journey')} />
         ) : step === 'details' ? (

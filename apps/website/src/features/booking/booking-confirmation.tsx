@@ -97,7 +97,7 @@ export function BookingConfirmation() {
           <XCircle size={44} aria-hidden className="text-danger" />
           <h1 className="text-2xl font-semibold text-text">{t('failedTitle')}</h1>
           <p className="text-text-muted">{t('failedHint')}</p>
-          <Link href="/book?step=payment" className="rounded-control bg-brand-black px-5 py-3 text-on-dark">{t('tryAgain')}</Link>
+          <Link href="/book?step=payment" className="rounded-control bg-site-dark px-5 py-3 text-on-dark">{t('tryAgain')}</Link>
         </div>
       )}
 

@@ -5,12 +5,239 @@
   },
   "header": {
     "language": "Sprog",
-    "book": "Book nu"
+    "book": "Book en tur",
+    "menu": "Menu",
+    "close": "Luk menu",
+    "nav": {
+      "home": "Forside",
+      "services": "Services",
+      "fleet": "Biler",
+      "about": "Om os",
+      "contact": "Kontakt"
+    }
   },
   "home": {
-    "title": "Førsteklasses chaufførservice i København",
-    "subtitle": "Lufthavnstransfer, forretningsrejser og chauffør på timebasis i København og CPH.",
-    "cta": "Book din tur"
+    "hero": {
+      "classic": {
+        "eyebrow": "Førsteklasses chaufførservice",
+        "title": "Luksuriøse ture til livets vigtigste øjeblikke",
+        "text": "Fra lufthavnstransfer til erhvervskørsel tilbyder EU Limousine en førsteklasses, pålidelig og diskret chaufførservice i København."
+      },
+      "noir": {
+        "eyebrow": "Førsteklasses chaufførservice",
+        "title1": "Mere end en tur.",
+        "title2": "En standard over.",
+        "text": "Førsteklasses transport i København – præget af punktlighed, diskretion og enestående service.",
+        "primary": "Book din tur",
+        "secondary": "Se vores services"
+      }
+    },
+    "highlights": {
+      "airport": {
+        "title": "Lufthavnstransfer",
+        "text": "Til og fra CPH"
+      },
+      "chauffeurs": {
+        "title": "Professionelle chauffører",
+        "text": "Uddannede og diskrete"
+      },
+      "fixedPrice": {
+        "title": "Faste priser",
+        "text": "Kendt før du betaler"
+      },
+      "punctual": {
+        "title": "Til tiden",
+        "text": "Punktlighed du kan stole på"
+      },
+      "comfort": {
+        "title": "Førsteklasses komfort",
+        "text": "Komfort, klasse, omhu"
+      },
+      "online": {
+        "title": "Nem booking online",
+        "text": "På få trin"
+      }
+    },
+    "quickBooking": {
+      "title": "Book din tur",
+      "pickup": "Afhentningssted",
+      "dropoff": "Destination",
+      "date": "Dato",
+      "time": "Tid",
+      "passengers": "Passagerer",
+      "submit": "Se priser",
+      "continue": "Fortsæt til booking",
+      "note": "Du ser den faste pris, før du betaler.",
+      "modes": {
+        "oneWay": "Enkelt tur",
+        "hourly": "Pr. time",
+        "asDirected": "Efter aftale"
+      },
+      "errors": {
+        "addresses": "Vælg afhentningssted og destination fra listen.",
+        "when": "Vælg dato og tid."
+      }
+    },
+    "services": {
+      "eyebrow": "Vores services",
+      "title": "Førsteklasses transportløsninger",
+      "titleNoir": "Førsteklasses transport tilpasset dig",
+      "subtitle": "Tilpasset din tidsplan, din destination og dine krav.",
+      "bookCta": "Book nu",
+      "items": {
+        "airport": {
+          "title": "Lufthavnstransfer",
+          "text": "Afhentning og aflevering til tiden i Københavns Lufthavn (CPH), med dit flynummer på bookingen.",
+          "short": "Afhentning og aflevering i CPH og andre lufthavne."
+        },
+        "corporate": {
+          "title": "Erhvervskørsel",
+          "text": "Professionel og diskret transport til ledere, møder og forretningsarrangementer.",
+          "short": "Pålidelig, professionel transport for virksomheder."
+        },
+        "hourly": {
+          "title": "Chauffør pr. time",
+          "text": "En chauffør til rådighed til møder, byture eller shopping.",
+          "short": "Din tid, din plan – med chauffør."
+        },
+        "events": {
+          "title": "Bryllupper & events",
+          "text": "Ankom med stil på de dage, der betyder mest.",
+          "short": "Ankom med stil til livets store øjeblikke."
+        },
+        "cityToCity": {
+          "title": "By til by",
+          "text": "Komfortabel kørsel over længere afstande mellem byer.",
+          "short": "Komfortabel kørsel over lange afstande."
+        },
+        "vip": {
+          "title": "VIP & ledere",
+          "text": "Diskret og personlig service til VIP-gæster.",
+          "short": "Diskret og personlig service til VIP'er."
+        }
+      }
+    },
+    "about": {
+      "eyebrow": "Om EU Limousine",
+      "title": "En højere standard for rejser",
+      "eyebrowNoir": "Velkommen til EU Limousine",
+      "titleNoir": "Kvalitet på hver tur",
+      "text": "EU Limousine er en førsteklasses chaufførservice i København bygget på tillid, professionalisme og sans for detaljer. Vi kombinerer komfortable biler med erfarne chauffører, så hver tur bliver rolig og problemfri.",
+      "points": {
+        "discreet": {
+          "title": "Diskret & fortroligt",
+          "text": "Dit privatliv er vores prioritet."
+        },
+        "chauffeurs": {
+          "title": "Professionelle chauffører",
+          "text": "Uddannede, punktlige og høflige."
+        },
+        "fixedPrice": {
+          "title": "Faste priser",
+          "text": "Du ser hele prisen, før du betaler."
+        },
+        "online": {
+          "title": "Nem booking",
+          "text": "Book online på få trin."
+        }
+      }
+    },
+    "stats": {
+      "label": "EU Limousine i tal",
+      "years": "Års erfaring",
+      "clients": "Tilfredse kunder",
+      "rides": "Gennemførte ture",
+      "cities": "Byer",
+      "rating": "Kundebedømmelse"
+    },
+    "how": {
+      "eyebrow": "Sådan fungerer det",
+      "title": "Enkelt. Problemfrit. Stressfrit.",
+      "titleNoir": "Enkle trin. Problemfri oplevelse.",
+      "subtitle": "Det er hurtigt og nemt at booke en tur hos EU Limousine.",
+      "steps": {
+        "book": {
+          "title": "Book",
+          "text": "Vælg rute, tidspunkt og biltype."
+        },
+        "pay": {
+          "title": "Betal sikkert",
+          "text": "Betal online og få din booking på e-mail."
+        },
+        "chauffeur": {
+          "title": "Mød din chauffør",
+          "text": "Vi sender chaufførens navn, telefon og bil på e-mail."
+        },
+        "ride": {
+          "title": "Nyd turen",
+          "text": "Slap af – vi klarer resten."
+        }
+      }
+    },
+    "fleet": {
+      "eyebrow": "Vores biler",
+      "title": "Luksusbiler til enhver tur",
+      "titleNoir": "Luksusbiler til enhver lejlighed",
+      "subtitle": "Komfortable, velholdte biler til alle slags ture.",
+      "cta": "Book en bil",
+      "orSimilar": "{model} eller lignende",
+      "seats": "Op til {count} passagerer",
+      "from": "Fra"
+    },
+    "why": {
+      "eyebrow": "Hvorfor vælge EU Limousine",
+      "title": "Forskellen ligger i detaljerne",
+      "titleNoir": "Oplev forskellen",
+      "items": {
+        "fleet": {
+          "title": "Førsteklasses biler",
+          "text": "Komfortable, velholdte biler."
+        },
+        "chauffeurs": {
+          "title": "Professionelle chauffører",
+          "text": "Erfarne, høflige og diskrete."
+        },
+        "discreet": {
+          "title": "Diskret & privat",
+          "text": "Dit privatliv er vores prioritet."
+        },
+        "punctual": {
+          "title": "Punktlig & pålidelig",
+          "text": "Vi planlægger hver tur, så vi er til tiden."
+        },
+        "pricing": {
+          "title": "Gennemsigtige priser",
+          "text": "En fast pris, vist før du betaler."
+        },
+        "support": {
+          "title": "Personlig hjælp",
+          "text": "Rigtige mennesker, der hjælper med din booking."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Kundeudtalelser",
+      "title": "Det siger vores kunder",
+      "titleNoir": "Kunderne har tillid til os",
+      "subtitle": "Anmeldelser fra folk, der har kørt med os.",
+      "rating": "{rating} ud af 5 stjerner"
+    },
+    "partners": {
+      "eyebrow": "Vores partnere",
+      "title": "Stolte af at arbejde med"
+    },
+    "gallery": {
+      "eyebrow": "Galleri",
+      "title": "Ture der gør indtryk"
+    },
+    "cta": {
+      "title": "Klar til en bedre tur?",
+      "text": "Oplev forskellen med førsteklasses transport. Book din tur i dag, og rejs trygt.",
+      "primary": "Book en tur",
+      "secondary": "Få en pris",
+      "primaryNoir": "Book din tur nu",
+      "contact": "Kontakt os"
+    }
   },
   "booking": {
     "title": "Book en chauffør",
@@ -136,6 +363,13 @@
     "draftBanner": "UDKAST — ikke juridisk gennemgået. Tekst i [firkantede parenteser] skal udfyldes, og hele siden skal gennemgås af en advokat før lancering. Indholdet findes kun på engelsk indtil videre."
   },
   "footer": {
-    "legalNote": "Juridiske sider er udkast"
+    "tagline": "Førsteklasses chaufførservice for private og virksomheder. Komfort, pålidelighed og diskretion.",
+    "quickLinks": "Genveje",
+    "bookOnline": "Book online",
+    "services": "Vores services",
+    "contactUs": "Kontakt os",
+    "directions": "Rutevejledning",
+    "contactTodo": "[Kontaktoplysninger — tilføj dem i src/config/site.ts]",
+    "rights": "© {year} EU Limousine. Alle rettigheder forbeholdes."
   }
 }

@@ -26,7 +26,7 @@ export function PrimaryButton({ children, ...props }: ButtonHTMLAttributes<HTMLB
     <button
       type="button"
       {...props}
-      className="w-full rounded-control bg-brand-black px-5 py-3.5 text-base font-medium text-on-dark disabled:opacity-50 sm:w-auto"
+      className="w-full rounded-control bg-site-dark px-5 py-3.5 text-base font-medium text-on-dark disabled:opacity-50 sm:w-auto"
     >
       {children}
     </button>

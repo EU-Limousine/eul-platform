@@ -6,12 +6,239 @@
   "header": {
     "brand": "EU Limousine",
     "language": "Language",
-    "book": "Book now"
+    "book": "Book a ride",
+    "menu": "Menu",
+    "close": "Close menu",
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "fleet": "Fleet",
+      "about": "About",
+      "contact": "Contact"
+    }
   },
   "home": {
-    "title": "Premium chauffeur service in Copenhagen",
-    "subtitle": "Airport transfers, business travel and chauffeur by the hour in Copenhagen and CPH.",
-    "cta": "Book your ride"
+    "hero": {
+      "classic": {
+        "eyebrow": "Premium chauffeur service",
+        "title": "Luxury rides for life's most important moments",
+        "text": "From airport transfers to corporate travel, EU Limousine provides a premium, reliable and discreet chauffeur service in Copenhagen."
+      },
+      "noir": {
+        "eyebrow": "Premium chauffeur service",
+        "title1": "More than a ride.",
+        "title2": "A standard above.",
+        "text": "Premium transport in Copenhagen, defined by punctuality, discretion and exceptional service.",
+        "primary": "Book your ride",
+        "secondary": "Explore services"
+      }
+    },
+    "highlights": {
+      "airport": {
+        "title": "Airport transfers",
+        "text": "To and from CPH"
+      },
+      "chauffeurs": {
+        "title": "Professional chauffeurs",
+        "text": "Trained and discreet"
+      },
+      "fixedPrice": {
+        "title": "Fixed prices",
+        "text": "Known before you pay"
+      },
+      "punctual": {
+        "title": "On time",
+        "text": "Punctuality you can rely on"
+      },
+      "comfort": {
+        "title": "Premium comfort",
+        "text": "Comfort, class, care"
+      },
+      "online": {
+        "title": "Easy online booking",
+        "text": "In a few steps"
+      }
+    },
+    "quickBooking": {
+      "title": "Book your ride",
+      "pickup": "Pickup location",
+      "dropoff": "Drop-off location",
+      "date": "Date",
+      "time": "Time",
+      "passengers": "Passengers",
+      "submit": "See prices",
+      "continue": "Continue to book",
+      "note": "You see the fixed price before you pay.",
+      "modes": {
+        "oneWay": "One way",
+        "hourly": "Hourly",
+        "asDirected": "As directed"
+      },
+      "errors": {
+        "addresses": "Choose a pickup and a drop-off address from the list.",
+        "when": "Choose a date and a time."
+      }
+    },
+    "services": {
+      "eyebrow": "Our services",
+      "title": "Premium transport solutions",
+      "titleNoir": "Premium transportation tailored to you",
+      "subtitle": "Tailored to your schedule, your destination and your standards.",
+      "bookCta": "Book now",
+      "items": {
+        "airport": {
+          "title": "Airport transfers",
+          "text": "On-time pickup and drop-off at Copenhagen Airport (CPH), with your flight number on the booking.",
+          "short": "Pickups and drop-offs at CPH and other airports."
+        },
+        "corporate": {
+          "title": "Corporate travel",
+          "text": "Professional and discreet transport for executives, meetings and business events.",
+          "short": "Reliable, professional transport for businesses."
+        },
+        "hourly": {
+          "title": "Hourly chauffeur",
+          "text": "A chauffeur at your disposal for meetings, city tours or shopping.",
+          "short": "Your time, your schedule, with a chauffeur."
+        },
+        "events": {
+          "title": "Weddings & events",
+          "text": "Arrive in style on the days that matter most.",
+          "short": "Arrive in style for life's important moments."
+        },
+        "cityToCity": {
+          "title": "City to city",
+          "text": "Comfortable long-distance travel between cities.",
+          "short": "Comfortable long-distance travel."
+        },
+        "vip": {
+          "title": "VIP & executive",
+          "text": "Discreet, personal service for VIP guests.",
+          "short": "Discreet, personal service for VIPs."
+        }
+      }
+    },
+    "about": {
+      "eyebrow": "About EU Limousine",
+      "title": "A higher standard of travel",
+      "eyebrowNoir": "Welcome to EU Limousine",
+      "titleNoir": "Excellence in every journey",
+      "text": "EU Limousine is a premium chauffeur service in Copenhagen built on trust, professionalism and attention to detail. We combine comfortable vehicles with experienced chauffeurs to make every journey calm and seamless.",
+      "points": {
+        "discreet": {
+          "title": "Discreet & confidential",
+          "text": "Your privacy is our priority."
+        },
+        "chauffeurs": {
+          "title": "Professional chauffeurs",
+          "text": "Trained, punctual and courteous."
+        },
+        "fixedPrice": {
+          "title": "Fixed prices",
+          "text": "You see the full price before you pay."
+        },
+        "online": {
+          "title": "Easy booking",
+          "text": "Book online in a few steps."
+        }
+      }
+    },
+    "stats": {
+      "label": "EU Limousine in numbers",
+      "years": "Years of experience",
+      "clients": "Happy clients",
+      "rides": "Rides completed",
+      "cities": "Cities served",
+      "rating": "Client rating"
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Simple. Seamless. Stress-free.",
+      "titleNoir": "Simple steps. Seamless experience.",
+      "subtitle": "Booking your ride with EU Limousine is quick and easy.",
+      "steps": {
+        "book": {
+          "title": "Book",
+          "text": "Choose your route, time and vehicle class."
+        },
+        "pay": {
+          "title": "Pay securely",
+          "text": "Pay online and get your booking by email."
+        },
+        "chauffeur": {
+          "title": "Meet your chauffeur",
+          "text": "We email your chauffeur's name, phone and vehicle."
+        },
+        "ride": {
+          "title": "Enjoy the ride",
+          "text": "Relax while we take care of the rest."
+        }
+      }
+    },
+    "fleet": {
+      "eyebrow": "Our fleet",
+      "title": "Luxury fleet for every journey",
+      "titleNoir": "Luxury vehicles for every occasion",
+      "subtitle": "Comfortable, well-kept vehicles for every kind of trip.",
+      "cta": "Book a vehicle",
+      "orSimilar": "{model} or similar",
+      "seats": "Up to {count} passengers",
+      "from": "From"
+    },
+    "why": {
+      "eyebrow": "Why choose EU Limousine",
+      "title": "The difference is in the details",
+      "titleNoir": "Experience the difference",
+      "items": {
+        "fleet": {
+          "title": "Premium vehicles",
+          "text": "Comfortable, well-maintained cars."
+        },
+        "chauffeurs": {
+          "title": "Professional chauffeurs",
+          "text": "Experienced, courteous and discreet."
+        },
+        "discreet": {
+          "title": "Discreet & private",
+          "text": "Your privacy, our priority."
+        },
+        "punctual": {
+          "title": "Punctual & reliable",
+          "text": "We plan every trip to be on time."
+        },
+        "pricing": {
+          "title": "Transparent pricing",
+          "text": "A fixed price, shown before you pay."
+        },
+        "support": {
+          "title": "Personal support",
+          "text": "Real people who help with your booking."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Client testimonials",
+      "title": "What our clients say",
+      "titleNoir": "Trusted by our clients",
+      "subtitle": "Reviews from people who travelled with us.",
+      "rating": "{rating} out of 5 stars"
+    },
+    "partners": {
+      "eyebrow": "Our partners",
+      "title": "Proud to work with"
+    },
+    "gallery": {
+      "eyebrow": "Gallery",
+      "title": "Journeys that make an impression"
+    },
+    "cta": {
+      "title": "Ready for a better ride?",
+      "text": "Experience the difference of premium transport. Book your ride today and travel with confidence.",
+      "primary": "Book a ride",
+      "secondary": "Get a price",
+      "primaryNoir": "Book your ride now",
+      "contact": "Contact us"
+    }
   },
   "booking": {
     "title": "Book a chauffeur",
@@ -373,8 +600,13 @@
     }
   },
   "footer": {
-    "rights": "© {year} EU Limousine",
-    "contact": "[Company legal name] · CVR [number] · [email]",
-    "legalNote": "Legal pages are drafts"
+    "tagline": "Premium chauffeur service for individuals and businesses. Comfort, reliability and discretion.",
+    "quickLinks": "Quick links",
+    "bookOnline": "Book online",
+    "services": "Our services",
+    "contactUs": "Contact us",
+    "directions": "Get directions",
+    "contactTodo": "[Contact details — add them in src/config/site.ts]",
+    "rights": "© {year} EU Limousine. All rights reserved."
   }
 }

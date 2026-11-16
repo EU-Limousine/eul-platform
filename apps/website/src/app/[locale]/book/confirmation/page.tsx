@@ -13,7 +13,7 @@ export default async function ConfirmationPage({ params }: { params: Promise<{ l
   const { locale } = await params;
   setRequestLocale(locale);
   return (
-    <main className="min-h-[70vh] bg-surface">
+    <main className="min-h-[70vh] bg-site-surface">
       <Suspense fallback={null}>
         <BookingConfirmation />
       </Suspense>

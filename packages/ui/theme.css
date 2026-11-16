@@ -36,6 +36,20 @@
   --color-danger: var(--danger);
   --color-danger-bg: var(--danger-bg);
 
+  /* Website themes */
+  --color-site-dark: var(--site-dark);
+  --color-site-dark-2: var(--site-dark-2);
+  --color-site-dark-3: var(--site-dark-3);
+  --color-site-surface: var(--site-surface);
+  --color-site-card: var(--site-card);
+  --color-site-warm: var(--site-warm);
+  --color-site-gold: var(--site-gold);
+  --color-site-gold-strong: var(--site-gold-strong);
+  --color-site-gold-text: var(--site-gold-text);
+  --color-site-on-dark: var(--site-on-dark);
+  --color-site-on-dark-muted: var(--site-on-dark-muted);
+  --color-site-line-dark: var(--site-line-dark);
+
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
 }

@@ -38,7 +38,7 @@ export function StepVehicle({ draft, update, next, back }: { draft: BookingDraft
               return (
                 <li key={o.quoteId}>
                   <label
-                    className={`flex cursor-pointer items-center gap-4 rounded-card border p-4 ${checked ? 'border-brand-black ring-1 ring-brand-black' : 'border-border hover:border-text-muted'}`}
+                    className={`flex cursor-pointer items-center gap-4 rounded-card border p-4 ${checked ? 'border-site-dark ring-1 ring-site-dark' : 'border-border hover:border-text-muted'}`}
                   >
                     <input
                       type="radio"

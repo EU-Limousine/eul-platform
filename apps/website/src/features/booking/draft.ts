@@ -76,6 +76,11 @@ export function clearDraft(): void {
   }
 }
 
+/** Save fields outside the booking page (e.g. the homepage booking form) before navigating. */
+export function saveDraft(patch: Partial<BookingDraft>): void {
+  write({ ...read(), ...patch });
+}
+
 /** After a failed payment: the next attempt must use a new idempotency key. */
 export function forgetCheckout(): void {
   const draft = read();

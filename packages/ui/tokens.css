@@ -47,3 +47,40 @@
   --sidebar-width: 228px;
   --topbar-height: 60px;
 }
+
+/*
+ * Website themes (homepage options). <html class="theme-classic"> or "theme-noir".
+ * Option 1 "classic" = deep navy + champagne. Option 2 "noir" = near-black + gold.
+ * Rule: --site-gold is for fills, borders and icons, and text ON DARK only.
+ * Gold-coloured text on a light background uses --site-gold-text (passes 4.5:1).
+ */
+:root,
+.theme-classic {
+  --site-dark: #0a1520;
+  --site-dark-2: #0f1e2c;
+  --site-dark-3: #16283a;
+  --site-surface: #f3f5f7;
+  --site-card: #ffffff;
+  --site-warm: #ebe8e2;
+  --site-gold: #d9c18f;
+  --site-gold-strong: #c3a46a;
+  --site-gold-text: #7a5c25;
+  --site-on-dark: #ffffff;
+  --site-on-dark-muted: #b6c0ca;
+  --site-line-dark: rgb(255 255 255 / 0.12);
+}
+
+.theme-noir {
+  --site-dark: #0b0b0d;
+  --site-dark-2: #141416;
+  --site-dark-3: #1d1d20;
+  --site-surface: #f6f5f2;
+  --site-card: #ffffff;
+  --site-warm: #efece6;
+  --site-gold: #c9a24e;
+  --site-gold-strong: #d4aa55;
+  --site-gold-text: #7a5c25;
+  --site-on-dark: #ffffff;
+  --site-on-dark-muted: #b5b0a6;
+  --site-line-dark: rgb(255 255 255 / 0.1);
+}

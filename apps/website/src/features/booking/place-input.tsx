@@ -10,7 +10,23 @@ import { fieldClass } from './ui';
 const newSession = () => crypto.randomUUID().replace(/-/g, '');
 
 /** Address search through our API (Google Places on the server). Keyboard: ↑ ↓ Enter Esc. */
-export function PlaceInput({ id, label, value, onChange, error }: { id: string; label: string; value?: Place; onChange: (place: Place | undefined) => void; error?: string }) {
+export function PlaceInput({
+  id,
+  label,
+  value,
+  onChange,
+  error,
+  tone = 'light',
+}: {
+  id: string;
+  label: string;
+  value?: Place;
+  onChange: (place: Place | undefined) => void;
+  error?: string;
+  /** "dark" for the hero booking forms on dark backgrounds. */
+  tone?: 'light' | 'dark';
+}) {
+  const dark = tone === 'dark';
   const t = useTranslations('booking.journey');
   const locale = useLocale();
   const listId = useId();
@@ -82,7 +98,7 @@ export function PlaceInput({ id, label, value, onChange, error }: { id: string; 
 
   return (
     <div className="relative space-y-1.5">
-      <label htmlFor={id} className="block text-sm font-medium text-text">
+      <label htmlFor={id} className={dark ? 'block text-xs font-medium text-site-on-dark-muted' : 'block text-sm font-medium text-text'}>
         {label}
       </label>
       <input
@@ -104,7 +120,11 @@ export function PlaceInput({ id, label, value, onChange, error }: { id: string; 
         onKeyDown={onKeyDown}
         onFocus={() => suggestions.length > 0 && !value && setOpen(true)}
         onBlur={() => window.setTimeout(() => setOpen(false), 150)}
-        className={fieldClass}
+        className={
+          dark
+            ? 'w-full rounded-control border border-site-line-dark bg-site-dark-3 px-3 py-2.5 text-sm text-site-on-dark placeholder:text-site-on-dark-muted'
+            : fieldClass
+        }
       />
       {open && suggestions.length > 0 && (
         <ul id={listId} role="listbox" className="absolute z-20 mt-1 w-full overflow-hidden rounded-control border border-border bg-surface shadow-lg">
@@ -130,7 +150,7 @@ export function PlaceInput({ id, label, value, onChange, error }: { id: string; 
         <p className="text-xs text-text-muted">{t('noResults')}</p>
       )}
       {shownError && (
-        <p id={`${id}-error`} role="alert" className="text-sm text-danger">
+        <p id={`${id}-error`} role="alert" className={dark ? 'text-sm text-site-gold' : 'text-sm text-danger'}>
           {shownError}
         </p>
       )}

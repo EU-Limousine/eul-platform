@@ -1,23 +1,24 @@
-import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { use } from 'react';
-import { Link } from '@/i18n/navigation';
+import { HomeClassic, HomeNoir } from '@/components/home/home-pages';
+import { HOME_VARIANT } from '@/config/site';
+import { fetchPublicCategories } from '@/lib/public-api';
 
-// TODO(design): build from the website home HTML design. TODO(content): real copy and images.
-export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = use(params);
+// Fleet prices refresh every 5 minutes (incremental static regeneration).
+export const revalidate = 300;
+
+/** The homepage option is chosen in src/config/site.ts (HOME_VARIANT). */
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   setRequestLocale(locale);
-  const t = useTranslations('home');
+  const categories = await fetchPublicCategories(locale);
 
   return (
-    <main className="bg-brand-black text-on-dark">
-      <section className="mx-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-6 py-24">
-        <h1 className="text-4xl font-semibold md:text-6xl">{t('title')}</h1>
-        <p className="mt-6 max-w-2xl text-lg text-on-dark-muted">{t('subtitle')}</p>
-        <Link href="/book" className="mt-10 inline-block self-start rounded-control bg-brand-gold px-6 py-3.5 font-medium text-brand-black">
-          {t('cta')}
-        </Link>
-      </section>
+    <main>
+      {HOME_VARIANT === 'noir' ? (
+        <HomeNoir categories={categories} locale={locale} />
+      ) : (
+        <HomeClassic categories={categories} locale={locale} />
+      )}
     </main>
   );
 }

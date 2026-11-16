@@ -14,7 +14,7 @@ export default async function BookPage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   setRequestLocale(locale);
   return (
-    <main className="min-h-[70vh] bg-surface">
+    <main className="min-h-[70vh] bg-site-surface">
       <Suspense fallback={null}>
         <BookingFlow />
       </Suspense>

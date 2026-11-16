@@ -13,7 +13,7 @@ export function BookingStepper({ current }: { current: Step }) {
         const state = i < index ? 'done' : i === index ? 'current' : 'todo';
         return (
           <li key={step} className="flex flex-1 flex-col gap-1.5" aria-current={state === 'current' ? 'step' : undefined}>
-            <span className={`h-1 rounded-full ${state === 'todo' ? 'bg-border' : 'bg-brand-black'}`} />
+            <span className={`h-1 rounded-full ${state === 'todo' ? 'bg-border' : 'bg-site-dark'}`} />
             <span className={state === 'todo' ? 'text-text-muted' : 'font-medium text-text'}>
               <span className="sr-only">{t('stepOf', { step: i + 1, total: STEPS.length + 1 })} </span>
               {t(step)}

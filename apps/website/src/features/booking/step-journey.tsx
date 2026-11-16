@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { BookingApiError, getQuote } from './api';
 import { CURRENCIES, defaultCurrency, type BookingDraft, type Place } from './draft';
@@ -11,7 +11,18 @@ import { Alert, Field, PrimaryButton, fieldClass } from './ui';
 type Errors = Partial<Record<'pickup' | 'dropoff' | 'date' | 'time' | 'passengers', string>>;
 
 /** Step 1: where, when, how many. Gets prices for every vehicle class that fits. */
-export function StepJourney({ draft, update, next }: { draft: BookingDraft; update: (p: Partial<BookingDraft>) => void; next: () => void }) {
+export function StepJourney({
+  draft,
+  update,
+  next,
+  autoSubmit = false,
+}: {
+  draft: BookingDraft;
+  update: (p: Partial<BookingDraft>) => void;
+  next: () => void;
+  /** Coming from the homepage booking form: fetch prices straight away. */
+  autoSubmit?: boolean;
+}) {
   const t = useTranslations('booking.journey');
   const locale = useLocale();
   const currency = draft.currency ?? defaultCurrency(locale);
@@ -29,6 +40,14 @@ export function StepJourney({ draft, update, next }: { draft: BookingDraft; upda
     if (!(draft.passengers >= 1 && draft.passengers <= 60)) e.passengers = t('errors.passengers');
     return e;
   }
+
+  const autoSent = useRef(false);
+  useEffect(() => {
+    if (autoSubmit && !autoSent.current) {
+      autoSent.current = true;
+      void submit();
+    }
+  }, [autoSubmit]);
 
   async function submit() {
     const e = validate();
@@ -102,7 +121,7 @@ export function StepJourney({ draft, update, next }: { draft: BookingDraft; upda
         <legend className="mb-1.5 block text-sm font-medium text-text">{t('currency')}</legend>
         <div className="inline-flex rounded-control border border-border p-1">
           {CURRENCIES.map((c) => (
-            <label key={c} className={`cursor-pointer rounded-control px-4 py-2 text-sm ${currency === c ? 'bg-brand-black text-on-dark' : 'text-text'}`}>
+            <label key={c} className={`cursor-pointer rounded-control px-4 py-2 text-sm ${currency === c ? 'bg-site-dark text-on-dark' : 'text-text'}`}>
               <input type="radio" name="currency" value={c} className="sr-only" checked={currency === c} onChange={() => update({ currency: c, quote: undefined, quoteId: undefined })} />
               {c}
             </label>
