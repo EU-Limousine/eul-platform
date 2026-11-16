@@ -40,7 +40,7 @@ export function FleetGrid({ categories, locale, variant }: { categories: PublicC
                   <span className="inline-flex items-center gap-1.5"><Users size={15} aria-hidden /> {t('seats', { count: c.maxPassengers })}</span>
                   {c.luggageNote && <span className="inline-flex items-center gap-1.5"><Luggage size={15} aria-hidden /> {c.luggageNote}</span>}
                 </p>
-                {c.fromPriceMinor !== null && c.currency && (
+                {c.fromPriceMinor != null && c.currency && (
                   <p className="mt-3 text-sm text-text">
                     {t('from')} <span className="font-semibold tabular-nums">{formatFrom(c.fromPriceMinor, c.currency, locale)}</span>
                   </p>
