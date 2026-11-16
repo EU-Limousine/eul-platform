@@ -13,6 +13,12 @@ export interface Env {
   /** Public URL of the website (payment return page). */
   WEBSITE_URL: string;
   PAYMENT_PROVIDER: string;
+  /**
+   * Pre-launch only: allows the fake payment provider and Turnstile's test key in production,
+   * so the live site can be tested before the payment provider (D-01) is chosen.
+   * MUST be removed before real customers book (go-live checklist).
+   */
+  PRELAUNCH_MODE: boolean;
   /** Signs fake-provider webhooks. Dev/test only. */
   FAKE_PAYMENT_SECRET: string;
   TURNSTILE_SECRET: string;
@@ -52,11 +58,18 @@ export function validateEnv(raw: Record<string, unknown>): Env {
   const jwtSecret = str(raw, 'JWT_ACCESS_SECRET');
   if (jwtSecret.length < 32) throw new Error('JWT_ACCESS_SECRET must be at least 32 characters');
 
+  const prelaunch = str(raw, 'PRELAUNCH_MODE', 'false') === 'true';
+  const strict = prod && !prelaunch;
+
   const paymentProvider = str(raw, 'PAYMENT_PROVIDER', 'fake');
-  if (prod && paymentProvider === 'fake') throw new Error('FakePaymentProvider is not allowed in production (D-01)');
+  if (strict && paymentProvider === 'fake') throw new Error('FakePaymentProvider is not allowed in production (D-01)');
+  const fakeSecret = str(raw, 'FAKE_PAYMENT_SECRET', 'dev-only-fake-payment-secret');
+  if (prod && paymentProvider === 'fake' && fakeSecret === 'dev-only-fake-payment-secret') {
+    throw new Error('Set FAKE_PAYMENT_SECRET (from Secret Manager) when using the fake provider in production');
+  }
 
   const turnstileSecret = str(raw, 'TURNSTILE_SECRET');
-  if (prod && turnstileSecret === TURNSTILE_TEST_SECRET) throw new Error('Use a real TURNSTILE_SECRET in production');
+  if (strict && turnstileSecret === TURNSTILE_TEST_SECRET) throw new Error('Use a real TURNSTILE_SECRET in production');
 
   const mapsKey = str(raw, 'GOOGLE_MAPS_SERVER_KEY', '');
   if (prod && !mapsKey) throw new Error('GOOGLE_MAPS_SERVER_KEY is required in production');
@@ -79,7 +92,8 @@ export function validateEnv(raw: Record<string, unknown>): Env {
     API_PUBLIC_URL: str(raw, 'API_PUBLIC_URL', 'http://localhost:8080').replace(/\/$/, ''),
     WEBSITE_URL: str(raw, 'WEBSITE_URL', 'http://localhost:3000').replace(/\/$/, ''),
     PAYMENT_PROVIDER: paymentProvider,
-    FAKE_PAYMENT_SECRET: str(raw, 'FAKE_PAYMENT_SECRET', 'dev-only-fake-payment-secret'),
+    PRELAUNCH_MODE: prelaunch,
+    FAKE_PAYMENT_SECRET: fakeSecret,
     TURNSTILE_SECRET: turnstileSecret,
     GOOGLE_MAPS_SERVER_KEY: mapsKey,
     DEFAULT_CURRENCY: currency,

@@ -1,0 +1,17 @@
+**/node_modules
+**/dist
+**/.next
+**/.turbo
+**/coverage
+**/*.tsbuildinfo
+.git
+.github
+.env
+**/.env
+**/.env.*
+!**/.env.example
+designs
+docs
+apps/driver
+services
+*.log

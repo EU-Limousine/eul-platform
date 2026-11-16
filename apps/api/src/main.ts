@@ -36,6 +36,10 @@ async function bootstrap(): Promise<void> {
     SwaggerModule.setup('docs', app, document);
   }
 
+  if (config.get('PRELAUNCH_MODE', { infer: true })) {
+    app.get(Logger).warn('PRELAUNCH_MODE is ON: test payments and the test bot check are allowed. Turn it off before go-live.');
+  }
+
   await app.listen(config.get('PORT', { infer: true }), '0.0.0.0');
 }
 
