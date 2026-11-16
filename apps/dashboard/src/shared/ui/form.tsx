@@ -35,7 +35,7 @@ export function PrimaryButton({ children, ...props }: ButtonHTMLAttributes<HTMLB
     <button
       type="button"
       {...props}
-      className="inline-flex items-center gap-2 rounded-control bg-navy-900 px-4 py-2 text-sm font-medium text-on-dark disabled:opacity-50"
+      className="inline-flex items-center gap-2 rounded-control bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
     >
       {children}
     </button>
