@@ -134,7 +134,7 @@ test('on a phone-sized window the menu opens as a panel', async () => {
   await page.getByRole('button', { name: 'Open menu' }).click();
   const panel = page.getByRole('dialog');
   await expect(panel).toBeVisible();
-  await panel.getByRole('link', { name: 'Drivers' }).click();
+  await panel.getByRole('link', { name: 'Drivers', exact: true }).click(); // not "Spare drivers"
   await expect(page).toHaveURL(/\/drivers/);
   await expect(panel).toBeHidden(); // closes after navigating
   await page.setViewportSize({ width: 1280, height: 800 });
