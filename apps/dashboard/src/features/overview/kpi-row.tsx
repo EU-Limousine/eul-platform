@@ -16,7 +16,7 @@ export function KpiRow({ data }: { data: Overview }) {
   const otherCurrencies = (revenue?.last7d.slice(1) ?? []).map((m) => formatMoney(m.amountMinor, m.currency)).join(' · ');
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
       <KpiCard
         icon={CalendarCheck}
         label={t('overview.kpi.bookings')}

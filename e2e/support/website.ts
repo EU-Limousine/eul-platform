@@ -71,8 +71,10 @@ export async function bookUntilPayment(page: Page, input: BookingInput): Promise
 export async function payAndGetReference(page: Page): Promise<string> {
   await page.getByRole('button', { name: 'Pay', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Booking received' })).toBeVisible({ timeout: 30_000 });
+  // References are EUL- + 6 characters. textContent glues the next label on ("EUL-2WYV7ZPickup"),
+  // so match exactly 6 instead of "as many as possible".
   const body = (await page.locator('main').textContent()) ?? '';
-  const reference = /EUL-[A-Z0-9]{4,}/.exec(body)?.[0];
+  const reference = /EUL-[A-Z0-9]{6}/.exec(body)?.[0];
   expect(reference, 'booking reference on the confirmation page').toBeTruthy();
   return reference as string;
 }

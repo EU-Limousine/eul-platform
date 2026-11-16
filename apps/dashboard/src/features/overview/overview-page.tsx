@@ -15,7 +15,7 @@ import { StatusDonut } from './status-donut';
 function OverviewSkeleton() {
   return (
     <div className="space-y-6" aria-busy>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
         {Array.from({ length: 5 }, (_, i) => (
           <Skeleton key={i} className="h-28 rounded-xl" />
         ))}
