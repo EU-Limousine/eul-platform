@@ -18,8 +18,8 @@ export interface Env {
   TURNSTILE_SECRET: string;
   /** Server-side key for the Google Routes API. Empty = straight-line estimate (dev only). */
   GOOGLE_MAPS_SERVER_KEY: string;
-  /** D-05 open: currency quotes are made in. */
-  DEFAULT_CURRENCY: 'DKK' | 'EUR';
+  /** Currency used when the customer does not choose one (DKK, EUR or USD). */
+  DEFAULT_CURRENCY: 'DKK' | 'EUR' | 'USD';
   QUOTE_TTL_MINUTES: number;
   CHECKOUT_TTL_MINUTES: number;
   /** D-07 open: shortest time between booking and pickup. */
@@ -62,7 +62,7 @@ export function validateEnv(raw: Record<string, unknown>): Env {
   if (prod && !mapsKey) throw new Error('GOOGLE_MAPS_SERVER_KEY is required in production');
 
   const currency = str(raw, 'DEFAULT_CURRENCY', 'EUR');
-  if (currency !== 'DKK' && currency !== 'EUR') throw new Error('DEFAULT_CURRENCY must be DKK or EUR');
+  if (currency !== 'DKK' && currency !== 'EUR' && currency !== 'USD') throw new Error('DEFAULT_CURRENCY must be DKK, EUR or USD');
 
   return {
     NODE_ENV: nodeEnv,

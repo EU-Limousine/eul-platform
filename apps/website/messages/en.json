@@ -44,9 +44,10 @@
         "date": "Choose a date.",
         "time": "Choose a time.",
         "passengers": "Enter 1 to 60 passengers.",
-        "noVehicles": "No vehicle fits this number of passengers. Please contact us.",
+        "noVehicles": "No vehicle class is available for this number of passengers in this currency. Try another currency or contact us.",
         "generic": "We could not get prices. Please try again."
-      }
+      },
+      "currency": "Currency"
     },
     "vehicle": {
       "title": "Choose your vehicle",
@@ -93,7 +94,7 @@
       "flight": "Flight",
       "total": "Total",
       "howItWorks": "You pay the full price now. You will get an email straight away, and a second email with your chauffeur's name, phone and vehicle once a chauffeur is assigned.",
-      "accept": "I accept the booking terms and cancellation policy.",
+      "accept": "I accept the <terms>booking terms</terms> and the <cancellation>cancellation policy</cancellation>.",
       "pay": "Pay {amount}",
       "redirecting": "Opening payment…",
       "back": "Back",
@@ -123,5 +124,257 @@
       "notFound": "We could not find this booking.",
       "startBooking": "Start a new booking"
     }
+  },
+  "legal": {
+    "draftBanner": "DRAFT — not legally reviewed. Text in [square brackets] must be completed and the whole page checked by a lawyer before launch.",
+    "lastUpdated": "Last updated: [date]",
+    "nav": "Legal",
+    "titles": {
+      "terms": "Booking terms",
+      "cancellation": "Cancellation policy",
+      "privacy": "Privacy policy",
+      "cookies": "Cookie policy",
+      "company": "Company information"
+    },
+    "pages": {
+      "terms": {
+        "intro": "These terms apply when you book a ride with EU Limousine through our website.",
+        "sections": [
+          {
+            "h": "1. Who we are",
+            "p": [
+              "EU Limousine is operated by [Company legal name], CVR [CVR number], [Street, postcode, city], Denmark.",
+              "Contact: [email address] · [phone number]."
+            ]
+          },
+          {
+            "h": "2. Our service",
+            "p": [
+              "We provide pre-booked chauffeur transport with a professional driver, mainly in [service area, e.g. Copenhagen and Copenhagen Airport].",
+              "The vehicle class you book (for example Business Class) guarantees the class and number of seats, not a specific make or model."
+            ]
+          },
+          {
+            "h": "3. Booking and payment",
+            "p": [
+              "The price shown before payment is the fixed price for the trip as you booked it (route, time, vehicle class and passengers).",
+              "You pay the full price when you book, through [payment provider]. We do not store your card details.",
+              "After payment you receive an email that your booking has been received. When a chauffeur has been assigned, you receive a second email with the chauffeur's name, phone number and vehicle."
+            ]
+          },
+          {
+            "h": "4. What the price includes",
+            "p": [
+              "The price includes [VAT / tolls / bridge fees / parking — to be confirmed].",
+              "Extra stops, extra waiting time or route changes requested during the trip are [charged as follows / not possible — to be decided]."
+            ]
+          },
+          {
+            "h": "5. Changes to your booking",
+            "p": [
+              "To change the time, address or vehicle class, contact us at [email/phone] at least [X hours] before pickup. A change may change the price."
+            ]
+          },
+          {
+            "h": "6. Cancellation",
+            "p": [
+              "Our cancellation policy explains when you can cancel and what is refunded."
+            ]
+          },
+          {
+            "h": "7. Waiting time and no-show",
+            "p": [
+              "Your chauffeur waits [X minutes] free of charge at the pickup address, or [Y minutes] after landing for airport pickups.",
+              "If the passenger does not show up and cannot be reached within the waiting time, the booking counts as a no-show: [no-show policy]."
+            ]
+          },
+          {
+            "h": "8. Flight delays",
+            "p": [
+              "If you give us your flight number, we [follow the flight and adjust the pickup time to the actual landing time — to be confirmed]."
+            ]
+          },
+          {
+            "h": "9. Passengers and luggage",
+            "p": [
+              "Each vehicle class has a maximum number of passengers and luggage, shown when you book. The chauffeur may refuse more passengers or luggage than the vehicle can safely carry.",
+              "[Rules on child seats, pets, smoking, food and drink — to be decided.]"
+            ]
+          },
+          {
+            "h": "10. Our responsibility",
+            "p": [
+              "[Liability terms — to be written by a lawyer.]",
+              "We are not responsible for delays caused by circumstances outside our control, such as [accidents, severe weather, road closures]."
+            ]
+          },
+          {
+            "h": "11. Complaints",
+            "p": [
+              "Please send complaints to [email address]. We answer within [X working days].",
+              "[Consumer complaint body and process — to be confirmed by a lawyer.]"
+            ]
+          },
+          {
+            "h": "12. Law",
+            "p": [
+              "These terms are governed by Danish law. [Venue for disputes — to be confirmed.]"
+            ]
+          }
+        ]
+      },
+      "cancellation": {
+        "intro": "This policy explains how to cancel a booking and what is refunded. Refunds are always made by our staff; nothing is refunded automatically.",
+        "sections": [
+          {
+            "h": "How to cancel",
+            "p": [
+              "Contact us at [email/phone] with your booking reference (for example EUL-ABC234)."
+            ]
+          },
+          {
+            "h": "Refunds",
+            "p": [
+              "Cancelled more than [X hours] before pickup: [full refund].",
+              "Cancelled between [X] and [Y hours] before pickup: [refund amount or percentage].",
+              "Cancelled less than [Y hours] before pickup, or no-show: [refund rule]."
+            ]
+          },
+          {
+            "h": "How refunds are paid",
+            "p": [
+              "Refunds go back to the payment method you used, normally within [X days], depending on [payment provider] and your bank."
+            ]
+          },
+          {
+            "h": "If we cancel",
+            "p": [
+              "If we have to cancel your booking, you get a full refund. [Any further compensation — to be decided.]"
+            ]
+          }
+        ]
+      },
+      "privacy": {
+        "intro": "This policy explains which personal data we collect when you book with EU Limousine, why, and your rights under the EU General Data Protection Regulation (GDPR).",
+        "sections": [
+          {
+            "h": "Data controller",
+            "p": [
+              "[Company legal name], CVR [CVR number], [address]. Contact for privacy questions: [email address]."
+            ]
+          },
+          {
+            "h": "What we collect",
+            "p": [
+              "Booking details: pickup and drop-off addresses, date and time, number of passengers, flight number and notes if you give them.",
+              "Contact details: your name, email address and phone number, and the passenger's name and phone if you book for someone else.",
+              "Payment: the amount, status and a reference from our payment provider. We never receive or store your card details.",
+              "Technical data: your language choice and basic server logs needed to run and protect the website."
+            ]
+          },
+          {
+            "h": "Why we use it",
+            "p": [
+              "To carry out your booking, send you emails about it and let the chauffeur contact the passenger (contract, GDPR Art. 6(1)(b)).",
+              "To keep accounting records required by law (legal obligation, Art. 6(1)(c)).",
+              "To protect the website against abuse (legitimate interest, Art. 6(1)(f))."
+            ]
+          },
+          {
+            "h": "Who receives your data",
+            "p": [
+              "The chauffeur assigned to your ride: passenger name, phone number, addresses, time, flight number and notes.",
+              "Our payment provider: [name].",
+              "Our email provider: [name].",
+              "Our hosting provider: Google Cloud (servers in the EU, region europe-west1, Belgium).",
+              "[Any other processors — to be listed.] We do not sell your data."
+            ]
+          },
+          {
+            "h": "Transfers outside the EU",
+            "p": [
+              "[Whether any provider transfers data outside the EU/EEA, and the safeguards used — to be confirmed.]"
+            ]
+          },
+          {
+            "h": "How long we keep it",
+            "p": [
+              "Booking and accounting records: [5 years after the end of the financial year, as required by the Danish Bookkeeping Act — to be confirmed].",
+              "Other data: [retention period]."
+            ]
+          },
+          {
+            "h": "Your rights",
+            "p": [
+              "You can ask for access to your data, correction, deletion, restriction, data portability, and object to processing based on legitimate interest. Contact [email address].",
+              "You can complain to the Danish Data Protection Agency (Datatilsynet), www.datatilsynet.dk."
+            ]
+          },
+          {
+            "h": "Security",
+            "p": [
+              "Data is sent over encrypted connections (HTTPS). Access is limited to staff who need it, and changes are logged."
+            ]
+          }
+        ]
+      },
+      "cookies": {
+        "intro": "We keep cookies and similar storage to a minimum. We do not use advertising or tracking cookies.",
+        "sections": [
+          {
+            "h": "What we use",
+            "p": [
+              "NEXT_LOCALE (cookie): remembers your language choice. Kept for 1 year.",
+              "Booking in progress (session storage in your browser): keeps the details of a booking you are making, so a reload or language change does not lose them. Deleted when you close the tab or complete the booking.",
+              "Security check [Cloudflare Turnstile]: protects the booking form against automated abuse. [Confirm what it stores.]",
+              "The payment page is run by [payment provider] under its own cookie policy."
+            ]
+          },
+          {
+            "h": "Analytics",
+            "p": [
+              "We do not use analytics at the moment. If we add analytics, we will ask for your consent first."
+            ]
+          },
+          {
+            "h": "Managing cookies",
+            "p": [
+              "You can delete cookies in your browser settings. The website still works, but your language choice is forgotten."
+            ]
+          }
+        ]
+      },
+      "company": {
+        "intro": "Information about the company behind EU Limousine.",
+        "sections": [
+          {
+            "h": "Company",
+            "p": [
+              "[Company legal name]",
+              "CVR: [CVR number]",
+              "[Street], [postcode] [city], Denmark"
+            ]
+          },
+          {
+            "h": "Contact",
+            "p": [
+              "Email: [email address]",
+              "Phone: [phone number]"
+            ]
+          },
+          {
+            "h": "Licences",
+            "p": [
+              "[Passenger transport licence / permit numbers, if applicable — to be confirmed]"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "footer": {
+    "rights": "© {year} EU Limousine",
+    "contact": "[Company legal name] · CVR [number] · [email]",
+    "legalNote": "Legal pages are drafts"
   }
 }

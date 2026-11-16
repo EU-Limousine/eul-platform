@@ -49,6 +49,7 @@ enum BookingType {
 enum Currency {
   DKK
   EUR
+  USD
 }
 
 enum OfferStatus {

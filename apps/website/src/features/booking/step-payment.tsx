@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { isLocale } from '@eul/i18n';
+import { Link } from '@/i18n/navigation';
 import { BookingApiError, createCheckout } from './api';
 import { newIdempotencyKey, selectedOption, type BookingDraft } from './draft';
 import { formatPickup, formatPrice } from './format';
@@ -81,10 +82,14 @@ export function StepPayment({ draft, update, back, restart }: { draft: BookingDr
 
       <p className="text-sm text-text-muted">{t('howItWorks')}</p>
 
-      {/* TODO(content): link to terms and cancellation policy (D-07) once written. */}
       <label className="flex items-start gap-2 text-sm text-text">
         <input type="checkbox" className="mt-0.5" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />
-        {t('accept')}
+        <span>
+          {t.rich('accept', {
+            terms: (chunks) => <Link href="/legal/terms" target="_blank" className="underline underline-offset-2">{chunks}</Link>,
+            cancellation: (chunks) => <Link href="/legal/cancellation" target="_blank" className="underline underline-offset-2">{chunks}</Link>,
+          })}
+        </span>
       </label>
 
       {error && (

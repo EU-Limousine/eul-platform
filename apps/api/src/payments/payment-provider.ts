@@ -5,7 +5,7 @@
  */
 export interface Money {
   amountMinor: number;
-  currency: 'DKK' | 'EUR';
+  currency: 'DKK' | 'EUR' | 'USD';
 }
 
 export type ProviderPaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED' | 'REFUNDED' | 'PARTIALLY_REFUNDED';

@@ -43,9 +43,10 @@
         "date": "Vælg en dato.",
         "time": "Vælg et tidspunkt.",
         "passengers": "Angiv 1 til 60 passagerer.",
-        "noVehicles": "Ingen bil passer til dette antal passagerer. Kontakt os venligst.",
+        "noVehicles": "Ingen biltype er tilgængelig for dette antal passagerer i denne valuta. Prøv en anden valuta eller kontakt os.",
         "generic": "Vi kunne ikke hente priser. Prøv igen."
-      }
+      },
+      "currency": "Valuta"
     },
     "vehicle": {
       "title": "Vælg din bil",
@@ -92,7 +93,7 @@
       "flight": "Fly",
       "total": "I alt",
       "howItWorks": "Du betaler hele beløbet nu. Du får straks en e-mail, og en ny e-mail med chaufførens navn, telefon og bil, når en chauffør er tildelt.",
-      "accept": "Jeg accepterer bookingbetingelserne og afbestillingsreglerne.",
+      "accept": "Jeg accepterer <terms>bookingbetingelserne</terms> og <cancellation>afbestillingsreglerne</cancellation>.",
       "pay": "Betal {amount}",
       "redirecting": "Åbner betaling…",
       "back": "Tilbage",
@@ -122,5 +123,19 @@
       "notFound": "Vi kunne ikke finde denne booking.",
       "startBooking": "Start en ny booking"
     }
+  },
+  "legal": {
+    "titles": {
+      "terms": "Bookingbetingelser",
+      "cancellation": "Afbestillingsregler",
+      "privacy": "Privatlivspolitik",
+      "cookies": "Cookiepolitik",
+      "company": "Virksomhedsoplysninger"
+    },
+    "nav": "Juridisk",
+    "draftBanner": "UDKAST — ikke juridisk gennemgået. Tekst i [firkantede parenteser] skal udfyldes, og hele siden skal gennemgås af en advokat før lancering. Indholdet findes kun på engelsk indtil videre."
+  },
+  "footer": {
+    "legalNote": "Juridiske sider er udkast"
   }
 }

@@ -24,7 +24,18 @@ export interface Details {
   notes: string;
 }
 
+export const CURRENCIES = ['DKK', 'EUR', 'USD'] as const;
+export type BookingCurrency = (typeof CURRENCIES)[number];
+
+/** Danish visitors see DKK first; everyone else the configured default. The customer can switch. */
+export function defaultCurrency(locale: string): BookingCurrency {
+  if (locale === 'da') return 'DKK';
+  const configured = process.env.NEXT_PUBLIC_DEFAULT_CURRENCY;
+  return (CURRENCIES as readonly string[]).includes(configured ?? '') ? (configured as BookingCurrency) : 'EUR';
+}
+
 export interface BookingDraft {
+  currency?: BookingCurrency;
   pickup?: Place;
   dropoff?: Place;
   date?: string; // YYYY-MM-DD, Copenhagen

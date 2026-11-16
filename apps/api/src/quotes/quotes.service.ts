@@ -40,7 +40,8 @@ export class QuotesService {
     // TODO(decision): service area limits (Copenhagen + CPH first) are not defined yet.
 
     const route = await this.routes.route(dto.pickup, dto.dropoff);
-    const currency = Currency[this.config.get('DEFAULT_CURRENCY', { infer: true })];
+    // Only classes with an active price in this currency are offered — never converted (no exchange rates).
+    const currency = dto.currency ?? Currency[this.config.get('DEFAULT_CURRENCY', { infer: true })];
     const ttlMs = this.config.get('QUOTE_TTL_MINUTES', { infer: true }) * 60_000;
     const expiresAt = new Date(Date.now() + ttlMs);
 

@@ -206,7 +206,7 @@
   },
   "pricing": {
     "title": "Pricing",
-    "subtitle": "Price = base fare + per km + per minute, never below the minimum fare. Changes affect new quotes only.",
+    "subtitle": "Price = base fare + per km + per minute, never below the minimum fare. One price per class and currency (DKK, EUR, USD). Changes affect new quotes only.",
     "empty": "No pricing rules yet.",
     "class": "Class",
     "status": "Status",
@@ -224,7 +224,12 @@
     "distancePart": "Distance",
     "timePart": "Time",
     "total": "Total",
-    "minimumApplied": "minimum fare applied"
+    "minimumApplied": "minimum fare applied",
+    "add": "Add price",
+    "addTitle": "Add a price",
+    "addHint": "Set a price for a vehicle class in DKK, EUR or USD. Customers only see classes priced in the currency they choose. There is no automatic currency conversion.",
+    "currency": "Currency",
+    "alreadySet": "already set"
   },
   "spares": {
     "title": "Spare drivers",
