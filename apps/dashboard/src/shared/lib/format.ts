@@ -33,7 +33,21 @@ export function nextDate(date: string): string {
   return d.toISOString().slice(0, 10);
 }
 
-/** Minor units → "€120.00" / "DKK 1,200.00". Display only; never do maths on the result. */
+/** The day before a YYYY-MM-DD date. */
+export function previousDate(date: string): string {
+  const d = new Date(`${date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
+/** "2026-11-20" → "Friday 20 November 2026" (a calendar date, no time zone shift). */
+export function formatLongDate(date: string): string {
+  return new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(
+    new Date(`${date}T00:00:00Z`),
+  );
+}
+
+/** Minor units →"€120.00" / "DKK 1,200.00". Display only; never do maths on the result. */
 export function formatMoney(amountMinor: number, currency: string): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency }).format(amountMinor / 100);
 }
