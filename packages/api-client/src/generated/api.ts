@@ -227,6 +227,34 @@ export interface UpdateVehicleDto {
   notes?: string;
 }
 
+export type Currency = typeof Currency[keyof typeof Currency];
+
+
+export const Currency = {
+  DKK: 'DKK',
+  EUR: 'EUR',
+  USD: 'USD',
+} as const;
+
+export interface PublicCategoryDto {
+  id: string;
+  code: string;
+  name: string;
+  /** @nullable */
+  exampleModel?: string | null;
+  maxPassengers: number;
+  /** @nullable */
+  luggageNote?: string | null;
+  /** @nullable */
+  description?: string | null;
+  /**
+     * Minimum fare in minor units — only when the price is CONFIRMED
+     * @nullable
+     */
+  fromPriceMinor?: number | null;
+  currency?: Currency | null;
+}
+
 export type DriverType = typeof DriverType[keyof typeof DriverType];
 
 
@@ -293,14 +321,6 @@ export interface UpdateDriverDto {
   isActive?: boolean;
 }
 
-export type Currency = typeof Currency[keyof typeof Currency];
-
-
-export const Currency = {
-  DKK: 'DKK',
-  EUR: 'EUR',
-} as const;
-
 export interface PricingRuleDto {
   id: string;
   categoryId: string;
@@ -365,6 +385,8 @@ export interface CreateQuoteDto {
   /** ISO 8601 with time zone (UTC preferred) */
   pickupAt: string;
   passengers: number;
+  /** Defaults to DEFAULT_CURRENCY */
+  currency?: Currency;
 }
 
 export interface QuoteCategoryDto {
@@ -674,6 +696,111 @@ export interface SetSparesDto {
   driverIds: string[];
 }
 
+export interface PlaceSuggestionDto {
+  placeId: string;
+  mainText: string;
+  secondaryText: string;
+}
+
+export interface PlaceDetailsDto {
+  placeId: string;
+  /** Full address to show and store */
+  address: string;
+  lat: number;
+  lng: number;
+}
+
+export interface DayCountDto {
+  /** Copenhagen date */
+  date: string;
+  created: number;
+  completed: number;
+}
+
+export interface BookingKpisDto {
+  /** Bookings created in the last 7 days */
+  last7d: number;
+  /** Bookings created in the 7 days before that */
+  prev7d: number;
+  /** Pickups today (Copenhagen) */
+  pickupsToday: number;
+  needsAttention: number;
+  /** Paid, no driver yet */
+  unassigned: number;
+  series: DayCountDto[];
+}
+
+export interface CustomerKpisDto {
+  total: number;
+  new7d: number;
+  prev7d: number;
+}
+
+export interface DriverKpisDto {
+  active: number;
+  /** On duty and not on a trip */
+  available: number;
+  onTrip: number;
+  offDuty: number;
+  inactive: number;
+}
+
+export interface VehicleKpisDto {
+  total: number;
+  /** Active and not on a trip */
+  available: number;
+  onTrip: number;
+  inactive: number;
+}
+
+export interface MoneyDto {
+  currency: Currency;
+  amountMinor: number;
+}
+
+export interface RevenueKpisDto {
+  last7d: MoneyDto[];
+  prev7d: MoneyDto[];
+}
+
+export interface RecentBookingDto {
+  id: string;
+  reference: string;
+  customerName: string;
+  categoryName: string;
+  /** @nullable */
+  driverName?: string | null;
+  pickupAt: string;
+  status: BookingStatus;
+}
+
+export interface ActivityDto {
+  id: string;
+  action: string;
+  entityType: string;
+  /** @nullable */
+  entityId?: string | null;
+  /** @nullable */
+  actorName?: string | null;
+  at: string;
+}
+
+export interface OverviewDto {
+  generatedAt: string;
+  bookings: BookingKpisDto;
+  /** @nullable */
+  customers?: CustomerKpisDto | null;
+  /** @nullable */
+  drivers?: DriverKpisDto | null;
+  /** @nullable */
+  vehicles?: VehicleKpisDto | null;
+  /** @nullable */
+  revenue?: RevenueKpisDto | null;
+  recentBookings: RecentBookingDto[];
+  /** @nullable */
+  activity?: ActivityDto[] | null;
+}
+
 export type HealthCheck200Status = typeof HealthCheck200Status[keyof typeof HealthCheck200Status];
 
 
@@ -805,6 +932,10 @@ export type VehiclesListVehiclesParams = {
   search?: string;
 };
 
+export type PublicCategoriesListParams = {
+  currency?: Currency;
+};
+
 export type DriversListParams = {
   /** @minimum 1 */
   page?: Object;
@@ -859,6 +990,45 @@ export type SparesGetParams = {
   /** Copenhagen local date */
   date: string;
 };
+
+export type PlacesAutocompleteParams = {
+  /** @minLength 2 */
+  q: string;
+  /** Session token: one per address field, reused for its details call (cheaper billing) */
+  session?: string;
+  lang?: PlacesAutocompleteLang;
+};
+
+export type PlacesAutocompleteLang = typeof PlacesAutocompleteLang[keyof typeof PlacesAutocompleteLang];
+
+
+export const PlacesAutocompleteLang = {
+  en: 'en',
+  da: 'da',
+  de: 'de',
+  fr: 'fr',
+  es: 'es',
+  it: 'it',
+  rm: 'rm',
+} as const;
+
+export type PlacesDetailsParams = {
+  session?: string;
+  lang?: PlacesDetailsLang;
+};
+
+export type PlacesDetailsLang = typeof PlacesDetailsLang[keyof typeof PlacesDetailsLang];
+
+
+export const PlacesDetailsLang = {
+  en: 'en',
+  da: 'da',
+  de: 'de',
+  fr: 'fr',
+  es: 'es',
+  it: 'it',
+  rm: 'rm',
+} as const;
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -2364,6 +2534,81 @@ export function useVehiclesUpdateVehicle<TData = Awaited<ReturnType<typeof vehic
 
 
 
+
+export const getPublicCategoriesListUrl = (params?: PublicCategoriesListParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/public/vehicle-categories?${stringifiedParams}` : `/public/vehicle-categories`
+}
+
+export const publicCategoriesList = async (params?: PublicCategoriesListParams, options?: Parameters<typeof http>[1]): Promise<PublicCategoryDto[]> => {
+
+  return http<PublicCategoryDto[]>(getPublicCategoriesListUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getPublicCategoriesListMutationKey = () => ['publicCategoriesList'] as const;
+
+export const getPublicCategoriesListMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publicCategoriesList>>, TError,PublicCategoriesListMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof publicCategoriesList>>, TError,PublicCategoriesListMutationVariables, TContext> => {
+
+const mutationKey = getPublicCategoriesListMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof publicCategoriesList>>, PublicCategoriesListMutationVariables> = (props) => {
+          const {params} = props ?? {};
+
+          return  publicCategoriesList(params,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PublicCategoriesListMutationResult = NonNullable<Awaited<ReturnType<typeof publicCategoriesList>>>
+
+    export type PublicCategoriesListMutationError = unknown
+    export type PublicCategoriesListMutationVariables = {params?: PublicCategoriesListParams}
+
+    export const usePublicCategoriesList = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publicCategoriesList>>, TError,PublicCategoriesListMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof publicCategoriesList>>,
+        TError,
+        PublicCategoriesListMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPublicCategoriesListMutationOptions(options), queryClient);
+    }
 
 export const getDriversListUrl = (params?: DriversListParams,) => {
   const normalizedParams = new URLSearchParams();
@@ -3885,3 +4130,229 @@ export function useSparesSet<TData = Awaited<ReturnType<typeof sparesSet>>, TErr
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+
+
+
+
+
+
+export const getPlacesAutocompleteUrl = (params: PlacesAutocompleteParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/public/places/autocomplete?${stringifiedParams}` : `/public/places/autocomplete`
+}
+
+export const placesAutocomplete = async (params: PlacesAutocompleteParams, options?: Parameters<typeof http>[1]): Promise<PlaceSuggestionDto[]> => {
+
+  return http<PlaceSuggestionDto[]>(getPlacesAutocompleteUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getPlacesAutocompleteMutationKey = () => ['placesAutocomplete'] as const;
+
+export const getPlacesAutocompleteMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof placesAutocomplete>>, TError,PlacesAutocompleteMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof placesAutocomplete>>, TError,PlacesAutocompleteMutationVariables, TContext> => {
+
+const mutationKey = getPlacesAutocompleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof placesAutocomplete>>, PlacesAutocompleteMutationVariables> = (props) => {
+          const {params} = props ?? {};
+
+          return  placesAutocomplete(params,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PlacesAutocompleteMutationResult = NonNullable<Awaited<ReturnType<typeof placesAutocomplete>>>
+
+    export type PlacesAutocompleteMutationError = unknown
+    export type PlacesAutocompleteMutationVariables = {params: PlacesAutocompleteParams}
+
+    export const usePlacesAutocomplete = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof placesAutocomplete>>, TError,PlacesAutocompleteMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof placesAutocomplete>>,
+        TError,
+        PlacesAutocompleteMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPlacesAutocompleteMutationOptions(options), queryClient);
+    }
+
+export const getPlacesDetailsUrl = (placeId: string,
+    params?: PlacesDetailsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/public/places/${placeId}?${stringifiedParams}` : `/public/places/${placeId}`
+}
+
+export const placesDetails = async (placeId: string,
+    params?: PlacesDetailsParams, options?: Parameters<typeof http>[1]): Promise<PlaceDetailsDto> => {
+
+  return http<PlaceDetailsDto>(getPlacesDetailsUrl(placeId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getPlacesDetailsMutationKey = () => ['placesDetails'] as const;
+
+export const getPlacesDetailsMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof placesDetails>>, TError,PlacesDetailsMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof placesDetails>>, TError,PlacesDetailsMutationVariables, TContext> => {
+
+const mutationKey = getPlacesDetailsMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof placesDetails>>, PlacesDetailsMutationVariables> = (props) => {
+          const {placeId,params} = props ?? {};
+
+          return  placesDetails(placeId,params,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PlacesDetailsMutationResult = NonNullable<Awaited<ReturnType<typeof placesDetails>>>
+
+    export type PlacesDetailsMutationError = unknown
+    export type PlacesDetailsMutationVariables = {placeId: string;params?: PlacesDetailsParams}
+
+    export const usePlacesDetails = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof placesDetails>>, TError,PlacesDetailsMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof placesDetails>>,
+        TError,
+        PlacesDetailsMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPlacesDetailsMutationOptions(options), queryClient);
+    }
+
+export const getOverviewGetUrl = () => {
+
+
+
+
+  return `/dashboard/overview`
+}
+
+export const overviewGet = async ( options?: Parameters<typeof http>[1]): Promise<OverviewDto> => {
+
+  return http<OverviewDto>(getOverviewGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getOverviewGetMutationKey = () => ['overviewGet'] as const;
+
+export const getOverviewGetMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof overviewGet>>, TError,void, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof overviewGet>>, TError,void, TContext> => {
+
+const mutationKey = getOverviewGetMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof overviewGet>>, void> = () => {
+
+
+          return  overviewGet(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OverviewGetMutationResult = NonNullable<Awaited<ReturnType<typeof overviewGet>>>
+
+    export type OverviewGetMutationError = unknown
+
+
+    export const useOverviewGet = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof overviewGet>>, TError,void, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof overviewGet>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getOverviewGetMutationOptions(options), queryClient);
+    }
