@@ -101,8 +101,6 @@ export interface TokenResponseDto {
   user: MeDto;
 }
 
-export interface Object { [key: string]: unknown }
-
 export interface UserDto {
   id: string;
   email: string;
@@ -909,22 +907,22 @@ export type HealthCheck503 = {
 
 export type UsersListParams = {
   /** @minimum 1 */
-  page?: Object;
+  page?: number;
   /**
    * @minimum 1
    * @maximum 100
    */
-  pageSize?: Object;
+  pageSize?: number;
 };
 
 export type VehiclesListVehiclesParams = {
   /** @minimum 1 */
-  page?: Object;
+  page?: number;
   /**
    * @minimum 1
    * @maximum 100
    */
-  pageSize?: Object;
+  pageSize?: number;
   categoryId?: string;
   /** Filter by active state */
   isActive?: boolean;
@@ -938,12 +936,12 @@ export type PublicCategoriesListParams = {
 
 export type DriversListParams = {
   /** @minimum 1 */
-  page?: Object;
+  page?: number;
   /**
    * @minimum 1
    * @maximum 100
    */
-  pageSize?: Object;
+  pageSize?: number;
   isActive?: boolean;
   /** Search name, email or phone */
   search?: string;
@@ -958,12 +956,12 @@ export type PricingPreviewParams = {
 
 export type BookingsListParams = {
   /** @minimum 1 */
-  page?: Object;
+  page?: number;
   /**
    * @minimum 1
    * @maximum 100
    */
-  pageSize?: Object;
+  pageSize?: number;
   /** Comma-separated statuses, e.g. NEW,NEEDS_ATTENTION */
   status?: string;
   type?: BookingType;
