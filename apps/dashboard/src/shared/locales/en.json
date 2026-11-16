@@ -23,10 +23,122 @@
   },
   "common": {
     "notBuilt": "This screen is not built yet.",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "loadError": "Could not load this. Please try again.",
+    "saveError": "Could not save. Please try again.",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "close": "Close",
+    "refreshing": "Refreshing…",
+    "pagination": "Pages",
+    "pageOf": "Page {{page}} of {{pages}} · {{total}} total",
+    "previous": "Previous",
+    "next": "Next"
   },
   "overview": {
     "title": "Overview",
     "welcome": "Welcome, {{name}}"
+  },
+  "status": {
+    "NEW": "New",
+    "PENDING_DISPATCH": "Pending dispatch",
+    "DRIVERS_NOTIFIED": "Drivers notified",
+    "ASSIGNED": "Assigned",
+    "DRIVER_EN_ROUTE": "En route",
+    "ARRIVED": "Arrived",
+    "IN_JOURNEY": "In journey",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled",
+    "NEEDS_ATTENTION": "Needs attention"
+  },
+  "payment": {
+    "PENDING": "Pending",
+    "PAID": "Paid",
+    "FAILED": "Failed",
+    "CANCELLED": "Cancelled",
+    "REFUNDED": "Refunded",
+    "PARTIALLY_REFUNDED": "Partly refunded"
+  },
+  "bookings": {
+    "title": "Bookings",
+    "subtitle": "All paid bookings, soonest pickup first",
+    "autoRefresh": "Updates automatically",
+    "empty": "No bookings match these filters.",
+    "sameDay": "Same day",
+    "passengers_one": "{{count}} passenger",
+    "passengers_other": "{{count}} passengers",
+    "backToList": "All bookings",
+    "tabs": {
+      "all": "All",
+      "attention": "Needs attention",
+      "unassigned": "Unassigned",
+      "assigned": "Assigned",
+      "active": "On the road",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "filters": {
+      "status": "Filter by status",
+      "search": "Search bookings",
+      "searchPlaceholder": "Reference, customer name or email",
+      "from": "Pickup from",
+      "to": "Pickup to"
+    },
+    "col": {
+      "pickup": "Pickup",
+      "reference": "Reference",
+      "route": "Route",
+      "class": "Class",
+      "customer": "Customer",
+      "driver": "Chauffeur",
+      "price": "Price",
+      "status": "Status"
+    }
+  },
+  "detail": {
+    "trip": "Trip",
+    "pickupTime": "Pickup",
+    "from": "From",
+    "to": "To",
+    "class": "Vehicle class",
+    "passengers": "Passengers",
+    "flight": "Flight",
+    "notes": "Notes",
+    "chauffeur": "Chauffeur",
+    "driver": "Name",
+    "phone": "Phone",
+    "vehicle": "Vehicle",
+    "assignedBy": "Assigned",
+    "dispatcher": "Dispatcher",
+    "acceptedByDriver": "Accepted by driver",
+    "noDriver": "No chauffeur assigned yet.",
+    "customer": "Customer",
+    "name": "Name",
+    "email": "Email",
+    "passenger": "Passenger",
+    "language": "Language",
+    "payment": "Payment",
+    "price": "Price",
+    "paymentStatus": "Status",
+    "provider": "Provider",
+    "history": "History",
+    "system": "System"
+  },
+  "assign": {
+    "button": "Assign chauffeur",
+    "title": "Assign chauffeur",
+    "description": "Booking {{reference}}. Spare chauffeurs for this date are listed first.",
+    "chooseDriver": "Choose a chauffeur",
+    "noDrivers": "No active chauffeurs. Add one under Drivers.",
+    "spare": "Spare",
+    "onDuty": "On duty",
+    "tripsToday_one": "{{count}} trip that day",
+    "tripsToday_other": "{{count}} trips that day",
+    "noVehicle": "No vehicle",
+    "tooSmall": "Vehicle has fewer seats than passengers",
+    "otherCategory": "Vehicle is in a different class than booked",
+    "confirm": "Assign",
+    "assigning": "Assigning…",
+    "conflict": "This ride is no longer available. It was assigned or changed by someone else."
   }
 }
