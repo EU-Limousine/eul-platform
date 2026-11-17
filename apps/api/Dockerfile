@@ -1,16 +1,20 @@
-# Build from the repo root:  docker build -f apps/api/Dockerfile -t eul-api .
+# Backend image: API + worker + migration/seed jobs (one image, different start commands).
+# Build from the repo root:  docker build -f apps/api/Dockerfile -t backend .
+#   API:     node apps/api/dist/main.js            (default)
+#   Worker:  node apps/worker/dist/main.js
+#   Jobs:    npm run db:deploy  /  npm run db:seed
 FROM node:22-slim AS base
 WORKDIR /app
 
 FROM base AS prune
 COPY . .
-RUN npx --yes turbo@^2 prune @eul/api --docker
+RUN npx --yes turbo@^2 prune @eul/api @eul/worker --docker
 
 FROM base AS build
 COPY --from=prune /app/out/json/ .
 RUN npm ci
 COPY --from=prune /app/out/full/ .
-RUN npx turbo run build --filter=@eul/api
+RUN npx turbo run build --filter=@eul/api --filter=@eul/worker
 
 FROM base AS run
 ENV NODE_ENV=production PORT=8080

@@ -40,7 +40,7 @@ export function BookingDetailPage({ bookingId }: { bookingId: string }) {
                 <button
                   type="button"
                   onClick={() => setAssignOpen(true)}
-                  className="inline-flex items-center gap-2 rounded-control bg-navy-900 px-4 py-2 text-sm font-medium text-on-dark"
+                  className="inline-flex items-center gap-2 rounded-control bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
                 >
                   <UserPlus size={16} aria-hidden /> {t('assign.button')}
                 </button>

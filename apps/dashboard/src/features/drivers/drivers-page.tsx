@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +35,16 @@ export function DriversPage({ search }: { search: ListSearch }) {
     setEditing(driver);
     setDialogOpen(true);
   };
+
+  // ?new=true (quick access, command menu) opens the add dialog once, then leaves the URL clean.
+  useEffect(() => {
+    if (!search.new) return;
+    if (canCreate) {
+      setEditing(undefined);
+      setDialogOpen(true);
+    }
+    void navigate({ to: '/drivers', search: (prev: ListSearch) => ({ ...prev, new: undefined }), replace: true });
+  }, [search.new, canCreate, navigate]);
 
   return (
     <section className="space-y-5">

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { TIME_ZONE } from '@eul/i18n';
-import { useAuthStore } from '@/features/auth/auth-store';
-import { logout } from '@/features/auth/session';
+import { Button } from '@/shared/ui/shadcn/button';
+import { ThemeToggle } from '@/shared/ui/theme-toggle';
+import { AlertsBell } from './alerts-bell';
+import { CommandMenu } from './command-menu';
+import { useShell } from './shell-store';
+import { UserMenu } from './user-menu';
 
 // Time zone name (CET/CEST) is derived by Intl, never hard-coded.
 const clockFormat = new Intl.DateTimeFormat('en-GB', {
@@ -25,29 +28,28 @@ function useClock(): string {
 
 export function Topbar() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const user = useAuthStore((s) => s.user);
+  const { toggleCollapsed, setMobileOpen } = useShell();
   const clock = useClock();
 
-  async function onLogout() {
-    await logout();
-    await navigate({ to: '/login' });
-  }
-
   return (
-    <header className="flex h-[var(--topbar-height)] items-center justify-end gap-6 bg-navy-950 px-6 text-on-dark">
-      <span className="tabular-nums text-sm text-on-dark-muted" aria-hidden>
+    <header className="sticky top-0 z-20 flex h-[var(--topbar-height)] shrink-0 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur md:px-6">
+      <Button variant="ghost" size="icon" onClick={() => setMobileOpen(true)} aria-label={t('nav.openMenu')} className="lg:hidden">
+        <Menu aria-hidden />
+      </Button>
+      <Button variant="ghost" size="icon" onClick={toggleCollapsed} aria-label={t('nav.collapse')} className="hidden lg:inline-flex">
+        <Menu aria-hidden />
+      </Button>
+
+      <div className="min-w-0 flex-1">
+        <CommandMenu />
+      </div>
+
+      <span className="hidden text-sm text-muted-foreground tabular-nums md:inline" aria-hidden>
         {clock}
       </span>
-      <span className="text-sm">{user?.name}</span>
-      <button
-        type="button"
-        onClick={onLogout}
-        aria-label={t('nav.logout')}
-        className="rounded-control p-2 text-on-dark-muted hover:bg-navy-700 hover:text-on-dark"
-      >
-        <LogOut size={18} aria-hidden />
-      </button>
+      <ThemeToggle />
+      <AlertsBell />
+      <UserMenu />
     </header>
   );
 }

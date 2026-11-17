@@ -1,17 +1,20 @@
 import { Outlet } from '@tanstack/react-router';
+import { TooltipProvider } from '@/shared/ui/shadcn/tooltip';
 import { Sidebar } from './sidebar';
 import { Topbar } from './topbar';
 
 export function AppLayout() {
   return (
-    <div className="flex h-full">
-      <Sidebar />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar />
-        <main className="flex-1 overflow-auto p-6">
-          <Outlet />
-        </main>
+    <TooltipProvider delayDuration={200}>
+      <div className="flex h-full bg-background">
+        <Sidebar />
+        <div className="flex min-w-0 flex-1 flex-col overflow-auto">
+          <Topbar />
+          <main className="flex-1 p-4 md:p-6">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

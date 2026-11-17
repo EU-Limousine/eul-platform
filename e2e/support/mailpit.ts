@@ -1,0 +1,21 @@
+import { expect, type APIRequestContext } from '@playwright/test';
+import { URLS } from './env';
+
+interface MailpitMessage {
+  Subject: string;
+  To: { Address: string }[];
+}
+
+/** Waits (up to 20 s) for an email whose subject contains all the given parts. */
+export async function expectEmail(request: APIRequestContext, ...subjectParts: string[]): Promise<void> {
+  await expect
+    .poll(
+      async () => {
+        const res = await request.get(`${URLS.mailpit}/api/v1/messages?limit=100`);
+        const { messages } = (await res.json()) as { messages: MailpitMessage[] };
+        return messages.some((m) => subjectParts.every((p) => m.Subject.toLowerCase().includes(p.toLowerCase())));
+      },
+      { timeout: 20_000, message: `email with subject containing: ${subjectParts.join(' + ')}` },
+    )
+    .toBe(true);
+}

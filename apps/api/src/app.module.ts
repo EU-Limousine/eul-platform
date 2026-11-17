@@ -17,6 +17,8 @@ import { QuotesModule } from './quotes/quotes.module';
 import { CheckoutsModule } from './checkouts/checkouts.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { SparesModule } from './dispatch/spares';
+import { PlacesModule } from './places/places';
+import { OverviewModule } from './reports/overview';
 import { HealthModule } from './health/health.controller';
 import { PrismaModule } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
@@ -65,6 +67,8 @@ const isDev = process.env.NODE_ENV !== 'production';
     CheckoutsModule,
     BookingsModule,
     SparesModule,
+    PlacesModule,
+    OverviewModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ErrorFilter },

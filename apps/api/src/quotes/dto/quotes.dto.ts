@@ -1,7 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
+  IsEnum,
   IsInt,
+  IsOptional,
   IsISO8601,
   IsLatitude,
   IsLongitude,
@@ -35,6 +37,11 @@ export class CreateQuoteDto {
   pickupAt!: string;
 
   @ApiProperty({ example: 2 }) @Type(() => Number) @IsInt() @Min(1) @Max(60) passengers!: number;
+
+  @ApiPropertyOptional({ enum: Currency, enumName: 'Currency', description: 'Defaults to DEFAULT_CURRENCY' })
+  @IsOptional()
+  @IsEnum(Currency)
+  currency?: Currency;
 }
 
 export class QuoteCategoryDto {

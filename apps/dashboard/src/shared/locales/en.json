@@ -1,16 +1,34 @@
 {
   "brand": "EU Limousine",
   "login": {
-    "title": "Operations Dashboard",
-    "subtitle": "Sign in to continue",
+    "title": "Welcome back",
+    "subtitle": "Sign in to the operations dashboard",
     "email": "Email",
     "password": "Password",
     "submit": "Sign in",
     "submitting": "Signing in…",
-    "errorGeneric": "Could not sign in. Please try again."
+    "errorGeneric": "Could not sign in. Please try again.",
+    "emailPlaceholder": "name@eulimousine.com",
+    "passwordPlaceholder": "Your password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "forgot": "Forgot your password? Ask an administrator to reset it.",
+    "secureNote": "Signed-in sessions are encrypted and every action is logged.",
+    "footer": "EU Limousine operations",
+    "hero": {
+      "kicker": "Welcome to",
+      "title": "Operations dashboard",
+      "tagline": "Safe. Reliable. Premium.",
+      "features": {
+        "secure": "Secure access",
+        "dispatch": "Live dispatch",
+        "fleet": "Fleet",
+        "audit": "Audit trail"
+      }
+    }
   },
   "nav": {
-    "overview": "Overview",
+    "overview": "Dashboard",
     "bookings": "Bookings",
     "dispatch": "Dispatch",
     "drivers": "Drivers",
@@ -20,7 +38,9 @@
     "audit": "Audit log",
     "logout": "Log out",
     "mainMenu": "Main menu",
-    "spares": "Spare drivers"
+    "spares": "Spare drivers",
+    "openMenu": "Open menu",
+    "collapse": "Collapse or expand the menu"
   },
   "common": {
     "notBuilt": "This screen is not built yet.",
@@ -45,8 +65,51 @@
     "unconfirmed": "Not confirmed"
   },
   "overview": {
-    "title": "Overview",
-    "welcome": "Welcome, {{name}}"
+    "title": "Dashboard",
+    "welcome": "Welcome back, {{name}}. Here is an overview of operations.",
+    "last7Days": "Last 7 days",
+    "vsLastWeek": "{{value}} vs last week",
+    "viewAll": "View all",
+    "kpi": {
+      "bookings": "Bookings (7 days)",
+      "customers": "Customers",
+      "drivers": "Active drivers",
+      "vehicles": "Vehicles",
+      "revenue": "Revenue (7 days)",
+      "pickupsToday_one": "{{count}} pickup today",
+      "pickupsToday_other": "{{count}} pickups today",
+      "newThisWeek_one": "{{count}} new this week",
+      "newThisWeek_other": "{{count}} new this week",
+      "availableNow_one": "{{count}} available now",
+      "availableNow_other": "{{count}} available now"
+    },
+    "chart": {
+      "title": "Bookings overview",
+      "created": "Bookings",
+      "completed": "Completed trips"
+    },
+    "vehicleStatus": "Vehicle status",
+    "driverStatus": "Driver status",
+    "totalVehicles": "Vehicles",
+    "totalDrivers": "Drivers",
+    "status": {
+      "available": "Available",
+      "online": "Available",
+      "onTrip": "On trip",
+      "offDuty": "Off duty",
+      "inactive": "Inactive"
+    },
+    "recentBookings": "Recent bookings",
+    "noBookings": "No bookings yet.",
+    "liveMap": {
+      "title": "Live vehicle map",
+      "soon": "Arrives with the driver app",
+      "hint": "Chauffeurs' live positions (on duty only) appear here in phase 1E."
+    },
+    "activity": {
+      "title": "Recent activity",
+      "empty": "No activity yet."
+    }
   },
   "status": {
     "NEW": "New",
@@ -206,7 +269,7 @@
   },
   "pricing": {
     "title": "Pricing",
-    "subtitle": "Price = base fare + per km + per minute, never below the minimum fare. Changes affect new quotes only.",
+    "subtitle": "Price = base fare + per km + per minute, never below the minimum fare. One price per class and currency (DKK, EUR, USD). Changes affect new quotes only.",
     "empty": "No pricing rules yet.",
     "class": "Class",
     "status": "Status",
@@ -224,7 +287,12 @@
     "distancePart": "Distance",
     "timePart": "Time",
     "total": "Total",
-    "minimumApplied": "minimum fare applied"
+    "minimumApplied": "minimum fare applied",
+    "add": "Add price",
+    "addTitle": "Add a price",
+    "addHint": "Set a price for a vehicle class in DKK, EUR or USD. Customers only see classes priced in the currency they choose. There is no automatic currency conversion.",
+    "currency": "Currency",
+    "alreadySet": "already set"
   },
   "spares": {
     "title": "Spare drivers",
@@ -240,5 +308,78 @@
     "moveDown": "Move down",
     "remove": "Remove",
     "unsaved": "Unsaved changes"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme",
+    "toggle": "Toggle light / dark theme"
+  },
+  "search": {
+    "placeholder": "Search…",
+    "title": "Search",
+    "description": "Go to a screen or run an action",
+    "input": "Type a screen or action…",
+    "empty": "Nothing found.",
+    "screens": "Screens",
+    "actions": "Actions"
+  },
+  "alerts": {
+    "label": "Alerts",
+    "labelCount_one": "Alerts: {{count}} booking needs attention",
+    "labelCount_other": "Alerts: {{count}} bookings need attention",
+    "title": "Bookings to handle",
+    "needsAttention": "Needs attention",
+    "unassigned": "Waiting for a chauffeur"
+  },
+  "roles": {
+    "SUPER_ADMIN": "Super admin",
+    "ADMIN": "Administrator",
+    "DISPATCHER": "Dispatcher",
+    "DRIVER": "Driver",
+    "DEVELOPER": "Developer",
+    "CUSTOMER": "Customer",
+    "CORPORATE_USER": "Corporate user",
+    "CORPORATE_ADMIN": "Corporate admin"
+  },
+  "quick": {
+    "title": "Quick access",
+    "addDriver": "Add driver",
+    "addVehicle": "Add vehicle",
+    "needsAttention": "Needs attention",
+    "unassigned": "Unassigned bookings",
+    "spares": "Spare drivers",
+    "pricing": "Pricing"
+  },
+  "activity": {
+    "booking": {
+      "create": "New booking created",
+      "assign": "Chauffeur assigned"
+    },
+    "vehicle": {
+      "create": "Vehicle added",
+      "update": "Vehicle updated"
+    },
+    "driver": {
+      "create": "Driver added",
+      "update": "Driver updated"
+    },
+    "pricing": {
+      "rule": {
+        "create": "Price added",
+        "update": "Price changed"
+      }
+    },
+    "user": {
+      "create": "User added",
+      "deactivate": "User deactivated",
+      "roles": {
+        "change": "User roles changed"
+      }
+    },
+    "dispatch": {
+      "spares": {
+        "set": "Spare drivers updated"
+      }
+    }
   }
 }

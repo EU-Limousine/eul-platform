@@ -81,7 +81,7 @@ export function AssignDialog({ bookingId, reference, open, onOpenChange }: Props
               type="button"
               disabled={!selected || assign.isPending || conflict}
               onClick={confirm}
-              className="rounded-control bg-navy-900 px-4 py-2 text-sm font-medium text-on-dark disabled:opacity-50"
+              className="rounded-control bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
             >
               {assign.isPending ? t('assign.assigning') : t('assign.confirm')}
             </button>
@@ -99,7 +99,7 @@ function CandidateRow({ candidate: c, checked, onSelect }: { candidate: DriverCa
     <li>
       <label
         className={`flex cursor-pointer items-start gap-3 rounded-control border px-3 py-2.5 ${
-          checked ? 'border-navy-900 bg-canvas' : 'border-border hover:bg-canvas'
+          checked ? 'border-primary bg-canvas' : 'border-border hover:bg-canvas'
         } ${noVehicle ? 'cursor-not-allowed opacity-60' : ''}`}
       >
         <input type="radio" name="driver" className="mt-1" checked={checked} disabled={noVehicle} onChange={onSelect} />

@@ -31,7 +31,7 @@ export function LanguageSwitcher() {
         value={locale}
         disabled={isPending}
         onChange={(e) => onChange(e.target.value as Locale)}
-        className="rounded-control border border-navy-600 bg-transparent px-2 py-1 text-on-dark"
+        className="rounded-control border border-site-line-dark bg-transparent px-2 py-1.5 text-sm text-site-on-dark"
       >
         {LOCALES.map((l) => (
           <option key={l} value={l} className="text-text">

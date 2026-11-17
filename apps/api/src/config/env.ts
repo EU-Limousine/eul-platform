@@ -13,13 +13,19 @@ export interface Env {
   /** Public URL of the website (payment return page). */
   WEBSITE_URL: string;
   PAYMENT_PROVIDER: string;
+  /**
+   * Pre-launch only: allows the fake payment provider and Turnstile's test key in production,
+   * so the live site can be tested before the payment provider (D-01) is chosen.
+   * MUST be removed before real customers book (go-live checklist).
+   */
+  PRELAUNCH_MODE: boolean;
   /** Signs fake-provider webhooks. Dev/test only. */
   FAKE_PAYMENT_SECRET: string;
   TURNSTILE_SECRET: string;
   /** Server-side key for the Google Routes API. Empty = straight-line estimate (dev only). */
   GOOGLE_MAPS_SERVER_KEY: string;
-  /** D-05 open: currency quotes are made in. */
-  DEFAULT_CURRENCY: 'DKK' | 'EUR';
+  /** Currency used when the customer does not choose one (DKK, EUR or USD). */
+  DEFAULT_CURRENCY: 'DKK' | 'EUR' | 'USD';
   QUOTE_TTL_MINUTES: number;
   CHECKOUT_TTL_MINUTES: number;
   /** D-07 open: shortest time between booking and pickup. */
@@ -52,17 +58,24 @@ export function validateEnv(raw: Record<string, unknown>): Env {
   const jwtSecret = str(raw, 'JWT_ACCESS_SECRET');
   if (jwtSecret.length < 32) throw new Error('JWT_ACCESS_SECRET must be at least 32 characters');
 
+  const prelaunch = str(raw, 'PRELAUNCH_MODE', 'false') === 'true';
+  const strict = prod && !prelaunch;
+
   const paymentProvider = str(raw, 'PAYMENT_PROVIDER', 'fake');
-  if (prod && paymentProvider === 'fake') throw new Error('FakePaymentProvider is not allowed in production (D-01)');
+  if (strict && paymentProvider === 'fake') throw new Error('FakePaymentProvider is not allowed in production (D-01)');
+  const fakeSecret = str(raw, 'FAKE_PAYMENT_SECRET', 'dev-only-fake-payment-secret');
+  if (prod && paymentProvider === 'fake' && fakeSecret === 'dev-only-fake-payment-secret') {
+    throw new Error('Set FAKE_PAYMENT_SECRET (from Secret Manager) when using the fake provider in production');
+  }
 
   const turnstileSecret = str(raw, 'TURNSTILE_SECRET');
-  if (prod && turnstileSecret === TURNSTILE_TEST_SECRET) throw new Error('Use a real TURNSTILE_SECRET in production');
+  if (strict && turnstileSecret === TURNSTILE_TEST_SECRET) throw new Error('Use a real TURNSTILE_SECRET in production');
 
   const mapsKey = str(raw, 'GOOGLE_MAPS_SERVER_KEY', '');
   if (prod && !mapsKey) throw new Error('GOOGLE_MAPS_SERVER_KEY is required in production');
 
   const currency = str(raw, 'DEFAULT_CURRENCY', 'EUR');
-  if (currency !== 'DKK' && currency !== 'EUR') throw new Error('DEFAULT_CURRENCY must be DKK or EUR');
+  if (currency !== 'DKK' && currency !== 'EUR' && currency !== 'USD') throw new Error('DEFAULT_CURRENCY must be DKK, EUR or USD');
 
   return {
     NODE_ENV: nodeEnv,
@@ -79,7 +92,8 @@ export function validateEnv(raw: Record<string, unknown>): Env {
     API_PUBLIC_URL: str(raw, 'API_PUBLIC_URL', 'http://localhost:8080').replace(/\/$/, ''),
     WEBSITE_URL: str(raw, 'WEBSITE_URL', 'http://localhost:3000').replace(/\/$/, ''),
     PAYMENT_PROVIDER: paymentProvider,
-    FAKE_PAYMENT_SECRET: str(raw, 'FAKE_PAYMENT_SECRET', 'dev-only-fake-payment-secret'),
+    PRELAUNCH_MODE: prelaunch,
+    FAKE_PAYMENT_SECRET: fakeSecret,
     TURNSTILE_SECRET: turnstileSecret,
     GOOGLE_MAPS_SERVER_KEY: mapsKey,
     DEFAULT_CURRENCY: currency,

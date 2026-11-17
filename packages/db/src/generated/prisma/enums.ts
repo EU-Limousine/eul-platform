@@ -55,7 +55,8 @@ export type BookingType = (typeof BookingType)[keyof typeof BookingType]
 
 export const Currency = {
   DKK: 'DKK',
-  EUR: 'EUR'
+  EUR: 'EUR',
+  USD: 'USD'
 } as const
 
 export type Currency = (typeof Currency)[keyof typeof Currency]

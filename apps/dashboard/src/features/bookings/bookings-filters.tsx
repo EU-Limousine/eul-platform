@@ -33,7 +33,7 @@ export function BookingsFilters({ value, onChange }: Props) {
             aria-selected={(value.tab ?? 'all') === tab.key}
             onClick={() => onChange({ tab: tab.key as StatusTabKey, page: 1 })}
             className={`rounded-control px-3 py-1.5 text-sm ${
-              (value.tab ?? 'all') === tab.key ? 'bg-navy-900 text-on-dark' : 'text-text-muted hover:bg-surface hover:text-text'
+              (value.tab ?? 'all') === tab.key ? 'bg-primary text-primary-foreground' : 'text-text-muted hover:bg-surface hover:text-text'
             }`}
           >
             {t(`bookings.tabs.${tab.key}`)}

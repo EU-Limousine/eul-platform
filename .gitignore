@@ -31,3 +31,8 @@ skills-lock.json
 Thumbs.db
 .vscode/*
 !.vscode/settings.json
+
+playwright-report/
+test-results/
+
+postman/reports/*

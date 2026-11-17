@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -33,6 +33,16 @@ export function VehiclesPage({ search }: { search: ListSearch }) {
     setEditing(vehicle);
     setDialogOpen(true);
   };
+
+  // ?new=true (quick access, command menu) opens the add dialog once, then leaves the URL clean.
+  useEffect(() => {
+    if (!search.new) return;
+    if (canWrite) {
+      setEditing(undefined);
+      setDialogOpen(true);
+    }
+    void navigate({ to: '/vehicles', search: (prev: ListSearch) => ({ ...prev, new: undefined }), replace: true });
+  }, [search.new, canWrite, navigate]);
 
   return (
     <section className="space-y-5">
