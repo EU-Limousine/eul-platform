@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { BookingApiError, getQuote } from './api';
-import { CURRENCIES, defaultCurrency, type BookingDraft, type Place } from './draft';
+import { CURRENCIES, defaultCurrency, type BookingDraft } from './draft';
 import { copenhagenToUtcIso, copenhagenToday } from './format';
 import { PlaceInput } from './place-input';
 import { Alert, Field, PrimaryButton, fieldClass } from './ui';
+import { quoteRequest } from './use-price';
 
 type Errors = Partial<Record<'pickup' | 'dropoff' | 'date' | 'time' | 'passengers', string>>;
 
-/** Step 1: where, when, how many. Gets prices for every vehicle class that fits. */
+/** Step 1: where, when, how many. The API checks the route and which vehicle classes fit (prices are shown later). */
 export function StepJourney({
   draft,
   update,
@@ -58,16 +59,26 @@ export function StepJourney({
     setLoading(true);
     try {
       const pickupAt = copenhagenToUtcIso(draft.date, draft.time);
-      const toPlace = (p: Place) => ({ address: p.address, lat: p.lat, lng: p.lng });
-      const quote = await getQuote({ pickup: toPlace(draft.pickup), dropoff: toPlace(draft.dropoff), pickupAt, passengers: draft.passengers, currency });
+      const body = quoteRequest(draft, pickupAt, currency);
+      if (!body) return;
+      const quote = await getQuote(body);
       if (quote.options.length === 0) {
         setFormError(t('errors.noVehicles'));
         return;
       }
+      // Keep the chosen class if it still fits the (possibly changed) journey and passengers.
+      const kept = quote.options.find((o) => o.category.id === draft.categoryId);
       update({
         currency,
-        quote: { pickupAt, distanceMeters: quote.distanceMeters, durationSeconds: quote.durationSeconds, options: quote.options },
-        quoteId: undefined,
+        quote: {
+          pickupAt,
+          distanceMeters: quote.distanceMeters,
+          durationSeconds: quote.durationSeconds,
+          distanceSource: quote.distanceSource,
+          options: quote.options,
+        },
+        categoryId: kept?.category.id,
+        quoteId: kept?.quoteId,
         checkout: undefined,
       });
       next();
@@ -122,7 +133,7 @@ export function StepJourney({
         <div className="inline-flex rounded-control border border-border p-1">
           {CURRENCIES.map((c) => (
             <label key={c} className={`cursor-pointer rounded-control px-4 py-2 text-sm ${currency === c ? 'bg-site-dark text-on-dark' : 'text-text'}`}>
-              <input type="radio" name="currency" value={c} className="sr-only" checked={currency === c} onChange={() => update({ currency: c, quote: undefined, quoteId: undefined })} />
+              <input type="radio" name="currency" value={c} className="sr-only" checked={currency === c} onChange={() => update({ currency: c, quote: undefined, quoteId: undefined, categoryId: undefined })} />
               {c}
             </label>
           ))}

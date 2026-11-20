@@ -7,7 +7,7 @@ import { bookUntilDetails, bookUntilPayment, chooseAddress, payAndGetReference }
 test.describe('Booking flow', () => {
   test('empty journey form shows clear errors', async ({ page }) => {
     await page.goto(`${URLS.website}/en/book`);
-    await page.getByRole('button', { name: 'See prices' }).click();
+    await page.getByRole('button', { name: 'See vehicles' }).click();
     await expect(page.getByText('Choose a pickup address from the list.')).toBeVisible();
     await expect(page.getByText('Choose a drop-off address from the list.')).toBeVisible();
     await expect(page.getByText('Choose a date.')).toBeVisible();
@@ -18,7 +18,7 @@ test.describe('Booking flow', () => {
     await page.goto(`${URLS.website}/en/book`);
     await chooseAddress(page, 'pickup', 'Nyhavn');
     await chooseAddress(page, 'dropoff', 'Nyhavn');
-    await page.getByRole('button', { name: 'See prices' }).click();
+    await page.getByRole('button', { name: 'See vehicles' }).click();
     await expect(page.getByText('Pickup and drop-off must be different.')).toBeVisible();
   });
 
@@ -29,6 +29,21 @@ test.describe('Booking flow', () => {
     await page.locator('#pickup').press('ArrowDown');
     await page.locator('#pickup').press('Enter');
     await expect(page.locator('#pickup')).toHaveValue(/Tivoli/i);
+  });
+
+  test('vehicle step shows no prices; details step shows the calculated price', async ({ page }) => {
+    await bookUntilDetails(page);
+    // Back to the vehicle list: classes are listed without a price.
+    await page.getByRole('button', { name: 'Back' }).click();
+    await expect(page.getByRole('heading', { name: 'Choose your vehicle' })).toBeVisible();
+    await expect(page.locator('label:has(input[name="vehicle"])').first()).not.toContainText(/€|kr\.|DKK|\$/);
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    // Details step: trip summary with distance, passengers and a total.
+    const summary = page.getByRole('region', { name: 'Your trip and price' });
+    await expect(summary).toContainText(/km/);
+    await expect(summary).toContainText('2 passengers');
+    await expect(summary.getByText('Total price')).toBeVisible({ timeout: 20_000 });
+    await expect(summary).toContainText(/€\s?\d/);
   });
 
   test('details step validates email and phone', async ({ page }) => {

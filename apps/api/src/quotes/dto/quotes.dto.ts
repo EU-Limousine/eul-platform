@@ -54,10 +54,20 @@ export class QuoteCategoryDto {
   @ApiPropertyOptional({ nullable: true, type: String }) description!: string | null;
 }
 
+/** How the price was built from the route (all money in minor units). Shown to the customer. */
+export class QuoteBreakdownDto {
+  @ApiProperty() baseFareMinor!: number;
+  @ApiProperty({ description: 'Per-km rate × route distance' }) distanceMinor!: number;
+  @ApiProperty({ description: 'Per-minute rate × route duration' }) timeMinor!: number;
+  @ApiProperty() minimumFareMinor!: number;
+  @ApiProperty({ description: 'True when the minimum fare replaced a lower calculated price' }) minimumApplied!: boolean;
+}
+
 export class QuoteOptionDto {
   @ApiProperty({ format: 'uuid' }) quoteId!: string;
   @ApiProperty({ type: QuoteCategoryDto }) category!: QuoteCategoryDto;
   @ApiProperty({ description: 'Total in minor units (øre / cents)' }) amountMinor!: number;
+  @ApiProperty({ type: QuoteBreakdownDto }) breakdown!: QuoteBreakdownDto;
   @ApiProperty({ enum: Currency, enumName: 'Currency' }) currency!: Currency;
   @ApiProperty({ format: 'date-time' }) expiresAt!: string;
 }
