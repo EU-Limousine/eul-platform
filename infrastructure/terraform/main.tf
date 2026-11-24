@@ -21,6 +21,9 @@ locals {
     "cloudtrace.googleapis.com",
     "billingbudgets.googleapis.com",
     "cloudbilling.googleapis.com",
+    # Google Maps Platform, called by the API with the server key: address search + route/price.
+    "places.googleapis.com", # Places API (New)
+    "routes.googleapis.com", # Routes API
   ]
 }
 
