@@ -9,6 +9,7 @@
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@eul/api-client": "*",
     "@eul/i18n": "*",
     "@eul/ui": "*",
     "date-fns": "^4.4.0",
