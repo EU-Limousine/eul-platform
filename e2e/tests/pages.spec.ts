@@ -30,11 +30,18 @@ test.describe('Website pages', () => {
     });
   }
 
-  test('service pages open in Danish too (English fallback for missing texts)', async ({ page }) => {
+  test('service pages are translated into Danish', async ({ page }) => {
     const res = await page.goto(`${URLS.website}/da/services/airport-transfers`);
     expect(res?.status()).toBe(200);
     await expect(page.locator('html')).toHaveAttribute('lang', 'da');
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Lufthavnstransfer');
+    await expect(page.getByRole('banner').getByRole('link', { name: 'Erhverv', exact: true }).first()).toBeAttached();
+  });
+
+  test('the Danish contact form shows Danish errors', async ({ page }) => {
+    await page.goto(`${URLS.website}/da/contact`);
+    await page.getByRole('button', { name: 'Send besked' }).click();
+    await expect(page.getByText('Indtast dit navn.')).toBeVisible();
   });
 
   test('header navigation reaches the main pages', async ({ page }) => {
