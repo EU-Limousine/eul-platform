@@ -13,7 +13,7 @@ Two Google Cloud projects in `europe-west1` (CLAUDE.md D-14), identical except f
 | Search engines | `X-Robots-Tag: noindex` | indexed |
 | Load balancer + domains | on | **off until launch** (pre-launch, see below) |
 | Uptime / worker alerts | off (staging sleeps at night) | on |
-| Deploys | automatically from `dev` | from `main` after staging verified (docs/release-process.md) |
+| Deploys | automatically from `develop` | from `main` after staging verified (docs/release-process.md) |
 
 The domain is registered at **Hostinger**, DNS is at **Cloudflare** with every record *DNS only*
 (grey cloud), staff email stays on **Hostinger Email** (D-19).
@@ -43,9 +43,9 @@ infrastructure/
   terraform/
     tf.sh                     wrapper: EUL_ENV=staging|production bash tf.sh bootstrap|plan|apply|output
     versions.tf  variables.tf  main.tf  iam.tf  load_balancer.tf  monitoring.tf  outputs.tf
-    envs/common.tfvars        github_repo, budget currency          ← EDIT github_repo once
+    envs/common.tfvars        github_repo (EU-Limousine/eul-platform), budget currency (DKK)
     envs/staging.tfvars       sizes and switches for eu-limo-staging
-    envs/production.tfvars    sizes and switches for eu-limo        ← EDIT alert_email
+    envs/production.tfvars    sizes and switches for eu-limo (alerts → info@eulimousine.com)
   gcp/
     config.sh                 names and hosts for the release scripts (must match the tfvars)
     secrets.sh                secret values
@@ -59,27 +59,31 @@ infrastructure/
 
 **Before you start**
 - Both projects exist with billing linked ✔.
-- In `infrastructure/terraform/envs/common.tfvars`: set `github_repo` (owner/repo) and check
-  `budget_currency` equals your billing account's currency (Console → Billing → Account management).
-- In `envs/production.tfvars`: set `alert_email`.
+- Already set: `github_repo = "EU-Limousine/eul-platform"`, `budget_currency = "DKK"`,
+  production alerts to `info@eulimousine.com` (change `alert_email` in `envs/production.tfvars` if
+  another mailbox should get them).
+- **Billing currency:** a budget must be in the billing account's own currency, and that currency is
+  fixed when the billing account is created. Check Console → Billing → Account management. `tf.sh plan`
+  also checks it and stops with a clear message if it is not DKK (then set `budget_currency` and the
+  two `budget_amount` values to that currency).
 - Hostinger → Emails: the mailboxes `bookings@` (sends system emails) and `info@` (receives enquiries) exist.
 - In **each** project: a Google Maps **server key** (APIs & Services → Credentials), restricted to
   *Places API (New)* and *Routes API* (one key per project, so Maps costs show per environment).
 - Staging uses Cloudflare's Turnstile **test keys** (leave empty), so automated tests are never
   stopped by a bot check. Production needs a real widget for `eulimousine.com` before launch.
 
-**A. GitHub** (your PC, GitHub CLI) — `dev` branch, protection, environments, test login
+**A. GitHub** (your PC, GitHub CLI) — `develop` branch, protection, environments, test login
 ```powershell
 gh auth login
 git push -u origin feat/deployment-build
-.\scripts\github-setup.ps1 -Repo "<owner>/<repo>"
+.\scripts\github-setup.ps1
 ```
 Pick the staging admin email + password it asks for and remember them (used again in B).
-Open the PR `feat/deployment-build → dev`, but do not merge yet.
+Open the PR `feat/deployment-build → develop`, but do not merge yet.
 
 **B. Staging infrastructure** (Cloud Shell)
 ```bash
-git clone -b feat/deployment-build https://github.com/<owner>/<repo>.git && cd <repo>
+git clone -b feat/deployment-build https://github.com/EU-Limousine/eul-platform.git && cd eul-platform
 EUL_ENV=staging bash infrastructure/terraform/tf.sh bootstrap   # state bucket (once)
 EUL_ENV=staging bash infrastructure/terraform/tf.sh plan        # read it: about 85 to add, 0 to change, 0 to destroy
 EUL_ENV=staging bash infrastructure/terraform/tf.sh apply       # type "yes"; ~15 min; billing starts here
@@ -90,9 +94,9 @@ Copy `github_environment_variables` to GitHub → Settings → Environments → 
 Add the `dns_records` in **Cloudflare → DNS**, each **DNS only (grey cloud)**.
 
 **C. First staging deploy** (GitHub)
-1. Merge the PR into `dev` (squash). *Deploy staging* starts; its end-to-end tests may fail if the
+1. Merge the PR into `develop` (squash). *Deploy staging* starts; its end-to-end tests may fail if the
    certificate is not ACTIVE yet (check with the `certificate_check` output). That red run is expected.
-2. Actions → **Deploy staging** → *Run workflow* on `dev`, tick **seed** (creates the first admin).
+2. Actions → **Deploy staging** → *Run workflow* on `develop`, tick **seed** (creates the first admin).
    Once the certificate is ACTIVE (15–60 min after DNS), leave **end-to-end tests** ticked:
    it must end with a green **staging/verified**.
 
@@ -104,7 +108,7 @@ EUL_ENV=production bash infrastructure/terraform/tf.sh apply
 EUL_ENV=production bash infrastructure/gcp/secrets.sh
 EUL_ENV=production bash infrastructure/terraform/tf.sh output   # variables → GitHub environment "production"
 ```
-Then PR **dev → main**, merge with **Create a merge commit** → *Deploy production* runs. After this
+Then PR **develop → main**, merge with **Create a merge commit** → *Deploy production* runs. After this
 first release, run Actions → **Deploy production** on `main` once with **seed** ticked.
 Production answers only on its `run.app` addresses until launch (no load balancer, no DNS).
 
@@ -115,7 +119,7 @@ EUL_ENV=production bash infrastructure/gcp/backup-restore-test.sh <image tag of 
 
 ## Changing infrastructure later
 
-Edit the `.tf` / `.tfvars` files → PR into `dev` (CI runs `terraform validate`) → in Cloud Shell:
+Edit the `.tf` / `.tfvars` files → PR into `develop` (CI runs `terraform validate`) → in Cloud Shell:
 ```bash
 EUL_ENV=staging bash infrastructure/terraform/tf.sh plan    # read what will change
 EUL_ENV=staging bash infrastructure/terraform/tf.sh apply
@@ -141,7 +145,7 @@ test payment page and no money moves. Staging always stays like this. For the re
 The API refuses to start in production with the fake provider or the Turnstile test secret unless
 `PRELAUNCH_MODE=true`, so this cannot be forgotten silently.
 
-## Costs (estimate, November 2026, on-demand list prices in USD)
+## Costs (estimate, November 2026, Google's list prices in USD, DKK at ≈ 6.5 per USD)
 
 Google's list prices (Tier-1 region rates; `europe-west1` can be a few percent higher), before taxes
 and the small Cloud Run free tier (shared by both projects). **Not included:** Google Maps API calls
@@ -157,8 +161,12 @@ and the small Cloud Run free tier (shared by both projects). **Not included:** G
 | Load balancer (+ traffic) | ≈ 20 (0 until launch) | ≈ 20 | ≈ 20 |
 | Images, secrets, logs, monitoring, state bucket | ≈ 5 | ≈ 3 | ≈ 3 |
 | **Total per month** | **≈ 190 USD** (≈ 170 before launch) | **≈ 140 USD** | **≈ 85 USD** |
+| **in DKK** | **≈ 1,240 DKK** (≈ 1,100 before launch) | **≈ 910 DKK** | **≈ 550 DKK** |
 
-Budgets (in Terraform, alerts at 50 / 90 / 100 % and forecast): **250 USD production, 150 USD staging**.
+Both projects together: **≈ 1,800–2,150 DKK a month** (≈ 275–330 USD). Google bills in your billing
+account's currency at its own exchange rate, so the DKK figures move with USD/DKK.
+
+Budgets (in Terraform, alerts at 50 / 90 / 100 % and forecast): **1,600 DKK production, 1,000 DKK staging**.
 Every resource is labelled `app`, `env`, `component`: Billing → Reports → group by label.
 
 Spend less: `bash infrastructure/gcp/staging-sleep.sh` when nobody tests (wake with `… wake`,

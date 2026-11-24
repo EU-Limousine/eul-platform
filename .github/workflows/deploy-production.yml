@@ -1,8 +1,8 @@
 name: Deploy production
 
-# Merge dev (or hotfix/*) into main → check the code was verified on staging → CI →
+# Merge develop (or hotfix/*) into main → check the code was verified on staging → CI →
 # deploy to production → read-only smoke test → automatic rollback if the smoke test fails.
-# After a successful release, a PR main → dev is opened when dev is missing commits from main (hotfixes).
+# After a successful release, a PR main → develop is opened when develop is missing commits from main (hotfixes).
 on:
   push:
     branches: [main]
@@ -35,7 +35,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # A merge commit's second parent is the PR's head (dev or hotfix/*), which staging verified.
+          # A merge commit's second parent is the PR's head (develop or hotfix/*), which staging verified.
           CANDIDATES="$(git rev-parse HEAD) $(git rev-parse -q --verify HEAD^2 || true)"
           for SHA in $CANDIDATES; do
             STATE=$(gh api "repos/${{ github.repository }}/commits/$SHA/statuses" \
@@ -43,7 +43,7 @@ jobs:
             echo "$SHA staging/verified = $STATE"
             if [ "$STATE" = success ]; then echo "✓ verified on staging"; exit 0; fi
           done
-          echo "::error::This code was not verified on staging. Merge dev into main through a PR (or run 'Deploy staging' on the hotfix branch first)."
+          echo "::error::This code was not verified on staging. Merge develop into main through a PR (or run 'Deploy staging' on the hotfix branch first)."
           exit 1
 
   ci:
@@ -82,8 +82,8 @@ jobs:
           echo "::error::Production smoke test failed. Traffic is back on the previous release. Database migrations are NOT rolled back (see docs/release-process.md)."
           exit 1
 
-  sync-dev:
-    name: keep dev up to date with main
+  sync-develop:
+    name: keep develop up to date with main
     needs: smoke
     runs-on: ubuntu-latest
     permissions:
@@ -93,16 +93,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Open PR main → dev if dev is missing commits (e.g. after a hotfix)
+      - name: Open PR main → develop if develop is missing commits (e.g. after a hotfix)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git fetch origin dev
-          MISSING=$(git rev-list --count origin/dev..origin/main)
-          if [ "$MISSING" = "0" ]; then echo "dev already contains main"; exit 0; fi
-          if gh pr list --base dev --head main --state open --json number --jq 'length' | grep -qv '^0$'; then
-            echo "A main → dev PR is already open"; exit 0
+          git fetch origin develop
+          MISSING=$(git rev-list --count origin/develop..origin/main)
+          if [ "$MISSING" = "0" ]; then echo "develop already contains main"; exit 0; fi
+          if gh pr list --base develop --head main --state open --json number --jq 'length' | grep -qv '^0$'; then
+            echo "A main → develop PR is already open"; exit 0
           fi
-          gh pr create --base dev --head main \
-            --title "Sync main → dev (${MISSING} commit(s) from production)" \
+          gh pr create --base develop --head main \
+            --title "Sync main → develop (${MISSING} commit(s) from production)" \
             --body "Automatic after the production release ${{ github.sha }}. Merge with **Create a merge commit** so the hotfix is not lost on the next release. If CI did not start on this PR, close and reopen it."
