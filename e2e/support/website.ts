@@ -7,12 +7,21 @@ export function copenhagenDate(days: number): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Copenhagen' }).format(date);
 }
 
-/** Types an address and picks the first suggestion (dev places or Google, whichever is configured). */
+/**
+ * Types an address and picks the first suggestion (dev places or Google, whichever is configured).
+ * Waits for the address details (lat/lng) to come back: the field shows the name at once, but the
+ * address only counts once the details call has answered. With real Google that takes a moment.
+ */
 export async function chooseAddress(page: Page, fieldId: 'pickup' | 'dropoff', query: string): Promise<void> {
   const input = page.locator(`#${fieldId}`);
   await input.fill(query);
   const option = page.getByRole('option', { name: new RegExp(query, 'i') }).first();
+  await expect(option).toBeVisible();
+  const details = page.waitForResponse(
+    (res) => res.request().method() === 'GET' && /\/public\/places\/(?!autocomplete(?:\?|$))[^/?]+(?:\?|$)/.test(res.url()),
+  );
   await option.click();
+  expect((await details).ok(), 'address details request failed').toBe(true);
   await expect(input).toHaveValue(new RegExp(query.split(' ')[0] ?? query, 'i'));
 }
 
