@@ -31,7 +31,24 @@ if [ "$CMD" = "bootstrap" ]; then
   exit 0
 fi
 
-grep -q 'YOUR-ORG/eul-platform' envs/common.tfvars && { echo "Edit github_repo in infrastructure/terraform/envs/common.tfvars first."; exit 1; }
+# The budget must be in the billing account's own currency, or Google rejects it.
+if [ "$CMD" = "plan" ] || [ "$CMD" = "apply" ]; then
+  WANT=$(sed -nE 's/^budget_currency *= *"([^"]+)".*/\1/p' envs/common.tfvars)
+  ACCOUNT=$(gcloud billing projects describe "$PROJECT_ID" --format='value(billingAccountName)' 2>/dev/null | sed 's#billingAccounts/##')
+  HAVE=$( [ -n "$ACCOUNT" ] && gcloud billing accounts describe "$ACCOUNT" --format='value(currencyCode)' 2>/dev/null || true)
+  if [ -z "$ACCOUNT" ]; then
+    echo "  ! $PROJECT_ID has no billing account linked (Console → Billing)."; exit 1
+  elif [ -z "$HAVE" ]; then
+    echo "  ! Could not read the billing account's currency (needs Billing Account Viewer). Assuming ${WANT}."
+  elif [ "$HAVE" != "$WANT" ]; then
+    echo "  ✗ Your billing account ${ACCOUNT} is in ${HAVE}, but envs/common.tfvars says budget_currency = \"${WANT}\"."
+    echo "    Set budget_currency = \"${HAVE}\" there and budget_amount in envs/*.tfvars in ${HAVE}."
+    echo "    (A billing account's currency cannot be changed; a new billing account would be needed for ${WANT}.)"
+    exit 1
+  else
+    echo "  ✓ billing account ${ACCOUNT} is in ${HAVE}"
+  fi
+fi
 
 terraform init -input=false -reconfigure \
   -backend-config="bucket=${BUCKET}" -backend-config="prefix=eul" >/dev/null

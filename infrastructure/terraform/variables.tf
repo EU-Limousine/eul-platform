@@ -21,8 +21,8 @@ variable "github_repo" {
   description = "owner/repo allowed to deploy (Workload Identity Federation)."
   type        = string
   validation {
-    condition     = can(regex("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$", var.github_repo)) && var.github_repo != "YOUR-ORG/eul-platform"
-    error_message = "Set github_repo in envs/common.tfvars to your GitHub owner/repo."
+    condition     = can(regex("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$", var.github_repo))
+    error_message = "github_repo in envs/common.tfvars must be owner/repo, e.g. EU-Limousine/eul-platform."
   }
 }
 
@@ -84,7 +84,7 @@ variable "budget_amount" {
   type        = number
 }
 variable "budget_currency" {
-  description = "Must be the billing account's currency (Console → Billing → Account management)."
+  description = "Must be the billing account's currency (Console → Billing → Account management); tf.sh checks it."
   type        = string
-  default     = "USD"
+  default     = "DKK"
 }

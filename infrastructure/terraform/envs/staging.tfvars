@@ -16,4 +16,4 @@ enable_load_balancer = true  # staging is reachable at its own addresses
 enable_monitoring    = false # it sleeps at night (staging-sleep.sh): alerts would fire
 alert_email          = ""
 
-budget_amount = 150 # in budget_currency
+budget_amount = 1000 # DKK ≈ 150 USD (estimate ≈ 910 DKK always on, ≈ 550 DKK with staging-sleep)
