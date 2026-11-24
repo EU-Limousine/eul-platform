@@ -77,6 +77,8 @@ export const Permission = {
   userswrite: 'users.write',
   rolesassign: 'roles.assign',
   customersread: 'customers.read',
+  enquiriesread: 'enquiries.read',
+  enquirieswrite: 'enquiries.write',
   dataexport: 'data.export',
   systemread: 'system.read',
   systemwrite: 'system.write',
@@ -852,6 +854,54 @@ export interface EnquiryCreatedDto {
   received: boolean;
 }
 
+export type EnquiryStatus = typeof EnquiryStatus[keyof typeof EnquiryStatus];
+
+
+export const EnquiryStatus = {
+  NEW: 'NEW',
+  HANDLED: 'HANDLED',
+} as const;
+
+export interface EnquiryDto {
+  id: string;
+  type: EnquiryType;
+  status: EnquiryStatus;
+  name: string;
+  email: string;
+  /** @nullable */
+  phone: string | null;
+  /** @nullable */
+  company: string | null;
+  /** @nullable */
+  bookingReference: string | null;
+  /**
+     * Where the form was sent from, e.g. "events-weddings"
+     * @nullable
+     */
+  topic: string | null;
+  message: string;
+  /** Website language the customer wrote from */
+  language: string;
+  createdAt: string;
+  /** @nullable */
+  handledAt: string | null;
+  /** @nullable */
+  handledByName: string | null;
+}
+
+export interface EnquiryPageDto {
+  items: EnquiryDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+  /** Enquiries still NEW (all types), for the inbox badge */
+  newCount: number;
+}
+
+export interface UpdateEnquiryDto {
+  status: EnquiryStatus;
+}
+
 export type HealthCheck200Status = typeof HealthCheck200Status[keyof typeof HealthCheck200Status];
 
 
@@ -1080,6 +1130,20 @@ export const PlacesDetailsLang = {
   it: 'it',
   rm: 'rm',
 } as const;
+
+export type EnquiriesListParams = {
+  /** @minimum 1 */
+  page?: number;
+  /**
+   * @minimum 1
+   * @maximum 100
+   */
+  pageSize?: number;
+  status?: EnquiryStatus;
+  type?: EnquiryType;
+  /** Search name, email, company, booking reference or message */
+  search?: string;
+};
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -4410,7 +4474,7 @@ export function useOverviewGet<TData = Awaited<ReturnType<typeof overviewGet>>, 
 
 
 
-export const getEnquiriesCreateUrl = () => {
+export const getPublicEnquiriesCreateUrl = () => {
 
 
 
@@ -4418,7 +4482,7 @@ export const getEnquiriesCreateUrl = () => {
   return `/public/enquiries`
 }
 
-export const enquiriesCreate = async (createEnquiryDto: CreateEnquiryDto, options?: Parameters<typeof http>[1]): Promise<EnquiryCreatedDto> => {
+export const publicEnquiriesCreate = async (createEnquiryDto: CreateEnquiryDto, options?: Parameters<typeof http>[1]): Promise<EnquiryCreatedDto> => {
 
     const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
     if (!h) return {};
@@ -4434,7 +4498,7 @@ export const enquiriesCreate = async (createEnquiryDto: CreateEnquiryDto, option
     }
     return headers;
   };
-return http<EnquiryCreatedDto>(getEnquiriesCreateUrl(),
+return http<EnquiryCreatedDto>(getPublicEnquiriesCreateUrl(),
   {
     ...options,
     method: 'POST',
@@ -4447,13 +4511,13 @@ return http<EnquiryCreatedDto>(getEnquiriesCreateUrl(),
 
 
 
-export const getEnquiriesCreateMutationKey = () => ['enquiriesCreate'] as const;
+export const getPublicEnquiriesCreateMutationKey = () => ['publicEnquiriesCreate'] as const;
 
-export const getEnquiriesCreateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
-): UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext> => {
+export const getPublicEnquiriesCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publicEnquiriesCreate>>, TError,PublicEnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof publicEnquiriesCreate>>, TError,PublicEnquiriesCreateMutationVariables, TContext> => {
 
-const mutationKey = getEnquiriesCreateMutationKey();
+const mutationKey = getPublicEnquiriesCreateMutationKey();
 const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -4463,10 +4527,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof enquiriesCreate>>, EnquiriesCreateMutationVariables> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof publicEnquiriesCreate>>, PublicEnquiriesCreateMutationVariables> = (props) => {
           const {data} = props ?? {};
 
-          return  enquiriesCreate(data,requestOptions)
+          return  publicEnquiriesCreate(data,requestOptions)
         }
 
 
@@ -4476,18 +4540,296 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type EnquiriesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof enquiriesCreate>>>
-    export type EnquiriesCreateMutationBody = CreateEnquiryDto
-    export type EnquiriesCreateMutationError = unknown
-    export type EnquiriesCreateMutationVariables = {data: CreateEnquiryDto}
+    export type PublicEnquiriesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof publicEnquiriesCreate>>>
+    export type PublicEnquiriesCreateMutationBody = CreateEnquiryDto
+    export type PublicEnquiriesCreateMutationError = unknown
+    export type PublicEnquiriesCreateMutationVariables = {data: CreateEnquiryDto}
 
-    export const useEnquiriesCreate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+    export const usePublicEnquiriesCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publicEnquiriesCreate>>, TError,PublicEnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof enquiriesCreate>>,
+        Awaited<ReturnType<typeof publicEnquiriesCreate>>,
         TError,
-        EnquiriesCreateMutationVariables,
+        PublicEnquiriesCreateMutationVariables,
         TContext
       > => {
-      return useMutation(getEnquiriesCreateMutationOptions(options), queryClient);
+      return useMutation(getPublicEnquiriesCreateMutationOptions(options), queryClient);
+    }
+
+export const getEnquiriesListUrl = (params?: EnquiriesListParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/enquiries?${stringifiedParams}` : `/enquiries`
+}
+
+export const enquiriesList = async (params?: EnquiriesListParams, options?: Parameters<typeof http>[1]): Promise<EnquiryPageDto> => {
+
+  return http<EnquiryPageDto>(getEnquiriesListUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getEnquiriesListQueryKey = (params?: EnquiriesListParams,) => {
+    return [
+    `/enquiries`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getEnquiriesListQueryOptions = <TData = Awaited<ReturnType<typeof enquiriesList>>, TError = unknown>(params?: EnquiriesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData>>, request?: SecondParameter<typeof http>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEnquiriesListQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof enquiriesList>>> = ({ signal }) => enquiriesList(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type EnquiriesListQueryResult = NonNullable<Awaited<ReturnType<typeof enquiriesList>>>
+export type EnquiriesListQueryError = unknown
+
+
+export function useEnquiriesList<TData = Awaited<ReturnType<typeof enquiriesList>>, TError = unknown>(
+ params: undefined |  EnquiriesListParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof enquiriesList>>,
+          TError,
+          Awaited<ReturnType<typeof enquiriesList>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesList<TData = Awaited<ReturnType<typeof enquiriesList>>, TError = unknown>(
+ params?: EnquiriesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof enquiriesList>>,
+          TError,
+          Awaited<ReturnType<typeof enquiriesList>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesList<TData = Awaited<ReturnType<typeof enquiriesList>>, TError = unknown>(
+ params?: EnquiriesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData>>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesList<TData = Awaited<ReturnType<typeof enquiriesList>>, TError = unknown>(
+ params?: EnquiriesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesList>>, TError, TData>>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getEnquiriesListQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getEnquiriesGetUrl = (id: string,) => {
+
+
+
+
+  return `/enquiries/${id}`
+}
+
+export const enquiriesGet = async (id: string, options?: Parameters<typeof http>[1]): Promise<EnquiryDto> => {
+
+  return http<EnquiryDto>(getEnquiriesGetUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getEnquiriesGetQueryKey = (id: string,) => {
+    return [
+    `/enquiries/${id}`
+    ] as const;
+    }
+
+
+export const getEnquiriesGetQueryOptions = <TData = Awaited<ReturnType<typeof enquiriesGet>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData>>, request?: SecondParameter<typeof http>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEnquiriesGetQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof enquiriesGet>>> = ({ signal }) => enquiriesGet(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type EnquiriesGetQueryResult = NonNullable<Awaited<ReturnType<typeof enquiriesGet>>>
+export type EnquiriesGetQueryError = unknown
+
+
+export function useEnquiriesGet<TData = Awaited<ReturnType<typeof enquiriesGet>>, TError = unknown>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof enquiriesGet>>,
+          TError,
+          Awaited<ReturnType<typeof enquiriesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesGet<TData = Awaited<ReturnType<typeof enquiriesGet>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof enquiriesGet>>,
+          TError,
+          Awaited<ReturnType<typeof enquiriesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesGet<TData = Awaited<ReturnType<typeof enquiriesGet>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData>>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useEnquiriesGet<TData = Awaited<ReturnType<typeof enquiriesGet>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof enquiriesGet>>, TError, TData>>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getEnquiriesGetQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getEnquiriesUpdateUrl = (id: string,) => {
+
+
+
+
+  return `/enquiries/${id}`
+}
+
+export const enquiriesUpdate = async (id: string,
+    updateEnquiryDto: UpdateEnquiryDto, options?: Parameters<typeof http>[1]): Promise<EnquiryDto> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return http<EnquiryDto>(getEnquiriesUpdateUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateEnquiryDto)
+  }
+);}
+
+
+
+
+
+export const getEnquiriesUpdateMutationKey = () => ['enquiriesUpdate'] as const;
+
+export const getEnquiriesUpdateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesUpdate>>, TError,EnquiriesUpdateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof enquiriesUpdate>>, TError,EnquiriesUpdateMutationVariables, TContext> => {
+
+const mutationKey = getEnquiriesUpdateMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof enquiriesUpdate>>, EnquiriesUpdateMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  enquiriesUpdate(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type EnquiriesUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof enquiriesUpdate>>>
+    export type EnquiriesUpdateMutationBody = UpdateEnquiryDto
+    export type EnquiriesUpdateMutationError = unknown
+    export type EnquiriesUpdateMutationVariables = {id: string;data: UpdateEnquiryDto}
+
+    export const useEnquiriesUpdate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesUpdate>>, TError,EnquiriesUpdateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof enquiriesUpdate>>,
+        TError,
+        EnquiriesUpdateMutationVariables,
+        TContext
+      > => {
+      return useMutation(getEnquiriesUpdateMutationOptions(options), queryClient);
     }
