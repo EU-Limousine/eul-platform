@@ -1,0 +1,43 @@
+name: Deploy
+
+# After CI passes on main: deploy to STAGING automatically, then PRODUCTION after your approval
+# (GitHub environment "production" has you as required reviewer). Same commit in both.
+# Each environment builds its own images (website settings such as the API address are baked in).
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Where to deploy'
+        type: choice
+        options: [staging, staging-then-production]
+        default: staging
+      seed:
+        description: 'Also run the seed job (first deploy of an environment only: creates the first admin)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write # Workload Identity Federation: no stored Google key
+
+jobs:
+  staging:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    uses: ./.github/workflows/deploy-env.yml
+    with:
+      environment: staging
+      ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      seed: ${{ inputs.seed == true }}
+
+  production:
+    needs: staging
+    if: github.event_name == 'workflow_run' || inputs.target == 'staging-then-production'
+    uses: ./.github/workflows/deploy-env.yml
+    with:
+      environment: production
+      ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      seed: ${{ inputs.seed == true }}

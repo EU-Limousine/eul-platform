@@ -2,8 +2,11 @@
 # Build from the repo root:  docker build -f apps/api/Dockerfile -t backend .
 #   API:     node apps/api/dist/main.js            (default)
 #   Worker:  node apps/worker/dist/main.js
-#   Jobs:    npm run db:deploy  /  npm run db:seed
+#   Jobs:    npm run migrate:deploy -w @eul/db  /  npm run seed -w @eul/db
 FROM node:22-slim AS base
+# Prisma's migration engine needs OpenSSL; the slim image does not include it.
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 FROM base AS prune
