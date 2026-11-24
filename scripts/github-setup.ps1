@@ -40,7 +40,7 @@ Ok "default branch = dev (new PRs target dev by default)"
 
 Step "Branch protection: dev"
 Put-Json "repos/$Repo/branches/dev/protection" @{
-  required_status_checks        = @{ strict = $false; contexts = @('check') }
+  required_status_checks        = @{ strict = $false; contexts = @('check', 'terraform') }
   enforce_admins                = $false
   required_pull_request_reviews = @{ required_approving_review_count = $Reviewers; dismiss_stale_reviews = $true }
   restrictions                  = $null
@@ -51,7 +51,7 @@ Ok "PR required, CI 'check' must pass, no force-push, cannot be deleted"
 
 Step "Branch protection: main"
 Put-Json "repos/$Repo/branches/main/protection" @{
-  required_status_checks        = @{ strict = $false; contexts = @('check', 'promotion-guard', 'staging/verified') }
+  required_status_checks        = @{ strict = $false; contexts = @('check', 'terraform', 'promotion-guard', 'staging/verified') }
   enforce_admins                = $true
   required_pull_request_reviews = @{ required_approving_review_count = $Reviewers; dismiss_stale_reviews = $true }
   restrictions                  = $null
@@ -78,8 +78,8 @@ Ok "E2E_ADMIN_EMAIL (variable) + E2E_ADMIN_PASSWORD (secret) on the staging envi
 
 Write-Host @"
 
-Still to add per environment (printed by: EUL_ENV=<env> bash infrastructure/gcp/3-github.sh):
-  GCP_PROJECT_ID, GCP_WIF_PROVIDER, GCP_DEPLOYER, TURNSTILE_SITE_KEY
+Still to add per environment (printed by: EUL_ENV=<env> bash infrastructure/terraform/tf.sh output):
+  GCP_PROJECT_ID, GCP_WIF_PROVIDER, GCP_DEPLOYER, and TURNSTILE_SITE_KEY (empty on staging)
   → GitHub → Settings → Environments → staging / production → Environment variables.
 Optional: Settings → Environments → production → Required reviewers (an extra click before each release).
 "@

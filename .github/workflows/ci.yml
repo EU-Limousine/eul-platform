@@ -33,3 +33,20 @@ jobs:
         run: npx turbo run typecheck test build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+
+  terraform:
+    name: terraform
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure/terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format (run "terraform fmt -recursive" to fix)
+        run: terraform fmt -check -recursive -diff
+        continue-on-error: true
+      - name: Validate (no cloud access needed)
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate

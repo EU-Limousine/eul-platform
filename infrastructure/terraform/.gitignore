@@ -1,0 +1,7 @@
+# Terraform working files (state lives in the GCS bucket, never in Git)
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfplan
+# .terraform.lock.hcl IS committed: it pins provider versions.
