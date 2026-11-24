@@ -285,8 +285,7 @@
       "priceNote": "Your fixed price is calculated from the route, the vehicle and the passengers on the next step.",
       "back": "Back",
       "continue": "Continue",
-      "passengers_one": "{count} passenger",
-      "passengers_other": "{count} passengers"
+      "passengers": "{count, plural, one {# passenger} other {# passengers}}"
     },
     "details": {
       "title": "Your details",
@@ -356,8 +355,6 @@
       "title": "Your trip and price",
       "route": "{km} km · about {duration}",
       "estimated": "estimated distance",
-      "passengers_one": "{count} passenger",
-      "passengers_other": "{count} passengers",
       "changeJourney": "Change journey",
       "changeVehicle": "Change vehicle",
       "calculating": "Calculating your price from the route…",
@@ -369,7 +366,8 @@
       "time": "Time ({duration})",
       "minimum": "Minimum fare applies",
       "total": "Total price",
-      "fixedNote": "Fixed price for the whole trip."
+      "fixedNote": "Fixed price for the whole trip.",
+      "passengers": "{count, plural, one {# passenger} other {# passengers}}"
     }
   },
   "legal": {

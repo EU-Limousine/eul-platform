@@ -284,8 +284,7 @@
       "priceNote": "Din faste pris beregnes ud fra ruten, bilen og antallet af passagerer i næste trin.",
       "back": "Tilbage",
       "continue": "Fortsæt",
-      "passengers_one": "{count} passager",
-      "passengers_other": "{count} passagerer"
+      "passengers": "{count, plural, one {# passager} other {# passagerer}}"
     },
     "details": {
       "title": "Dine oplysninger",
@@ -355,8 +354,6 @@
       "title": "Din tur og pris",
       "route": "{km} km · ca. {duration}",
       "estimated": "anslået afstand",
-      "passengers_one": "{count} passager",
-      "passengers_other": "{count} passagerer",
       "changeJourney": "Ændr tur",
       "changeVehicle": "Skift bil",
       "calculating": "Beregner din pris ud fra ruten…",
@@ -368,7 +365,8 @@
       "time": "Tid ({duration})",
       "minimum": "Minimumspris gælder",
       "total": "Samlet pris",
-      "fixedNote": "Fast pris for hele turen."
+      "fixedNote": "Fast pris for hele turen.",
+      "passengers": "{count, plural, one {# passager} other {# passagerer}}"
     }
   },
   "legal": {
