@@ -2,12 +2,10 @@
 # Step 4 — HTTPS load balancer for the custom domains (run AFTER the first deploy).
 #   bash infrastructure/gcp/4-load-balancer.sh
 # Why not Cloud Run domain mapping: Google marks it Preview and "not recommended for production".
-# One global external Application Load Balancer per project serves (production / staging):
-#   eulimousine.com       / staging.eulimousine.com      → eul-web   (production: www → 301 to apex)
-#   app.eulimousine.com   / app-staging.eulimousine.com  → eul-dashboard
-#   api.eulimousine.com   / api-staging.eulimousine.com  → eul-api (WebSockets supported)
+# One global external Application Load Balancer serves:
+#   eulimousine.com → eul-web      www.eulimousine.com → 301 to eulimousine.com
+#   app.eulimousine.com → eul-dashboard      api.eulimousine.com → eul-api (WebSockets supported)
 # with one Google-managed certificate. Afterwards the run.app URLs are closed to the internet.
-# Staging answers every request with "X-Robots-Tag: noindex" so search engines never list it.
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
@@ -27,26 +25,10 @@ for S in web api dashboard; do
     gcloud compute backend-services add-backend "be-$S" --global \
       --network-endpoint-group="neg-$S" --network-endpoint-group-region="$REGION"
   fi
-  if [ "$NOINDEX" = "true" ]; then
-    gcloud compute backend-services update "be-$S" --global \
-      --custom-response-header='X-Robots-Tag: noindex, nofollow' --quiet >/dev/null
-  fi
   ok "be-$S → eul-$S"
 done
 
 log "URL map (host routing + www redirect)"
-WWW_HOSTRULE=""; WWW_MATCHER=""; CERT_DOMAINS="${WEB_HOST},${APP_HOST},${API_HOST}"
-if [ "$WWW_REDIRECT" = "true" ]; then
-  WWW_HOSTRULE="- hosts: ['www.${WEB_HOST}']
-  pathMatcher: www"
-  WWW_MATCHER="- name: www
-  defaultUrlRedirect:
-    hostRedirect: ${WEB_HOST}
-    redirectResponseCode: MOVED_PERMANENTLY_DEFAULT
-    httpsRedirect: true
-    stripQuery: false"
-  CERT_DOMAINS="${WEB_HOST},www.${WEB_HOST},${APP_HOST},${API_HOST}"
-fi
 URLMAP_FILE=$(mktemp)
 cat >"$URLMAP_FILE" <<EOF
 name: ${LB_NAME}
@@ -56,13 +38,19 @@ hostRules:
   pathMatcher: dashboard
 - hosts: ['${API_HOST}']
   pathMatcher: api
-${WWW_HOSTRULE}
+- hosts: ['www.${DOMAIN}']
+  pathMatcher: www
 pathMatchers:
 - name: dashboard
   defaultService: projects/${PROJECT_ID}/global/backendServices/be-dashboard
 - name: api
   defaultService: projects/${PROJECT_ID}/global/backendServices/be-api
-${WWW_MATCHER}
+- name: www
+  defaultUrlRedirect:
+    hostRedirect: ${DOMAIN}
+    redirectResponseCode: MOVED_PERMANENTLY_DEFAULT
+    httpsRedirect: true
+    stripQuery: false
 EOF
 gcloud compute url-maps import "$LB_NAME" --global --source="$URLMAP_FILE" --quiet
 rm -f "$URLMAP_FILE"
@@ -71,7 +59,7 @@ ok "$LB_NAME"
 log "Google-managed certificate (becomes ACTIVE only after the DNS records point here)"
 gcloud compute ssl-certificates describe eul-cert --global >/dev/null 2>&1 \
   || gcloud compute ssl-certificates create eul-cert --global \
-    --domains="$CERT_DOMAINS"
+    --domains="${DOMAIN},www.${DOMAIN},${APP_HOST},${API_HOST}"
 
 log "HTTPS frontend (443)"
 gcloud compute target-https-proxies describe eul-https-proxy --global >/dev/null 2>&1 \
@@ -103,15 +91,18 @@ done
 cat <<EOF
 
 ────────────────────────────────────────────────────────────────────────
-Add these records in Cloudflare → ${BASE_DOMAIN} → DNS → Records
+Add these records in Cloudflare → ${DOMAIN} → DNS → Records
 (DNS lives at Cloudflare since November 2026, D-19; the domain stays registered at Hostinger):
 
-  Type  Name                         IPv4 address      Proxy status
-$(for H in $(echo "$CERT_DOMAINS" | tr ',' ' '); do N="${H%.${BASE_DOMAIN}}"; [ "$H" = "$BASE_DOMAIN" ] && N="@"; printf '  A     %-28s %-17s DNS only (grey cloud)\n' "$N" "$IP"; done)
+  Type  Name   IPv4 address      Proxy status
+  A     @      ${IP}    DNS only (grey cloud)
+  A     www    ${IP}    DNS only (grey cloud)
+  A     app    ${IP}    DNS only (grey cloud)
+  A     api    ${IP}    DNS only (grey cloud)
 
 • DNS only is required: Google issues and renews the certificate only while the names point
   straight at this IP. Never switch these to Proxied (orange cloud).
-• Delete any OTHER A/AAAA/CNAME records with these names.
+• Delete any OTHER A/AAAA/CNAME records for @, www, app and api.
 • Do NOT touch MX, TXT (SPF, DKIM, DMARC) or the Hostinger mail records: staff email keeps working.
 • The certificate turns ACTIVE 15–60 minutes after DNS resolves. Check with:
     gcloud compute ssl-certificates describe eul-cert --global --format='value(managed.status,managed.domainStatus)'

@@ -1,8 +1,7 @@
 name: Deploy
 
-# After CI passes on main: deploy to STAGING automatically, then PRODUCTION after your approval
-# (GitHub environment "production" has you as required reviewer). Same commit in both.
-# Each environment builds its own images (website settings such as the API address are baked in).
+# Runs after CI passes on main (and on demand). Builds the three images, then
+# infrastructure/gcp/deploy.sh migrates the database and deploys every service.
 on:
   workflow_run:
     workflows: [CI]
@@ -10,13 +9,8 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      target:
-        description: 'Where to deploy'
-        type: choice
-        options: [staging, staging-then-production]
-        default: staging
       seed:
-        description: 'Also run the seed job (first deploy of an environment only: creates the first admin)'
+        description: 'Also run the seed job (first deploy only: creates the first admin)'
         type: boolean
         default: false
 
@@ -24,20 +18,56 @@ permissions:
   contents: read
   id-token: write # Workload Identity Federation: no stored Google key
 
-jobs:
-  staging:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    uses: ./.github/workflows/deploy-env.yml
-    with:
-      environment: staging
-      ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-      seed: ${{ inputs.seed == true }}
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false # never stop a release halfway through a migration
 
-  production:
-    needs: staging
-    if: github.event_name == 'workflow_run' || inputs.target == 'staging-then-production'
-    uses: ./.github/workflows/deploy-env.yml
-    with:
-      environment: production
-      ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-      seed: ${{ inputs.seed == true }}
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: production # add yourself as required reviewer in GitHub settings
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      DOMAIN: ${{ vars.DOMAIN }}
+      TAG: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOYER }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push images
+        env:
+          TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+        run: |
+          source infrastructure/gcp/config.sh
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+
+          docker build -f apps/api/Dockerfile -t "$IMAGE_BASE/backend:$TAG" .
+
+          # NEXT_PUBLIC_* values are public and baked into the website at build time.
+          docker build -f apps/website/Dockerfile \
+            --build-arg NEXT_PUBLIC_API_URL="https://${API_HOST}" \
+            --build-arg SITE_URL="https://${WEB_HOST}" \
+            --build-arg NEXT_PUBLIC_DEFAULT_CURRENCY="$DEFAULT_CURRENCY" \
+            --build-arg NEXT_PUBLIC_HOME_VARIANT="$HOME_VARIANT" \
+            --build-arg NEXT_PUBLIC_CONSENT_CATEGORIES="$CONSENT_CATEGORIES" \
+            --build-arg NEXT_PUBLIC_TURNSTILE_SITE_KEY="$TURNSTILE_SITE_KEY" \
+            -t "$IMAGE_BASE/web:$TAG" .
+
+          # The dashboard reads its API URL at container start (40-config.sh): one image for every environment.
+          docker build -f apps/dashboard/Dockerfile -t "$IMAGE_BASE/dashboard:$TAG" .
+
+          docker push "$IMAGE_BASE/backend:$TAG"
+          docker push "$IMAGE_BASE/web:$TAG"
+          docker push "$IMAGE_BASE/dashboard:$TAG"
+
+      - name: Migrate and deploy
+        run: bash infrastructure/gcp/deploy.sh "$TAG" ${{ inputs.seed && '--seed' || '' }}

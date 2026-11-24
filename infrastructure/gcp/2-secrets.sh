@@ -84,4 +84,4 @@ for S in database-url redis-url smtp-pass; do grant "$S" sa-worker; done
 for S in database-url seed-admin-password; do grant "$S" sa-migrate; done
 ok "sa-api, sa-worker and sa-migrate can read only their own secrets"
 
-log "Done. Next: EUL_ENV=$EUL_ENV bash infrastructure/gcp/3-github.sh"
+log "Done. Next: bash infrastructure/gcp/3-github.sh"
