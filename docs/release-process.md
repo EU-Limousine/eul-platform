@@ -84,8 +84,13 @@ Actions → **Rollback** → environment **production** → Run. Traffic goes to
 about a minute; the smoke test confirms. Then fix forward (scenario 7 or 8). The next normal release
 moves traffic to the new version again automatically.
 
-### 10. Change only infrastructure settings (memory, instances, env values in `deploy.sh`/`config.sh`)
-Same path as code: PR → dev (staging gets it) → dev → main (production gets it).
+### 10. Change settings
+- **Cloud Run settings** (memory, instances, env values in `deploy.sh` / `config.sh`): same path as
+  code: PR → dev (staging gets it) → dev → main (production gets it).
+- **Infrastructure** (database size, Redis, load balancer, alerts, budgets in `infrastructure/terraform`):
+  PR → dev as usual (CI runs `terraform validate`), then in Cloud Shell
+  `EUL_ENV=staging bash infrastructure/terraform/tf.sh plan`, check the plan, `… apply`;
+  after the release to main, the same for `EUL_ENV=production`.
 
 ### 11. Change a secret (password, key)
 Not through Git. Cloud Shell: `printf %s 'NEW' | gcloud secrets versions add <name> --data-file=-`
@@ -111,16 +116,16 @@ migration is **backwards-compatible** (CLAUDE.md §5 Database: expand → migrat
   reads; release 3 removes the old column. The previous release must always still work.
 - If a migration itself is wrong in production: write a new corrective migration and release it
   (scenario 8). Restore from backup only as the last resort (point-in-time recovery, see
-  `infrastructure/gcp/6-backup-restore-test.sh` for the clone command).
+  `infrastructure/gcp/backup-restore-test.sh` for the clone command).
 
 ## One-time setup
 
-1. GCP side for both projects: `infrastructure/gcp/README.md`.
+1. GCP side for both projects: `infrastructure/README.md` (Terraform).
 2. GitHub side (your PC, GitHub CLI): `.\scripts\github-setup.ps1 -Repo "<owner>/<repo>"` —
    creates `dev`, makes it the default branch, sets the protections above, the environments and
    the staging test login (`E2E_ADMIN_EMAIL` variable + `E2E_ADMIN_PASSWORD` secret).
 3. Add `GCP_PROJECT_ID`, `GCP_WIF_PROVIDER`, `GCP_DEPLOYER`, `TURNSTILE_SITE_KEY` to each environment
-   (printed by `EUL_ENV=<env> bash infrastructure/gcp/3-github.sh`).
+   (printed by `EUL_ENV=<env> bash infrastructure/terraform/tf.sh output`).
 4. Delete the old `.github/workflows/deploy.yml` if it exists.
 5. Optional: GitHub → Settings → Environments → production → *Required reviewers* for one extra
    click before each production release.

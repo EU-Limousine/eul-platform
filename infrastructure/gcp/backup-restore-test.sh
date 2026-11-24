@@ -2,12 +2,12 @@
 # Acceptance check 13: "Backups restore successfully on a test server".
 # Restores production to a throw-away instance (point-in-time, 10 minutes ago), checks that the app
 # can read it, then deletes everything it created. Production is only read, never changed.
-#   bash infrastructure/gcp/6-backup-restore-test.sh <image-tag>
+#   bash infrastructure/gcp/backup-restore-test.sh <image-tag>
 # Takes 15–30 minutes and costs a few cents (the test instance lives for under an hour).
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
-TAG="${1:?usage: 6-backup-restore-test.sh <image-tag of a deployed release>}"
+TAG="${1:?usage: backup-restore-test.sh <image-tag of a deployed release>}"
 TEST_INSTANCE="eul-pg-restore-$(date +%Y%m%d%H%M)"
 TEST_CONNECTION="${PROJECT_ID}:${REGION}:${TEST_INSTANCE}"
 POINT_IN_TIME=$(date -u -d '-10 minutes' +%Y-%m-%dT%H:%M:%SZ)
