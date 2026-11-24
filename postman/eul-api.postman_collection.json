@@ -76,7 +76,7 @@
           ]
         },
         {
-          "name": "Address search too short \u2192 422",
+          "name": "Address search too short → 422",
           "request": {
             "method": "GET",
             "header": [],
@@ -158,7 +158,7 @@
           ]
         },
         {
-          "name": "Quote: pickup too soon \u2192 422",
+          "name": "Quote: pickup too soon → 422",
           "request": {
             "method": "POST",
             "header": [
@@ -208,7 +208,7 @@
           ]
         },
         {
-          "name": "Quote: invalid body \u2192 422 with field errors",
+          "name": "Quote: invalid body → 422 with field errors",
           "request": {
             "method": "POST",
             "header": [
@@ -249,6 +249,47 @@
               }
             }
           ]
+        },
+        {
+          "name": "Enquiry: invalid body → 422 with field errors",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-turnstile-token",
+                "value": "{{turnstileToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/public/enquiries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"GENERAL\",\n  \"name\": \"X\",\n  \"email\": \"not-an-email\",\n  \"message\": \"short\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const turnstileBlocked = pm.response.code === 403 && pm.environment.get('allowWrites') !== 'true';",
+                  "if (turnstileBlocked) return;",
+                  "pm.test('422', () => pm.response.to.have.status(422));",
+                  "const b = pm.response.json();",
+                  "pm.test('field errors for name, email, message', () => pm.expect(Object.keys(b.fieldErrors || {})).to.include.members(['name', 'email', 'message']));"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -257,7 +298,7 @@
       "description": "Logins: 2 attempts per run (the API allows 10 a minute).",
       "item": [
         {
-          "name": "No token \u2192 401",
+          "name": "No token → 401",
           "request": {
             "method": "GET",
             "header": [],
@@ -276,7 +317,7 @@
           ]
         },
         {
-          "name": "Bad token \u2192 401",
+          "name": "Bad token → 401",
           "request": {
             "method": "GET",
             "header": [
@@ -300,7 +341,7 @@
           ]
         },
         {
-          "name": "Wrong password \u2192 401",
+          "name": "Wrong password → 401",
           "request": {
             "method": "POST",
             "header": [
@@ -484,7 +525,7 @@
           ]
         },
         {
-          "name": "Bookings: pageSize over 100 \u2192 422",
+          "name": "Bookings: pageSize over 100 → 422",
           "request": {
             "method": "GET",
             "header": [
@@ -508,7 +549,7 @@
           ]
         },
         {
-          "name": "Bookings: unknown query field \u2192 422",
+          "name": "Bookings: unknown query field → 422",
           "request": {
             "method": "GET",
             "header": [
@@ -532,7 +573,7 @@
           ]
         },
         {
-          "name": "Booking: not a UUID \u2192 400/422",
+          "name": "Booking: not a UUID → 400/422",
           "request": {
             "method": "GET",
             "header": [
@@ -556,7 +597,7 @@
           ]
         },
         {
-          "name": "Booking: unknown id \u2192 404",
+          "name": "Booking: unknown id → 404",
           "request": {
             "method": "GET",
             "header": [
@@ -828,7 +869,7 @@
           ]
         },
         {
-          "name": "Checkout without Idempotency-Key \u2192 rejected",
+          "name": "Checkout without Idempotency-Key → rejected",
           "request": {
             "method": "POST",
             "header": [
@@ -934,7 +975,7 @@
           ]
         },
         {
-          "name": "Checkout again, same key \u2192 same checkout",
+          "name": "Checkout again, same key → same checkout",
           "request": {
             "method": "POST",
             "header": [
@@ -987,7 +1028,7 @@
           ]
         },
         {
-          "name": "Checkout status before paying \u2192 PENDING",
+          "name": "Checkout status before paying → PENDING",
           "request": {
             "method": "GET",
             "header": [],
@@ -1018,7 +1059,7 @@
           ]
         },
         {
-          "name": "Test payment: Pay \u2192 303 to website",
+          "name": "Test payment: Pay → 303 to website",
           "request": {
             "method": "POST",
             "header": [],
@@ -1053,7 +1094,7 @@
           }
         },
         {
-          "name": "Checkout status \u2192 PAID with reference",
+          "name": "Checkout status → PAID with reference",
           "request": {
             "method": "GET",
             "header": [],
@@ -1267,7 +1308,7 @@
           ]
         },
         {
-          "name": "Create vehicle: missing fields \u2192 422",
+          "name": "Create vehicle: missing fields → 422",
           "request": {
             "method": "POST",
             "header": [
@@ -1369,7 +1410,7 @@
           ]
         },
         {
-          "name": "Driver cannot open the dashboard \u2192 403",
+          "name": "Driver cannot open the dashboard → 403",
           "request": {
             "method": "POST",
             "header": [
@@ -1549,7 +1590,7 @@
           ]
         },
         {
-          "name": "Assign again \u2192 409 (first acceptance wins)",
+          "name": "Assign again → 409 (first acceptance wins)",
           "request": {
             "method": "POST",
             "header": [
@@ -1592,6 +1633,44 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiry (contact form)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-turnstile-token",
+                "value": "{{turnstileToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/public/enquiries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"GENERAL\",\n  \"name\": \"Postman Tester\",\n  \"email\": \"postman@example.com\",\n  \"topic\": \"contact\",\n  \"message\": \"Automated test message from the Postman collection.\",\n  \"language\": \"en\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201', () => pm.response.to.have.status(201));",
+                  "pm.test('received', () => pm.expect(pm.response.json()).to.eql({ received: true }));"
                 ]
               }
             }
@@ -1740,7 +1819,7 @@
           ]
         },
         {
-          "name": "Test payment: Fail \u2192 303",
+          "name": "Test payment: Fail → 303",
           "request": {
             "method": "POST",
             "header": [],
@@ -1775,7 +1854,7 @@
           }
         },
         {
-          "name": "Failed checkout \u2192 FAILED, no booking",
+          "name": "Failed checkout → FAILED, no booking",
           "request": {
             "method": "GET",
             "header": [],
@@ -1834,7 +1913,7 @@
           ]
         },
         {
-          "name": "Refresh after logout \u2192 401",
+          "name": "Refresh after logout → 401",
           "request": {
             "method": "POST",
             "header": [],

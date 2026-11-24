@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { COMPANY } from '@/config/site';
 import { Link } from '@/i18n/navigation';
-import { SERVICE_KEYS } from './home/content';
 import { LEGAL_PAGES } from './legal-pages';
+import { SERVICE_PAGES } from './page/services-data';
 import { Logo } from './logo';
 import { Container } from './ui';
 
@@ -23,7 +23,8 @@ const SOCIAL_LABELS: Record<keyof typeof COMPANY.social, string> = {
 export function SiteFooter() {
   const t = useTranslations('footer');
   const nav = useTranslations('header.nav');
-  const services = useTranslations('home.services.items');
+  const services = useTranslations('pages.services.items');
+  const pages = useTranslations('pages.common.footerLinks');
   const legal = useTranslations('legal');
   const socials = (Object.keys(COMPANY.social) as (keyof typeof COMPANY.social)[]).filter((k) => COMPANY.social[k]);
   const hasContact = COMPANY.phone || COMPANY.email || COMPANY.address;
@@ -48,18 +49,28 @@ export function SiteFooter() {
         </div>
 
         <FooterColumn title={t('quickLinks')}>
-          {(['home', 'services', 'fleet', 'about'] as const).map((key) => (
-            <li key={key}>
-              <Link href={key === 'home' ? '/' : `/#${key}`} className="hover:text-site-gold">{nav(key)}</Link>
+          {(
+            [
+              ['/services', nav('services')],
+              ['/business', nav('business')],
+              ['/fleet', nav('fleet')],
+              ['/service-areas', pages('areas')],
+              ['/about', nav('about')],
+              ['/faq', pages('faq')],
+              ['/contact', nav('contact')],
+            ] as const
+          ).map(([href, label]) => (
+            <li key={href}>
+              <Link href={href} className="hover:text-site-gold">{label}</Link>
             </li>
           ))}
           <li><Link href="/book" className="hover:text-site-gold">{t('bookOnline')}</Link></li>
         </FooterColumn>
 
         <FooterColumn title={t('services')}>
-          {SERVICE_KEYS.map((key) => (
-            <li key={key}>
-              <Link href="/#services" className="hover:text-site-gold">{services(`${key}.title`)}</Link>
+          {SERVICE_PAGES.map((page) => (
+            <li key={page.slug}>
+              <Link href={`/services/${page.slug}`} className="hover:text-site-gold">{services(`${page.key}.title`)}</Link>
             </li>
           ))}
         </FooterColumn>

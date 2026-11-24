@@ -19,6 +19,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { SparesModule } from './dispatch/spares';
 import { PlacesModule } from './places/places';
 import { OverviewModule } from './reports/overview';
+import { EnquiriesModule } from './enquiries/enquiries';
 import { HealthModule } from './health/health.controller';
 import { PrismaModule } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
@@ -69,6 +70,7 @@ const isDev = process.env.NODE_ENV !== 'production';
     SparesModule,
     PlacesModule,
     OverviewModule,
+    EnquiriesModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ErrorFilter },

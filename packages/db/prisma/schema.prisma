@@ -546,3 +546,37 @@ model NotificationLog {
   @@index([createdAt])
   @@map("notification_logs")
 }
+
+// ───────── Website enquiries (contact, business, events/groups) ─────────
+
+enum EnquiryType {
+  GENERAL
+  BUSINESS
+  EVENT
+}
+
+enum EnquiryStatus {
+  NEW
+  HANDLED
+}
+
+/** A message from the website's contact, business or event forms. Staff are emailed; nothing is auto-answered. */
+model Enquiry {
+  id               String        @id @default(uuid()) @db.Uuid
+  type             EnquiryType
+  status           EnquiryStatus @default(NEW)
+  name             String
+  email            String
+  phone            String?
+  company          String?
+  bookingReference String?       @map("booking_reference")
+  /** e.g. service page the event/group form was sent from */
+  topic            String?
+  message          String
+  language         String        @default("en")
+  createdAt        DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  handledAt        DateTime?     @map("handled_at") @db.Timestamptz
+
+  @@index([status, createdAt])
+  @@map("enquiries")
+}

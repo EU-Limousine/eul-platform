@@ -1,2 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /en/book
+Disallow: /da/book
+Disallow: /de/book
+Disallow: /fr/book
+Disallow: /es/book
+Disallow: /it/book
+Disallow: /rm/book
+
+Sitemap: https://eulimousine.com/sitemap.xml

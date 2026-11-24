@@ -14,7 +14,8 @@
       "services": "Services",
       "fleet": "Fleet",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "business": "Business"
     }
   },
   "home": {
@@ -627,5 +628,626 @@
     "directions": "Get directions",
     "contactTodo": "[Contact details — add them in src/config/site.ts]",
     "rights": "© {year} EU Limousine. All rights reserved."
+  },
+  "pages": {
+    "common": {
+      "home": "Home",
+      "breadcrumbs": "Breadcrumbs",
+      "learnMore": "Learn more",
+      "getPrice": "Get a price",
+      "sendEnquiry": "Send an enquiry",
+      "howItWorks": "How it works",
+      "suitableVehicles": "Suitable vehicles",
+      "vehicleNote": "The vehicle shown is an example of the class. You get this class or a similar vehicle.",
+      "pricingTitle": "Pricing",
+      "pricingOnline": "You see a fixed price for the whole trip before you pay. It is calculated from the route, the vehicle class and the number of passengers.",
+      "pricingEnquiry": "This service is priced on request, because it depends on your plan. Send the form and we will reply with an offer.",
+      "faqTitle": "Questions",
+      "related": "Other services",
+      "footerLinks": {
+        "areas": "Service areas",
+        "faq": "FAQ"
+      },
+      "cta": {
+        "title": "Ready when you are",
+        "text": "Get a fixed price for your journey in a few steps.",
+        "book": "Book a ride",
+        "contact": "Contact us"
+      }
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Chauffeur services in Copenhagen",
+      "text": "Airport transfers, hourly hire, journeys between cities and transport for events and groups.",
+      "metaTitle": "Chauffeur services in Copenhagen | EU Limousine",
+      "metaDescription": "Airport transfers, chauffeur by the hour, city-to-city, VIP, events, tours and group transport in Copenhagen.",
+      "business": {
+        "title": "Business travel",
+        "text": "Transport for executives, guests and events, booked by your team."
+      },
+      "items": {
+        "airport": {
+          "title": "Airport transfers",
+          "short": "To and from Copenhagen Airport (CPH) at a fixed price.",
+          "metaTitle": "Copenhagen airport transfer | EU Limousine",
+          "hero": "To and from Copenhagen Airport (CPH) in a private car with a chauffeur, at a fixed price.",
+          "introTitle": "What you get",
+          "intro": "Book online in a few steps. Add your flight number so your chauffeur has it with the booking.",
+          "included": [
+            "A fixed price for the whole trip, shown before you pay",
+            "Your flight number on the booking",
+            "Email confirmation with your booking reference",
+            "Your chauffeur's name, phone and vehicle by email once assigned",
+            "Vehicle classes for 1 to 7 passengers with luggage",
+            "Booking for someone else, with the passenger's name and phone"
+          ],
+          "steps": [
+            {
+              "title": "Enter your journey",
+              "text": "Pickup, destination, date, time and number of passengers in the booking form."
+            },
+            {
+              "title": "Choose a vehicle and see your price",
+              "text": "Pick a vehicle class that fits your group. The fixed price is calculated from the route before you pay."
+            },
+            {
+              "title": "Pay and get your confirmation",
+              "text": "You receive an email with your booking reference straight away, and a second email with your chauffeur's name, phone and vehicle once a chauffeur is assigned."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Can I book a transfer for someone else?",
+              "a": "Yes. Tick \"I am booking for someone else\" and add the passenger's name and phone. You receive the confirmation emails."
+            },
+            {
+              "q": "Why do you ask for my flight number?",
+              "a": "It is added to your booking so your chauffeur knows which flight you arrive on."
+            },
+            {
+              "q": "How is the price calculated?",
+              "a": "From the route between your pickup and destination, the vehicle class and the number of passengers. You see the fixed price before you pay."
+            }
+          ]
+        },
+        "hourly": {
+          "title": "Chauffeur by the hour",
+          "short": "A car and chauffeur at your disposal for meetings, shopping or a day in the city.",
+          "metaTitle": "Chauffeur by the hour in Copenhagen | EU Limousine",
+          "hero": "A car and chauffeur at your disposal, for as long as you need.",
+          "introTitle": "Your time, your plan",
+          "intro": "Ideal for a day of meetings, several stops or an evening out. Tell us your plan and we send you a price.",
+          "included": [
+            "One chauffeur and vehicle for the hours you book",
+            "Several stops on the same day",
+            "Vehicle classes for 1 to 7 passengers",
+            "A clear offer before you confirm"
+          ],
+          "steps": [
+            {
+              "title": "Tell us your plan",
+              "text": "Send the form with the date, times, places and number of guests."
+            },
+            {
+              "title": "We prepare an offer",
+              "text": "Our team checks vehicles and chauffeurs and replies by email."
+            },
+            {
+              "title": "Confirm and relax",
+              "text": "Once you accept, we plan the details with you so everything is taken care of on the day."
+            }
+          ],
+          "enquiryTitle": "Ask for a price",
+          "enquiryText": "Tell us the date, start time, how many hours and roughly where you want to go.",
+          "faq": [
+            {
+              "q": "Can I book hourly hire online?",
+              "a": "Not yet. Send the form and we reply with a price. Single journeys can be booked online straight away."
+            },
+            {
+              "q": "Can I change my plan during the day?",
+              "a": "Tell your chauffeur. Changes beyond the booked hours are agreed with our team."
+            },
+            {
+              "q": "Which vehicles can I choose?",
+              "a": "Sedans and vans from our fleet. See the vehicle classes below."
+            }
+          ]
+        },
+        "cityToCity": {
+          "title": "City to city",
+          "short": "Door-to-door journeys between cities, at a fixed price.",
+          "metaTitle": "City-to-city chauffeur from Copenhagen | EU Limousine",
+          "hero": "Door-to-door journeys between cities in a private car with a chauffeur.",
+          "introTitle": "Travel in comfort, door to door",
+          "intro": "Enter any pickup and destination in the booking form. You see the vehicle classes and a fixed price before you pay.",
+          "included": [
+            "A fixed price calculated from the route",
+            "Door-to-door, no transfers",
+            "Vehicle classes for 1 to 7 passengers",
+            "Email confirmation with your booking reference"
+          ],
+          "steps": [
+            {
+              "title": "Enter your journey",
+              "text": "Pickup, destination, date, time and number of passengers in the booking form."
+            },
+            {
+              "title": "Choose a vehicle and see your price",
+              "text": "Pick a vehicle class that fits your group. The fixed price is calculated from the route before you pay."
+            },
+            {
+              "title": "Pay and get your confirmation",
+              "text": "You receive an email with your booking reference straight away, and a second email with your chauffeur's name, phone and vehicle once a chauffeur is assigned."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Which cities can I travel to?",
+              "a": "Enter your destination in the booking form. If we can offer the journey, you see the vehicles and a fixed price."
+            },
+            {
+              "q": "Is the price per person?",
+              "a": "No. The price is for the whole vehicle and journey."
+            },
+            {
+              "q": "Can I add stops on the way?",
+              "a": "Add them in the notes for the chauffeur, or contact us before booking for a journey with several stops."
+            }
+          ]
+        },
+        "vip": {
+          "title": "VIP chauffeur",
+          "short": "Discreet, personal service for VIP guests and executives.",
+          "metaTitle": "VIP chauffeur service in Copenhagen | EU Limousine",
+          "hero": "Discreet, personal transport for VIP guests and executives.",
+          "introTitle": "Discreet and personal",
+          "intro": "Choose a First Class vehicle and add any wishes in the notes for the chauffeur.",
+          "included": [
+            "Our most comfortable vehicle classes",
+            "Booking for a guest, with their name and phone",
+            "Notes for the chauffeur with your wishes",
+            "A fixed price before you pay"
+          ],
+          "steps": [
+            {
+              "title": "Enter your journey",
+              "text": "Pickup, destination, date, time and number of passengers in the booking form."
+            },
+            {
+              "title": "Choose a vehicle and see your price",
+              "text": "Pick a vehicle class that fits your group. The fixed price is calculated from the route before you pay."
+            },
+            {
+              "title": "Pay and get your confirmation",
+              "text": "You receive an email with your booking reference straight away, and a second email with your chauffeur's name, phone and vehicle once a chauffeur is assigned."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Can my assistant book for me?",
+              "a": "Yes. They book for someone else and add your name and phone as the passenger."
+            },
+            {
+              "q": "How do I share special wishes?",
+              "a": "Write them in the notes for the chauffeur when you book, or contact us before the trip."
+            },
+            {
+              "q": "Is my booking information kept private?",
+              "a": "We use your details only for your booking. See our privacy policy."
+            }
+          ]
+        },
+        "events": {
+          "title": "Events and weddings",
+          "short": "Arrive in style on the days that matter most.",
+          "metaTitle": "Wedding and event chauffeur in Copenhagen | EU Limousine",
+          "hero": "Transport for weddings, galas and events, from one car to several vehicles.",
+          "introTitle": "Your day, planned with you",
+          "intro": "Book a single car online, or send us your plan for several vehicles, guests or a full day.",
+          "included": [
+            "One car booked online in a few steps",
+            "Several vehicles or a full day on request",
+            "Transport for the couple, family and guests",
+            "A clear offer before you confirm"
+          ],
+          "steps": [
+            {
+              "title": "Tell us your plan",
+              "text": "Send the form with the date, times, places and number of guests."
+            },
+            {
+              "title": "We prepare an offer",
+              "text": "Our team checks vehicles and chauffeurs and replies by email."
+            },
+            {
+              "title": "Confirm and relax",
+              "text": "Once you accept, we plan the details with you so everything is taken care of on the day."
+            }
+          ],
+          "enquiryTitle": "Plan your event",
+          "enquiryText": "Tell us the date, places, times and how many guests need transport.",
+          "faq": [
+            {
+              "q": "Can I book online?",
+              "a": "Yes, for a single journey. For several vehicles or a full day, send the form and we reply with an offer."
+            },
+            {
+              "q": "Can you decorate the car?",
+              "a": "Tell us what you would like in the form and we will tell you what is possible."
+            },
+            {
+              "q": "How early should I book?",
+              "a": "As early as you can, especially on popular dates. Send the form and we confirm availability."
+            }
+          ]
+        },
+        "tours": {
+          "title": "Tours and sightseeing",
+          "short": "See Copenhagen and the surroundings with your own chauffeur.",
+          "metaTitle": "Private sightseeing tours in Copenhagen | EU Limousine",
+          "hero": "See Copenhagen and the surroundings at your own pace, with your own chauffeur.",
+          "introTitle": "At your own pace",
+          "intro": "Tell us what you would like to see and how much time you have. We send you a plan and a price.",
+          "included": [
+            "A private vehicle and chauffeur",
+            "Your own route and stops",
+            "Vehicle classes for 1 to 7 passengers",
+            "A clear offer before you confirm"
+          ],
+          "steps": [
+            {
+              "title": "Tell us your plan",
+              "text": "Send the form with the date, times, places and number of guests."
+            },
+            {
+              "title": "We prepare an offer",
+              "text": "Our team checks vehicles and chauffeurs and replies by email."
+            },
+            {
+              "title": "Confirm and relax",
+              "text": "Once you accept, we plan the details with you so everything is taken care of on the day."
+            }
+          ],
+          "enquiryTitle": "Plan your tour",
+          "enquiryText": "Tell us the date, start time, number of guests and the places you would like to see.",
+          "faq": [
+            {
+              "q": "Is a guide included?",
+              "a": "Your chauffeur drives you. Tell us in the form if you would like a guide, and we tell you what is possible."
+            },
+            {
+              "q": "Can we stop and walk around?",
+              "a": "Yes. Plan your stops with us, and your chauffeur waits for you as agreed in the offer."
+            },
+            {
+              "q": "How do I get a price?",
+              "a": "Send the form. Tours depend on time and route, so we reply with an offer."
+            }
+          ]
+        },
+        "group": {
+          "title": "Group transport",
+          "short": "Vans, shuttles and coaches for teams, delegations and guests.",
+          "metaTitle": "Group transport in Copenhagen | EU Limousine",
+          "hero": "Vans, shuttles and coaches for teams, delegations and event guests.",
+          "introTitle": "One booking for the whole group",
+          "intro": "Book a van online, or send your plan for larger groups and several vehicles.",
+          "included": [
+            "Vans for up to 7 passengers, booked online",
+            "Shuttles and coaches for larger groups, on request",
+            "Several vehicles coordinated for one event",
+            "A clear offer before you confirm"
+          ],
+          "steps": [
+            {
+              "title": "Tell us your plan",
+              "text": "Send the form with the date, times, places and number of guests."
+            },
+            {
+              "title": "We prepare an offer",
+              "text": "Our team checks vehicles and chauffeurs and replies by email."
+            },
+            {
+              "title": "Confirm and relax",
+              "text": "Once you accept, we plan the details with you so everything is taken care of on the day."
+            }
+          ],
+          "enquiryTitle": "Ask for group transport",
+          "enquiryText": "Tell us the date, places, times and the number of passengers and bags.",
+          "faq": [
+            {
+              "q": "How many passengers can you carry?",
+              "a": "See the vehicle classes below. For groups larger than one vehicle, send the form and we plan several vehicles."
+            },
+            {
+              "q": "Can I book a coach online?",
+              "a": "Not yet. Coaches and large groups are priced on request."
+            },
+            {
+              "q": "Can you handle airport arrivals for a group?",
+              "a": "Yes. Send the flight details in the form and we plan the vehicles."
+            }
+          ]
+        }
+      }
+    },
+    "business": {
+      "eyebrow": "Business",
+      "title": "Business travel",
+      "text": "Reliable transport for executives, guests and events, booked by your team in a few steps.",
+      "metaTitle": "Corporate chauffeur service in Copenhagen | EU Limousine",
+      "cta": "Contact our business team",
+      "benefitsTitle": "What works for your team today",
+      "benefitsIntro": "Every booking gets a reference and email confirmations, so your team always knows what is booked.",
+      "benefits": [
+        "Book for employees and guests, with the passenger's name and phone",
+        "A fixed price before you pay",
+        "Email confirmation with the booking reference",
+        "Your chauffeur's name, phone and vehicle by email once assigned",
+        "Notes for the chauffeur, e.g. your internal reference",
+        "Business accounts with invoicing: ask our team"
+      ],
+      "useCasesTitle": "Typical trips",
+      "useCases": [
+        {
+          "title": "Airport pickups",
+          "text": "Collect guests and colleagues at Copenhagen Airport (CPH)."
+        },
+        {
+          "title": "Meetings and roadshows",
+          "text": "One car between several meetings, priced on request."
+        },
+        {
+          "title": "Events and delegations",
+          "text": "Vans, shuttles and coaches for groups, planned with you."
+        }
+      ],
+      "hotelsTitle": "Hotels and concierges",
+      "hotelsText": "Book transport for your guests the same way, or tell us about regular needs in the form below.",
+      "formTitle": "Tell us about your needs",
+      "formText": "Our team replies by email.",
+      "faq": [
+        {
+          "q": "Can we pay by invoice?",
+          "a": "Business accounts with invoicing are being prepared. Send the form and our team gets back to you."
+        },
+        {
+          "q": "Can several people in our company book?",
+          "a": "Yes. Anyone can book online; each booking is confirmed to the email used for it."
+        },
+        {
+          "q": "Can we add our own reference?",
+          "a": "Yes, write it in the notes for the chauffeur when you book."
+        }
+      ]
+    },
+    "fleet": {
+      "eyebrow": "Fleet",
+      "title": "Our vehicle classes",
+      "text": "From business sedans to vans and coaches. Choose the class that fits your group.",
+      "metaTitle": "Our fleet | EU Limousine",
+      "empty": "Our vehicle classes are being updated. Please check again soon or contact us."
+    },
+    "areas": {
+      "eyebrow": "Service areas",
+      "title": "Where we drive",
+      "text": "We operate in Copenhagen and at Copenhagen Airport (CPH).",
+      "metaTitle": "Service areas: Copenhagen and CPH | EU Limousine",
+      "city": {
+        "title": "Copenhagen",
+        "text": "Pickups and drop-offs anywhere in the city: hotels, offices, homes and venues."
+      },
+      "airport": {
+        "title": "Copenhagen Airport (CPH)",
+        "text": "Transfers to and from the airport, with your flight number on the booking."
+      },
+      "beyond": {
+        "title": "Beyond Copenhagen",
+        "text": "Enter your destination in the booking form. If we can offer the journey, you see the vehicles and a fixed price."
+      },
+      "more": "More Danish cities will follow. Contact us if you need transport elsewhere."
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "About EU Limousine",
+      "text": "A premium chauffeur service in Copenhagen.",
+      "metaTitle": "About us | EU Limousine",
+      "promiseTitle": "Everything is taken care of",
+      "promiseText": "That is the feeling we want every passenger to have. Book in a few steps, see a fixed price before you pay, and know exactly who will pick you up.",
+      "whereText": "Today we drive in Copenhagen and at Copenhagen Airport (CPH), for private travellers and businesses.",
+      "howTitle": "How we work",
+      "how": [
+        {
+          "title": "One clear price",
+          "text": "Calculated from your route, vehicle and passengers, and shown before you pay."
+        },
+        {
+          "title": "Always informed",
+          "text": "An email with your booking reference straight away, and your chauffeur's details once assigned."
+        },
+        {
+          "title": "A vehicle that fits",
+          "text": "Sedans, vans, shuttles and coaches, from one traveller to a whole group."
+        }
+      ],
+      "factsTitle": "Company details",
+      "facts": {
+        "name": "Company",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email"
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "text": "Answers about booking, prices, airport pickups and more.",
+      "metaTitle": "FAQ | EU Limousine",
+      "jump": "Jump to a topic",
+      "groups": {
+        "booking": {
+          "title": "Booking",
+          "items": [
+            {
+              "q": "How do I book?",
+              "a": "Use Book a ride: enter your journey, choose a vehicle, add your details and pay. It takes a few minutes."
+            },
+            {
+              "q": "Can I book for someone else?",
+              "a": "Yes. Tick \"I am booking for someone else\" and add the passenger's name and phone."
+            },
+            {
+              "q": "How far in advance must I book?",
+              "a": "The booking form shows the earliest pickup time you can choose."
+            },
+            {
+              "q": "Which languages can I book in?",
+              "a": "English, Danish, German, French, Spanish, Italian and Romansh. Use the language menu at the top."
+            }
+          ]
+        },
+        "prices": {
+          "title": "Prices and payment",
+          "items": [
+            {
+              "q": "How is the price calculated?",
+              "a": "From the route between pickup and destination, the vehicle class and the number of passengers. You see the fixed price before you pay."
+            },
+            {
+              "q": "Is the price per person?",
+              "a": "No. The price is for the whole vehicle and journey."
+            },
+            {
+              "q": "When do I pay?",
+              "a": "You pay online when you book. You receive an email with your booking reference straight away."
+            },
+            {
+              "q": "Which currencies can I pay in?",
+              "a": "Choose DKK, EUR or USD in the booking form, where available for your vehicle."
+            }
+          ]
+        },
+        "airport": {
+          "title": "Airport pickups",
+          "items": [
+            {
+              "q": "Should I add my flight number?",
+              "a": "Yes. It is added to your booking so your chauffeur knows which flight you arrive on."
+            },
+            {
+              "q": "How do I find my chauffeur?",
+              "a": "You receive your chauffeur's name and phone by email once a chauffeur is assigned."
+            }
+          ]
+        },
+        "changes": {
+          "title": "Changes and cancellations",
+          "items": [
+            {
+              "q": "How do I change my booking?",
+              "a": "Contact us with your booking reference and the change you need."
+            },
+            {
+              "q": "Can I cancel?",
+              "a": "Yes. The conditions are described in our cancellation policy. Contact us with your booking reference."
+            }
+          ]
+        },
+        "business": {
+          "title": "Business",
+          "items": [
+            {
+              "q": "Do you offer business accounts?",
+              "a": "Business accounts with invoicing are being prepared. Contact our business team through the Business page."
+            },
+            {
+              "q": "Can I add a company reference?",
+              "a": "Yes, write it in the notes for the chauffeur when you book."
+            }
+          ]
+        },
+        "vehicles": {
+          "title": "Vehicles",
+          "items": [
+            {
+              "q": "Which vehicle will I get?",
+              "a": "A vehicle of the class you booked. The model shown is an example; you may get a similar vehicle of the same class."
+            },
+            {
+              "q": "How many passengers and bags fit?",
+              "a": "Each vehicle class shows its passengers and luggage on the Fleet page and in the booking form."
+            }
+          ]
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Contact us",
+      "text": "Questions about a booking, a special request or anything else? We reply by email.",
+      "metaTitle": "Contact | EU Limousine",
+      "formTitle": "Send us a message",
+      "priceTitle": "Looking for a price?",
+      "priceText": "You get a fixed price in a few steps in the booking form.",
+      "faqTitle": "Quick answers",
+      "faqText": "Many questions about booking, prices and airport pickups are answered in our FAQ.",
+      "faqLink": "Read the FAQ"
+    },
+    "blog": {
+      "eyebrow": "Blog",
+      "title": "Travel notes",
+      "text": "Tips for airport transfers, business travel and getting around Copenhagen.",
+      "metaTitle": "Blog | EU Limousine",
+      "empty": "Our first articles are on their way."
+    },
+    "enquiry": {
+      "name": "Your name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company",
+      "reference": "Booking reference",
+      "message": "Message",
+      "optional": "optional",
+      "volume": "Expected trips per month",
+      "volumes": {
+        "choose": "Choose…",
+        "few": "1–5",
+        "some": "6–20",
+        "many": "More than 20"
+      },
+      "placeholders": {
+        "GENERAL": "How can we help?",
+        "BUSINESS": "Tell us about your company and the transport you need.",
+        "EVENT": "Date, places, times and number of guests."
+      },
+      "privacy": "We use your details only to answer your message. See our privacy policy.",
+      "send": "Send message",
+      "sending": "Sending…",
+      "sentTitle": "Thank you, we have your message",
+      "sentText": "Our team will reply by email.",
+      "errors": {
+        "name": "Enter your name.",
+        "email": "Enter a valid email address.",
+        "phone": "Enter a valid phone number, e.g. +45 12 34 56 78.",
+        "company": "Enter your company name.",
+        "reference": "Booking references look like EUL-ABC123.",
+        "message": "Write a message of at least 10 characters.",
+        "check": "Please check this field.",
+        "botCheck": "Please complete the security check and try again.",
+        "tooMany": "Too many messages. Please wait a minute and try again.",
+        "generic": "Your message could not be sent. Please try again.",
+        "network": "No connection. Please check your internet and try again."
+      }
+    },
+    "errors": {
+      "notFoundTitle": "Page not found",
+      "notFoundText": "The page you are looking for does not exist or has moved.",
+      "errorTitle": "Something went wrong",
+      "errorText": "Please try again in a moment.",
+      "retry": "Try again",
+      "home": "Go to the home page",
+      "book": "Book a ride"
+    }
   }
 }
