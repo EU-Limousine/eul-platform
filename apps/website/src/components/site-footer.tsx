@@ -2,6 +2,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { COMPANY } from '@/config/site';
+import { CookieSettingsLink } from '@/features/consent/cookie-settings-link';
 import { Link } from '@/i18n/navigation';
 import { LEGAL_PAGES } from './legal-pages';
 import { SERVICE_PAGES } from './page/services-data';
@@ -111,6 +112,7 @@ export function SiteFooter() {
           <p className="flex gap-5">
             <Link href="/legal/privacy" className="hover:text-site-gold">{legal('titles.privacy')}</Link>
             <Link href="/legal/terms" className="hover:text-site-gold">{legal('titles.terms')}</Link>
+            <CookieSettingsLink className="hover:text-site-gold" />
           </p>
         </Container>
       </div>

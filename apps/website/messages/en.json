@@ -572,6 +572,7 @@
             "h": "What we use",
             "p": [
               "NEXT_LOCALE (cookie): remembers your language choice. Kept for 1 year.",
+              "eul_consent (cookie): remembers your cookie choices, if we ask for them. Kept for 12 months, then we ask again.",
               "Booking in progress (session storage in your browser): keeps the details of a booking you are making, so a reload or language change does not lose them. Deleted when you close the tab or complete the booking.",
               "Security check [Cloudflare Turnstile]: protects the booking form against automated abuse. [Confirm what it stores.]",
               "The payment page is run by [payment provider] under its own cookie policy."
@@ -580,13 +581,14 @@
           {
             "h": "Analytics",
             "p": [
-              "We do not use analytics at the moment. If we add analytics, we will ask for your consent first."
+              "We do not use analytics at the moment. If we add analytics or other optional cookies, we will ask for your consent first and list them here. [Name each tool, what it stores and for how long.]"
             ]
           },
           {
             "h": "Managing cookies",
             "p": [
-              "You can delete cookies in your browser settings. The website still works, but your language choice is forgotten."
+              "When we use optional cookies, you can change or withdraw your choice at any time with \"Cookie settings\" at the bottom of every page.",
+              "You can also delete cookies in your browser settings. The website still works, but your language choice is forgotten."
             ]
           }
         ]
@@ -1248,6 +1250,33 @@
       "retry": "Try again",
       "home": "Go to the home page",
       "book": "Book a ride"
+    }
+  },
+  "consent": {
+    "title": "Your cookie choices",
+    "text": "We use cookies that the website needs to work. With your permission we would also like to use optional cookies. Nothing optional is used until you choose.",
+    "policyLink": "Read our cookie policy",
+    "acceptAll": "Accept all",
+    "rejectAll": "Reject all",
+    "choose": "Choose cookies",
+    "settingsTitle": "Cookie settings",
+    "settingsText": "Choose which optional cookies we may use. You can change your choice at any time with \"Cookie settings\" at the bottom of every page.",
+    "settingsLink": "Cookie settings",
+    "alwaysOn": "Always on",
+    "save": "Save my choices",
+    "categories": {
+      "necessary": {
+        "title": "Necessary",
+        "text": "Remember your language, keep a booking in progress and protect our forms against abuse. The website cannot work without them."
+      },
+      "statistics": {
+        "title": "Statistics",
+        "text": "Help us understand how visitors use the website, so we can improve it."
+      },
+      "marketing": {
+        "title": "Marketing",
+        "text": "Used to measure our advertising and show relevant offers on other websites."
+      }
     }
   }
 }

@@ -1012,5 +1012,32 @@
       "home": "Gå til forsiden",
       "book": "Book en tur"
     }
+  },
+  "consent": {
+    "title": "Dine valg om cookies",
+    "text": "Vi bruger cookies, som hjemmesiden har brug for for at virke. Med din tilladelse vil vi også gerne bruge valgfrie cookies. Intet valgfrit bruges, før du har valgt.",
+    "policyLink": "Læs vores cookiepolitik",
+    "acceptAll": "Accepter alle",
+    "rejectAll": "Afvis alle",
+    "choose": "Vælg cookies",
+    "settingsTitle": "Cookieindstillinger",
+    "settingsText": "Vælg, hvilke valgfrie cookies vi må bruge. Du kan til enhver tid ændre dit valg under \"Cookieindstillinger\" nederst på hver side.",
+    "settingsLink": "Cookieindstillinger",
+    "alwaysOn": "Altid slået til",
+    "save": "Gem mine valg",
+    "categories": {
+      "necessary": {
+        "title": "Nødvendige",
+        "text": "Husker dit sprog, gemmer en booking i gang og beskytter vores formularer mod misbrug. Hjemmesiden kan ikke virke uden dem."
+      },
+      "statistics": {
+        "title": "Statistik",
+        "text": "Hjælper os med at forstå, hvordan besøgende bruger hjemmesiden, så vi kan forbedre den."
+      },
+      "marketing": {
+        "title": "Markedsføring",
+        "text": "Bruges til at måle vores annoncering og vise relevante tilbud på andre hjemmesider."
+      }
+    }
   }
 }
