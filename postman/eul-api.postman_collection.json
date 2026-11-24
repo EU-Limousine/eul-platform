@@ -76,7 +76,7 @@
           ]
         },
         {
-          "name": "Address search too short \u2192 422",
+          "name": "Address search too short → 422",
           "request": {
             "method": "GET",
             "header": [],
@@ -158,7 +158,7 @@
           ]
         },
         {
-          "name": "Quote: pickup too soon \u2192 422",
+          "name": "Quote: pickup too soon → 422",
           "request": {
             "method": "POST",
             "header": [
@@ -208,7 +208,7 @@
           ]
         },
         {
-          "name": "Quote: invalid body \u2192 422 with field errors",
+          "name": "Quote: invalid body → 422 with field errors",
           "request": {
             "method": "POST",
             "header": [
@@ -249,6 +249,47 @@
               }
             }
           ]
+        },
+        {
+          "name": "Enquiry: invalid body → 422 with field errors",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-turnstile-token",
+                "value": "{{turnstileToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/public/enquiries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"GENERAL\",\n  \"name\": \"X\",\n  \"email\": \"not-an-email\",\n  \"message\": \"short\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const turnstileBlocked = pm.response.code === 403 && pm.environment.get('allowWrites') !== 'true';",
+                  "if (turnstileBlocked) return;",
+                  "pm.test('422', () => pm.response.to.have.status(422));",
+                  "const b = pm.response.json();",
+                  "pm.test('field errors for name, email, message', () => pm.expect(Object.keys(b.fieldErrors || {})).to.include.members(['name', 'email', 'message']));"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -257,7 +298,7 @@
       "description": "Logins: 2 attempts per run (the API allows 10 a minute).",
       "item": [
         {
-          "name": "No token \u2192 401",
+          "name": "No token → 401",
           "request": {
             "method": "GET",
             "header": [],
@@ -276,7 +317,7 @@
           ]
         },
         {
-          "name": "Bad token \u2192 401",
+          "name": "Bad token → 401",
           "request": {
             "method": "GET",
             "header": [
@@ -300,7 +341,26 @@
           ]
         },
         {
-          "name": "Wrong password \u2192 401",
+          "name": "Enquiries without token → 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/enquiries"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Wrong password → 401",
           "request": {
             "method": "POST",
             "header": [
@@ -484,7 +544,7 @@
           ]
         },
         {
-          "name": "Bookings: pageSize over 100 \u2192 422",
+          "name": "Bookings: pageSize over 100 → 422",
           "request": {
             "method": "GET",
             "header": [
@@ -508,7 +568,7 @@
           ]
         },
         {
-          "name": "Bookings: unknown query field \u2192 422",
+          "name": "Bookings: unknown query field → 422",
           "request": {
             "method": "GET",
             "header": [
@@ -532,7 +592,7 @@
           ]
         },
         {
-          "name": "Booking: not a UUID \u2192 400/422",
+          "name": "Booking: not a UUID → 400/422",
           "request": {
             "method": "GET",
             "header": [
@@ -556,7 +616,7 @@
           ]
         },
         {
-          "name": "Booking: unknown id \u2192 404",
+          "name": "Booking: unknown id → 404",
           "request": {
             "method": "GET",
             "header": [
@@ -762,6 +822,57 @@
               }
             }
           ]
+        },
+        {
+          "name": "Enquiries inbox (new)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=NEW&page=1&pageSize=10"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const p = pm.response.json();",
+                  "pm.test('page shape', () => { pm.expect(p.items).to.be.an('array'); ['total','page','pageSize','newCount'].forEach(k => pm.expect(p[k]).to.be.a('number')); });",
+                  "pm.test('only NEW items', () => p.items.forEach(e => pm.expect(e.status).to.eql('NEW')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiries: unknown status → 422",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=SPAM"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('422', () => pm.response.to.have.status(422));"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -828,7 +939,7 @@
           ]
         },
         {
-          "name": "Checkout without Idempotency-Key \u2192 rejected",
+          "name": "Checkout without Idempotency-Key → rejected",
           "request": {
             "method": "POST",
             "header": [
@@ -934,7 +1045,7 @@
           ]
         },
         {
-          "name": "Checkout again, same key \u2192 same checkout",
+          "name": "Checkout again, same key → same checkout",
           "request": {
             "method": "POST",
             "header": [
@@ -987,7 +1098,7 @@
           ]
         },
         {
-          "name": "Checkout status before paying \u2192 PENDING",
+          "name": "Checkout status before paying → PENDING",
           "request": {
             "method": "GET",
             "header": [],
@@ -1018,7 +1129,7 @@
           ]
         },
         {
-          "name": "Test payment: Pay \u2192 303 to website",
+          "name": "Test payment: Pay → 303 to website",
           "request": {
             "method": "POST",
             "header": [],
@@ -1053,7 +1164,7 @@
           }
         },
         {
-          "name": "Checkout status \u2192 PAID with reference",
+          "name": "Checkout status → PAID with reference",
           "request": {
             "method": "GET",
             "header": [],
@@ -1267,7 +1378,7 @@
           ]
         },
         {
-          "name": "Create vehicle: missing fields \u2192 422",
+          "name": "Create vehicle: missing fields → 422",
           "request": {
             "method": "POST",
             "header": [
@@ -1369,7 +1480,7 @@
           ]
         },
         {
-          "name": "Driver cannot open the dashboard \u2192 403",
+          "name": "Driver cannot open the dashboard → 403",
           "request": {
             "method": "POST",
             "header": [
@@ -1549,7 +1660,7 @@
           ]
         },
         {
-          "name": "Assign again \u2192 409 (first acceptance wins)",
+          "name": "Assign again → 409 (first acceptance wins)",
           "request": {
             "method": "POST",
             "header": [
@@ -1592,6 +1703,186 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiry (contact form)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-turnstile-token",
+                "value": "{{turnstileToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/public/enquiries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"GENERAL\",\n  \"name\": \"Postman Tester\",\n  \"email\": \"postman@example.com\",\n  \"topic\": \"contact\",\n  \"message\": \"Automated test message from the Postman collection.\",\n  \"language\": \"en\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201', () => pm.response.to.have.status(201));",
+                  "pm.test('received', () => pm.expect(pm.response.json()).to.eql({ received: true }));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Find the Postman enquiry in the inbox",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=NEW&search=postman@example.com&pageSize=1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const p = pm.response.json();",
+                  "pm.test('found', () => pm.expect(p.items.length).to.eql(1));",
+                  "if (p.items[0]) pm.environment.set('enquiryId', p.items[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark enquiry handled",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/{{enquiryId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const e = pm.response.json();",
+                  "pm.test('handled with who and when', () => { pm.expect(e.status).to.eql('HANDLED'); pm.expect(e.handledAt).to.be.a('string'); pm.expect(e.handledByName).to.be.a('string'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark handled again → no change",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/{{enquiryId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "pm.test('still handled', () => pm.expect(pm.response.json().status).to.eql('HANDLED'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiry: unknown id → 404",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/00000000-0000-4000-8000-000000000000",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));",
+                  "pm.test('code', () => pm.expect(pm.response.json().code).to.eql('ENQUIRY_NOT_FOUND'));"
                 ]
               }
             }
@@ -1740,7 +2031,7 @@
           ]
         },
         {
-          "name": "Test payment: Fail \u2192 303",
+          "name": "Test payment: Fail → 303",
           "request": {
             "method": "POST",
             "header": [],
@@ -1775,7 +2066,7 @@
           }
         },
         {
-          "name": "Failed checkout \u2192 FAILED, no booking",
+          "name": "Failed checkout → FAILED, no booking",
           "request": {
             "method": "GET",
             "header": [],
@@ -1834,7 +2125,7 @@
           ]
         },
         {
-          "name": "Refresh after logout \u2192 401",
+          "name": "Refresh after logout → 401",
           "request": {
             "method": "POST",
             "header": [],

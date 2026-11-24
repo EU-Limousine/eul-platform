@@ -8,13 +8,13 @@ import { Logo } from './logo';
 import { MobileMenu } from './mobile-menu';
 import { Container } from './ui';
 
-/** Sections of the homepage the menu links to (anchors work from every page). */
+/** Main menu (the logo links home). */
 export const NAV_ITEMS = [
-  { href: '/', key: 'home' },
-  { href: '/#services', key: 'services' },
-  { href: '/#fleet', key: 'fleet' },
-  { href: '/#about', key: 'about' },
-  { href: '/#contact', key: 'contact' },
+  { href: '/services', key: 'services' },
+  { href: '/business', key: 'business' },
+  { href: '/fleet', key: 'fleet' },
+  { href: '/about', key: 'about' },
+  { href: '/contact', key: 'contact' },
 ] as const;
 
 export function SiteHeader() {

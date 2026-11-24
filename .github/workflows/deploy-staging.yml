@@ -1,0 +1,102 @@
+name: Deploy staging
+
+# Merge into dev → CI → deploy to staging → end-to-end tests ON staging →
+# commit status "staging/verified" on that exact commit. Branch protection on main requires
+# that status, so only code that passed on staging can be merged into main.
+# Run manually to verify a hotfix/* branch on staging before it goes to main.
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: 'Also run the seed job (first staging deploy only: creates the first admin)'
+        type: boolean
+        default: false
+      run_e2e:
+        description: 'Run the end-to-end tests after deploying'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write   # Workload Identity Federation
+  statuses: write   # staging/verified on the commit
+
+concurrency:
+  group: staging      # one staging release at a time; later ones wait (never cancelled mid-migration)
+  cancel-in-progress: false
+
+jobs:
+  mark-pending:
+    runs-on: ubuntu-latest
+    steps:
+      - name: staging/verified → pending
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+            -f state=pending -f context=staging/verified \
+            -f description="Deploying to staging and running the tests…" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  ci:
+    needs: mark-pending
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    uses: ./.github/workflows/deploy-env.yml
+    with:
+      environment: staging
+      ref: ${{ github.sha }}
+      seed: ${{ inputs.seed == true }}
+
+  e2e:
+    needs: deploy
+    if: github.event_name == 'push' || inputs.run_e2e
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+      E2E_TARGET: staging
+      E2E_WEBSITE_URL: https://staging.eulimousine.com
+      E2E_DASHBOARD_URL: https://app-staging.eulimousine.com
+      E2E_API_URL: https://api-staging.eulimousine.com
+      SEED_ADMIN_EMAIL: ${{ vars.E2E_ADMIN_EMAIL }}
+      SEED_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
+      NEXT_PUBLIC_CONSENT_CATEGORIES: ''   # same as the staging build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Smoke (read-only) before the full run
+        run: bash infrastructure/gcp/smoke.sh staging
+      - name: End-to-end tests against staging
+        run: npx playwright test -c e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-staging-${{ github.sha }}
+          path: e2e/playwright-report
+          retention-days: 14
+
+  mark-result:
+    needs: [ci, deploy, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: staging/verified → success or failure
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OK: ${{ needs.ci.result == 'success' && needs.deploy.result == 'success' && needs.e2e.result == 'success' }}
+        run: |
+          if [ "$OK" = "true" ]; then STATE=success; DESC="Deployed to staging and all end-to-end tests passed"
+          else STATE=failure; DESC="CI ${{ needs.ci.result }} · deploy ${{ needs.deploy.result }} · e2e ${{ needs.e2e.result }}"; fi
+          gh api "repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+            -f state="$STATE" -f context=staging/verified -f description="$DESC" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          [ "$STATE" = success ]

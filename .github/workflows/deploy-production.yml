@@ -1,0 +1,108 @@
+name: Deploy production
+
+# Merge dev (or hotfix/*) into main → check the code was verified on staging → CI →
+# deploy to production → read-only smoke test → automatic rollback if the smoke test fails.
+# After a successful release, a PR main → dev is opened when dev is missing commits from main (hotfixes).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: 'Also run the seed job (first production deploy only: creates the first admin)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+  statuses: read
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  staging-verified:
+    name: was it verified on staging?
+    if: github.ref == 'refs/heads/main'   # production only ever deploys main (also when started by hand)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: The merged code passed on staging
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # A merge commit's second parent is the PR's head (dev or hotfix/*), which staging verified.
+          CANDIDATES="$(git rev-parse HEAD) $(git rev-parse -q --verify HEAD^2 || true)"
+          for SHA in $CANDIDATES; do
+            STATE=$(gh api "repos/${{ github.repository }}/commits/$SHA/statuses" \
+              --jq '[.[] | select(.context=="staging/verified")][0].state // "none"')
+            echo "$SHA staging/verified = $STATE"
+            if [ "$STATE" = success ]; then echo "✓ verified on staging"; exit 0; fi
+          done
+          echo "::error::This code was not verified on staging. Merge dev into main through a PR (or run 'Deploy staging' on the hotfix branch first)."
+          exit 1
+
+  ci:
+    needs: staging-verified
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    uses: ./.github/workflows/deploy-env.yml
+    with:
+      environment: production
+      ref: ${{ github.sha }}
+      seed: ${{ inputs.seed == true }}
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOYER }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Smoke test (read-only, never creates data)
+        id: smoke
+        # Before the production DNS records exist, smoke.sh falls back to the run.app addresses.
+        run: bash infrastructure/gcp/smoke.sh production
+      - name: Smoke failed → roll back to the previous release
+        if: failure() && steps.smoke.outcome == 'failure'
+        env:
+          EUL_ENV: production
+        run: |
+          bash infrastructure/gcp/rollback.sh
+          echo "::error::Production smoke test failed. Traffic is back on the previous release. Database migrations are NOT rolled back (see docs/release-process.md)."
+          exit 1
+
+  sync-dev:
+    name: keep dev up to date with main
+    needs: smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Open PR main → dev if dev is missing commits (e.g. after a hotfix)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch origin dev
+          MISSING=$(git rev-list --count origin/dev..origin/main)
+          if [ "$MISSING" = "0" ]; then echo "dev already contains main"; exit 0; fi
+          if gh pr list --base dev --head main --state open --json number --jq 'length' | grep -qv '^0$'; then
+            echo "A main → dev PR is already open"; exit 0
+          fi
+          gh pr create --base dev --head main \
+            --title "Sync main → dev (${MISSING} commit(s) from production)" \
+            --body "Automatic after the production release ${{ github.sha }}. Merge with **Create a merge commit** so the hotfix is not lost on the next release. If CI did not start on this PR, close and reopen it."

@@ -13,7 +13,8 @@
       "services": "Services",
       "fleet": "Biler",
       "about": "Om os",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "business": "Erhverv"
     }
   },
   "home": {
@@ -283,8 +284,7 @@
       "priceNote": "Din faste pris beregnes ud fra ruten, bilen og antallet af passagerer i næste trin.",
       "back": "Tilbage",
       "continue": "Fortsæt",
-      "passengers_one": "{count} passager",
-      "passengers_other": "{count} passagerer"
+      "passengers": "{count, plural, one {# passager} other {# passagerer}}"
     },
     "details": {
       "title": "Dine oplysninger",
@@ -354,8 +354,6 @@
       "title": "Din tur og pris",
       "route": "{km} km · ca. {duration}",
       "estimated": "anslået afstand",
-      "passengers_one": "{count} passager",
-      "passengers_other": "{count} passagerer",
       "changeJourney": "Ændr tur",
       "changeVehicle": "Skift bil",
       "calculating": "Beregner din pris ud fra ruten…",
@@ -367,7 +365,8 @@
       "time": "Tid ({duration})",
       "minimum": "Minimumspris gælder",
       "total": "Samlet pris",
-      "fixedNote": "Fast pris for hele turen."
+      "fixedNote": "Fast pris for hele turen.",
+      "passengers": "{count, plural, one {# passager} other {# passagerer}}"
     }
   },
   "legal": {
@@ -390,5 +389,653 @@
     "directions": "Rutevejledning",
     "contactTodo": "[Kontaktoplysninger — tilføj dem i src/config/site.ts]",
     "rights": "© {year} EU Limousine. Alle rettigheder forbeholdes."
+  },
+  "pages": {
+    "common": {
+      "home": "Forside",
+      "breadcrumbs": "Brødkrummer",
+      "learnMore": "Læs mere",
+      "getPrice": "Se pris",
+      "sendEnquiry": "Send en forespørgsel",
+      "howItWorks": "Sådan foregår det",
+      "suitableVehicles": "Egnede biler",
+      "vehicleNote": "Bilen på billedet er et eksempel på klassen. Du får denne klasse eller en tilsvarende bil.",
+      "pricingTitle": "Priser",
+      "pricingOnline": "Du ser en fast pris for hele turen, før du betaler. Den beregnes ud fra ruten, bilklassen og antallet af passagerer.",
+      "pricingEnquiry": "Denne service prissættes efter forespørgsel, fordi den afhænger af jeres plan. Send formularen, så svarer vi med et tilbud.",
+      "faqTitle": "Spørgsmål",
+      "related": "Andre services",
+      "footerLinks": {
+        "areas": "Områder",
+        "faq": "Spørgsmål og svar"
+      },
+      "cta": {
+        "title": "Klar, når du er",
+        "text": "Få en fast pris på din tur på få trin.",
+        "book": "Book en tur",
+        "contact": "Kontakt os"
+      }
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Chaufførservice i København",
+      "text": "Lufthavnstransfer, chauffør pr. time, ture mellem byer og transport til events og grupper.",
+      "metaTitle": "Chaufførservice i København | EU Limousine",
+      "metaDescription": "Lufthavnstransfer, chauffør pr. time, by til by, VIP, events, ture og gruppetransport i København.",
+      "business": {
+        "title": "Erhvervsrejser",
+        "text": "Transport til ledere, gæster og events, booket af jeres team."
+      },
+      "items": {
+        "airport": {
+          "title": "Lufthavnstransfer",
+          "short": "Til og fra Københavns Lufthavn (CPH) til fast pris.",
+          "metaTitle": "Lufthavnstransfer i København | EU Limousine",
+          "hero": "Til og fra Københavns Lufthavn (CPH) i privat bil med chauffør, til fast pris.",
+          "introTitle": "Det får du",
+          "intro": "Book online på få trin. Tilføj dit flynummer, så chaufføren har det med bookingen.",
+          "included": [
+            "En fast pris for hele turen, vist før du betaler",
+            "Dit flynummer på bookingen",
+            "Bekræftelse på e-mail med dit bookingnummer",
+            "Chaufførens navn, telefon og bil på e-mail, når en chauffør er tildelt",
+            "Bilklasser til 1 til 7 passagerer med bagage",
+            "Booking for en anden, med passagerens navn og telefon"
+          ],
+          "steps": [
+            {
+              "title": "Indtast din tur",
+              "text": "Afhentningssted, destination, dato, tid og antal passagerer i bookingformularen."
+            },
+            {
+              "title": "Vælg bil og se prisen",
+              "text": "Vælg en bilklasse, der passer til jeres gruppe. Den faste pris beregnes ud fra ruten, før du betaler."
+            },
+            {
+              "title": "Betal og få din bekræftelse",
+              "text": "Du får straks en e-mail med dit bookingnummer og en ny e-mail med chaufførens navn, telefon og bil, så snart en chauffør er tildelt."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Kan jeg booke en transfer for en anden?",
+              "a": "Ja. Sæt flueben i \"Jeg booker for en anden\", og tilføj passagerens navn og telefon. Du modtager bekræftelserne på e-mail."
+            },
+            {
+              "q": "Hvorfor beder I om mit flynummer?",
+              "a": "Det tilføjes din booking, så chaufføren ved, hvilket fly du ankommer med."
+            },
+            {
+              "q": "Hvordan beregnes prisen?",
+              "a": "Ud fra ruten mellem afhentningssted og destination, bilklassen og antallet af passagerer. Du ser den faste pris, før du betaler."
+            }
+          ]
+        },
+        "hourly": {
+          "title": "Chauffør pr. time",
+          "short": "Bil og chauffør til rådighed til møder, shopping eller en dag i byen.",
+          "metaTitle": "Chauffør pr. time i København | EU Limousine",
+          "hero": "Bil og chauffør til din rådighed, så længe du har brug for det.",
+          "introTitle": "Din tid, din plan",
+          "intro": "Ideelt til en dag med møder, flere stop eller en aften i byen. Fortæl os din plan, så sender vi en pris.",
+          "included": [
+            "Én chauffør og bil i de timer, du booker",
+            "Flere stop samme dag",
+            "Bilklasser til 1 til 7 passagerer",
+            "Et klart tilbud, før du bekræfter"
+          ],
+          "steps": [
+            {
+              "title": "Fortæl os din plan",
+              "text": "Send formularen med dato, tidspunkter, steder og antal gæster."
+            },
+            {
+              "title": "Vi laver et tilbud",
+              "text": "Vores team tjekker biler og chauffører og svarer på e-mail."
+            },
+            {
+              "title": "Bekræft og slap af",
+              "text": "Når du har accepteret, planlægger vi detaljerne med dig, så alt er klaret på dagen."
+            }
+          ],
+          "enquiryTitle": "Få en pris",
+          "enquiryText": "Fortæl os dato, starttidspunkt, antal timer og cirka hvor du vil hen.",
+          "faq": [
+            {
+              "q": "Kan jeg booke chauffør pr. time online?",
+              "a": "Ikke endnu. Send formularen, så svarer vi med en pris. Enkeltture kan bookes online med det samme."
+            },
+            {
+              "q": "Kan jeg ændre min plan i løbet af dagen?",
+              "a": "Sig det til chaufføren. Ændringer ud over de bookede timer aftales med vores team."
+            },
+            {
+              "q": "Hvilke biler kan jeg vælge?",
+              "a": "Sedaner og minibusser fra vores flåde. Se bilklasserne nedenfor."
+            }
+          ]
+        },
+        "cityToCity": {
+          "title": "By til by",
+          "short": "Dør-til-dør-ture mellem byer til fast pris.",
+          "metaTitle": "Chauffør fra København til andre byer | EU Limousine",
+          "hero": "Dør-til-dør-ture mellem byer i privat bil med chauffør.",
+          "introTitle": "Rejs komfortabelt, dør til dør",
+          "intro": "Indtast afhentningssted og destination i bookingformularen. Du ser bilklasserne og en fast pris, før du betaler.",
+          "included": [
+            "En fast pris beregnet ud fra ruten",
+            "Dør til dør, ingen skift",
+            "Bilklasser til 1 til 7 passagerer",
+            "Bekræftelse på e-mail med dit bookingnummer"
+          ],
+          "steps": [
+            {
+              "title": "Indtast din tur",
+              "text": "Afhentningssted, destination, dato, tid og antal passagerer i bookingformularen."
+            },
+            {
+              "title": "Vælg bil og se prisen",
+              "text": "Vælg en bilklasse, der passer til jeres gruppe. Den faste pris beregnes ud fra ruten, før du betaler."
+            },
+            {
+              "title": "Betal og få din bekræftelse",
+              "text": "Du får straks en e-mail med dit bookingnummer og en ny e-mail med chaufførens navn, telefon og bil, så snart en chauffør er tildelt."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Hvilke byer kan jeg rejse til?",
+              "a": "Indtast din destination i bookingformularen. Hvis vi kan tilbyde turen, ser du bilerne og en fast pris."
+            },
+            {
+              "q": "Er prisen pr. person?",
+              "a": "Nej. Prisen gælder for hele bilen og turen."
+            },
+            {
+              "q": "Kan jeg tilføje stop undervejs?",
+              "a": "Skriv dem i beskeden til chaufføren, eller kontakt os før bookingen, hvis turen har flere stop."
+            }
+          ]
+        },
+        "vip": {
+          "title": "VIP-chauffør",
+          "short": "Diskret, personlig service til VIP-gæster og ledere.",
+          "metaTitle": "VIP-chaufførservice i København | EU Limousine",
+          "hero": "Diskret, personlig transport til VIP-gæster og ledere.",
+          "introTitle": "Diskret og personligt",
+          "intro": "Vælg en bil i First Class, og skriv eventuelle ønsker i beskeden til chaufføren.",
+          "included": [
+            "Vores mest komfortable bilklasser",
+            "Booking for en gæst, med navn og telefon",
+            "Besked til chaufføren med dine ønsker",
+            "En fast pris, før du betaler"
+          ],
+          "steps": [
+            {
+              "title": "Indtast din tur",
+              "text": "Afhentningssted, destination, dato, tid og antal passagerer i bookingformularen."
+            },
+            {
+              "title": "Vælg bil og se prisen",
+              "text": "Vælg en bilklasse, der passer til jeres gruppe. Den faste pris beregnes ud fra ruten, før du betaler."
+            },
+            {
+              "title": "Betal og få din bekræftelse",
+              "text": "Du får straks en e-mail med dit bookingnummer og en ny e-mail med chaufførens navn, telefon og bil, så snart en chauffør er tildelt."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Kan min assistent booke for mig?",
+              "a": "Ja. Assistenten booker for en anden og tilføjer dit navn og telefon som passager."
+            },
+            {
+              "q": "Hvordan deler jeg særlige ønsker?",
+              "a": "Skriv dem i beskeden til chaufføren, når du booker, eller kontakt os før turen."
+            },
+            {
+              "q": "Behandles mine bookingoplysninger fortroligt?",
+              "a": "Vi bruger kun dine oplysninger til din booking. Se vores privatlivspolitik."
+            }
+          ]
+        },
+        "events": {
+          "title": "Events og bryllupper",
+          "short": "Ankom med stil på de dage, der betyder mest.",
+          "metaTitle": "Bryllups- og eventchauffør i København | EU Limousine",
+          "hero": "Transport til bryllupper, galla og events, fra én bil til flere.",
+          "introTitle": "Jeres dag, planlagt sammen med jer",
+          "intro": "Book én bil online, eller send os jeres plan for flere biler, gæster eller en hel dag.",
+          "included": [
+            "Én bil booket online på få trin",
+            "Flere biler eller en hel dag efter forespørgsel",
+            "Transport til brudeparret, familien og gæsterne",
+            "Et klart tilbud, før du bekræfter"
+          ],
+          "steps": [
+            {
+              "title": "Fortæl os din plan",
+              "text": "Send formularen med dato, tidspunkter, steder og antal gæster."
+            },
+            {
+              "title": "Vi laver et tilbud",
+              "text": "Vores team tjekker biler og chauffører og svarer på e-mail."
+            },
+            {
+              "title": "Bekræft og slap af",
+              "text": "Når du har accepteret, planlægger vi detaljerne med dig, så alt er klaret på dagen."
+            }
+          ],
+          "enquiryTitle": "Planlæg jeres event",
+          "enquiryText": "Fortæl os dato, steder, tidspunkter og hvor mange gæster der skal have transport.",
+          "faq": [
+            {
+              "q": "Kan jeg booke online?",
+              "a": "Ja, til en enkelt tur. Til flere biler eller en hel dag sender du formularen, så svarer vi med et tilbud."
+            },
+            {
+              "q": "Kan I pynte bilen?",
+              "a": "Skriv i formularen, hvad I ønsker, så fortæller vi, hvad der er muligt."
+            },
+            {
+              "q": "Hvor tidligt skal jeg booke?",
+              "a": "Så tidligt som muligt, især på populære datoer. Send formularen, så bekræfter vi, om vi kan."
+            }
+          ]
+        },
+        "tours": {
+          "title": "Ture og sightseeing",
+          "short": "Se København og omegn med din egen chauffør.",
+          "metaTitle": "Private sightseeingture i København | EU Limousine",
+          "hero": "Se København og omegn i dit eget tempo med din egen chauffør.",
+          "introTitle": "I dit eget tempo",
+          "intro": "Fortæl os, hvad du gerne vil se, og hvor meget tid du har. Vi sender dig en plan og en pris.",
+          "included": [
+            "Privat bil og chauffør",
+            "Din egen rute og dine egne stop",
+            "Bilklasser til 1 til 7 passagerer",
+            "Et klart tilbud, før du bekræfter"
+          ],
+          "steps": [
+            {
+              "title": "Fortæl os din plan",
+              "text": "Send formularen med dato, tidspunkter, steder og antal gæster."
+            },
+            {
+              "title": "Vi laver et tilbud",
+              "text": "Vores team tjekker biler og chauffører og svarer på e-mail."
+            },
+            {
+              "title": "Bekræft og slap af",
+              "text": "Når du har accepteret, planlægger vi detaljerne med dig, så alt er klaret på dagen."
+            }
+          ],
+          "enquiryTitle": "Planlæg din tur",
+          "enquiryText": "Fortæl os dato, starttidspunkt, antal gæster og de steder, du gerne vil se.",
+          "faq": [
+            {
+              "q": "Er en guide inkluderet?",
+              "a": "Chaufføren kører jer. Skriv i formularen, hvis I ønsker en guide, så fortæller vi, hvad der er muligt."
+            },
+            {
+              "q": "Kan vi stoppe og gå rundt?",
+              "a": "Ja. Planlæg stoppene med os, så venter chaufføren som aftalt i tilbuddet."
+            },
+            {
+              "q": "Hvordan får jeg en pris?",
+              "a": "Send formularen. Ture afhænger af tid og rute, så vi svarer med et tilbud."
+            }
+          ]
+        },
+        "group": {
+          "title": "Gruppetransport",
+          "short": "Minibusser, shuttles og busser til teams, delegationer og gæster.",
+          "metaTitle": "Gruppetransport i København | EU Limousine",
+          "hero": "Minibusser, shuttles og busser til teams, delegationer og eventgæster.",
+          "introTitle": "Én booking til hele gruppen",
+          "intro": "Book en minibus online, eller send jeres plan for større grupper og flere biler.",
+          "included": [
+            "Minibusser til op til 7 passagerer, booket online",
+            "Shuttles og busser til større grupper efter forespørgsel",
+            "Flere biler koordineret til samme event",
+            "Et klart tilbud, før du bekræfter"
+          ],
+          "steps": [
+            {
+              "title": "Fortæl os din plan",
+              "text": "Send formularen med dato, tidspunkter, steder og antal gæster."
+            },
+            {
+              "title": "Vi laver et tilbud",
+              "text": "Vores team tjekker biler og chauffører og svarer på e-mail."
+            },
+            {
+              "title": "Bekræft og slap af",
+              "text": "Når du har accepteret, planlægger vi detaljerne med dig, så alt er klaret på dagen."
+            }
+          ],
+          "enquiryTitle": "Forespørg om gruppetransport",
+          "enquiryText": "Fortæl os dato, steder, tidspunkter og antal passagerer og kufferter.",
+          "faq": [
+            {
+              "q": "Hvor mange passagerer kan I køre?",
+              "a": "Se bilklasserne nedenfor. Er gruppen større end én bil, sender du formularen, så planlægger vi flere biler."
+            },
+            {
+              "q": "Kan jeg booke en bus online?",
+              "a": "Ikke endnu. Busser og store grupper prissættes efter forespørgsel."
+            },
+            {
+              "q": "Kan I tage imod en gruppe i lufthavnen?",
+              "a": "Ja. Send flyoplysningerne i formularen, så planlægger vi bilerne."
+            }
+          ]
+        }
+      }
+    },
+    "business": {
+      "eyebrow": "Erhverv",
+      "title": "Erhvervsrejser",
+      "text": "Pålidelig transport til ledere, gæster og events, booket af jeres team på få trin.",
+      "metaTitle": "Erhvervschauffør i København | EU Limousine",
+      "cta": "Kontakt vores erhvervsteam",
+      "benefitsTitle": "Det virker for jeres team i dag",
+      "benefitsIntro": "Hver booking får et bookingnummer og bekræftelser på e-mail, så jeres team altid ved, hvad der er booket.",
+      "benefits": [
+        "Book for medarbejdere og gæster, med passagerens navn og telefon",
+        "En fast pris, før du betaler",
+        "Bekræftelse på e-mail med bookingnummeret",
+        "Chaufførens navn, telefon og bil på e-mail, når en chauffør er tildelt",
+        "Besked til chaufføren, fx jeres interne reference",
+        "Erhvervskonti med faktura: spørg vores team"
+      ],
+      "useCasesTitle": "Typiske ture",
+      "useCases": [
+        {
+          "title": "Afhentning i lufthavnen",
+          "text": "Hent gæster og kolleger i Københavns Lufthavn (CPH)."
+        },
+        {
+          "title": "Møder og roadshows",
+          "text": "Én bil mellem flere møder, pris efter forespørgsel."
+        },
+        {
+          "title": "Events og delegationer",
+          "text": "Minibusser, shuttles og busser til grupper, planlagt med jer."
+        }
+      ],
+      "hotelsTitle": "Hoteller og concierger",
+      "hotelsText": "Book transport til jeres gæster på samme måde, eller fortæl os om faste behov i formularen nedenfor.",
+      "formTitle": "Fortæl os om jeres behov",
+      "formText": "Vores team svarer på e-mail.",
+      "faq": [
+        {
+          "q": "Kan vi betale med faktura?",
+          "a": "Erhvervskonti med faktura er under forberedelse. Send formularen, så vender vores team tilbage."
+        },
+        {
+          "q": "Kan flere i vores virksomhed booke?",
+          "a": "Ja. Alle kan booke online; hver booking bekræftes til den e-mail, der er brugt til den."
+        },
+        {
+          "q": "Kan vi tilføje vores egen reference?",
+          "a": "Ja, skriv den i beskeden til chaufføren, når du booker."
+        }
+      ]
+    },
+    "fleet": {
+      "eyebrow": "Biler",
+      "title": "Vores bilklasser",
+      "text": "Fra erhvervssedaner til minibusser og busser. Vælg den klasse, der passer til jeres gruppe.",
+      "metaTitle": "Vores biler | EU Limousine",
+      "empty": "Vores bilklasser bliver opdateret. Kig forbi igen snart, eller kontakt os."
+    },
+    "areas": {
+      "eyebrow": "Områder",
+      "title": "Hvor vi kører",
+      "text": "Vi kører i København og i Københavns Lufthavn (CPH).",
+      "metaTitle": "Områder: København og CPH | EU Limousine",
+      "city": {
+        "title": "København",
+        "text": "Afhentning og aflevering overalt i byen: hoteller, kontorer, hjem og spillesteder."
+      },
+      "airport": {
+        "title": "Københavns Lufthavn (CPH)",
+        "text": "Transfer til og fra lufthavnen, med dit flynummer på bookingen."
+      },
+      "beyond": {
+        "title": "Uden for København",
+        "text": "Indtast din destination i bookingformularen. Hvis vi kan tilbyde turen, ser du bilerne og en fast pris."
+      },
+      "more": "Flere danske byer følger. Kontakt os, hvis du har brug for transport andre steder."
+    },
+    "about": {
+      "eyebrow": "Om os",
+      "title": "Om EU Limousine",
+      "text": "En førsteklasses chaufførservice i København.",
+      "metaTitle": "Om os | EU Limousine",
+      "promiseTitle": "Alt er klaret",
+      "promiseText": "Det er den følelse, vi vil give hver passager. Book på få trin, se en fast pris før du betaler, og vid præcis, hvem der henter dig.",
+      "whereText": "I dag kører vi i København og i Københavns Lufthavn (CPH) for private rejsende og virksomheder.",
+      "howTitle": "Sådan arbejder vi",
+      "how": [
+        {
+          "title": "Én klar pris",
+          "text": "Beregnet ud fra din rute, bil og passagerer og vist, før du betaler."
+        },
+        {
+          "title": "Altid informeret",
+          "text": "En e-mail med dit bookingnummer med det samme og chaufførens oplysninger, når en chauffør er tildelt."
+        },
+        {
+          "title": "En bil der passer",
+          "text": "Sedaner, minibusser, shuttles og busser, fra én rejsende til en hel gruppe."
+        }
+      ],
+      "factsTitle": "Virksomhedsoplysninger",
+      "facts": {
+        "name": "Virksomhed",
+        "address": "Adresse",
+        "phone": "Telefon",
+        "email": "E-mail"
+      }
+    },
+    "faq": {
+      "eyebrow": "Spørgsmål og svar",
+      "title": "Ofte stillede spørgsmål",
+      "text": "Svar om booking, priser, afhentning i lufthavnen og meget mere.",
+      "metaTitle": "Spørgsmål og svar | EU Limousine",
+      "jump": "Gå til et emne",
+      "groups": {
+        "booking": {
+          "title": "Booking",
+          "items": [
+            {
+              "q": "Hvordan booker jeg?",
+              "a": "Brug Book en tur: indtast din tur, vælg en bil, tilføj dine oplysninger og betal. Det tager få minutter."
+            },
+            {
+              "q": "Kan jeg booke for en anden?",
+              "a": "Ja. Sæt flueben i \"Jeg booker for en anden\", og tilføj passagerens navn og telefon."
+            },
+            {
+              "q": "Hvor lang tid i forvejen skal jeg booke?",
+              "a": "Bookingformularen viser det tidligste afhentningstidspunkt, du kan vælge."
+            },
+            {
+              "q": "Hvilke sprog kan jeg booke på?",
+              "a": "Engelsk, dansk, tysk, fransk, spansk, italiensk og rætoromansk. Brug sprogmenuen øverst."
+            }
+          ]
+        },
+        "prices": {
+          "title": "Priser og betaling",
+          "items": [
+            {
+              "q": "Hvordan beregnes prisen?",
+              "a": "Ud fra ruten mellem afhentningssted og destination, bilklassen og antallet af passagerer. Du ser den faste pris, før du betaler."
+            },
+            {
+              "q": "Er prisen pr. person?",
+              "a": "Nej. Prisen gælder for hele bilen og turen."
+            },
+            {
+              "q": "Hvornår betaler jeg?",
+              "a": "Du betaler online, når du booker. Du får straks en e-mail med dit bookingnummer."
+            },
+            {
+              "q": "Hvilke valutaer kan jeg betale i?",
+              "a": "Vælg DKK, EUR eller USD i bookingformularen, hvor det er muligt for din bil."
+            }
+          ]
+        },
+        "airport": {
+          "title": "Afhentning i lufthavnen",
+          "items": [
+            {
+              "q": "Skal jeg tilføje mit flynummer?",
+              "a": "Ja. Det tilføjes din booking, så chaufføren ved, hvilket fly du ankommer med."
+            },
+            {
+              "q": "Hvordan finder jeg min chauffør?",
+              "a": "Du får chaufførens navn og telefon på e-mail, når en chauffør er tildelt."
+            }
+          ]
+        },
+        "changes": {
+          "title": "Ændringer og afbestilling",
+          "items": [
+            {
+              "q": "Hvordan ændrer jeg min booking?",
+              "a": "Kontakt os med dit bookingnummer og den ændring, du har brug for."
+            },
+            {
+              "q": "Kan jeg afbestille?",
+              "a": "Ja. Betingelserne står i vores afbestillingspolitik. Kontakt os med dit bookingnummer."
+            }
+          ]
+        },
+        "business": {
+          "title": "Erhverv",
+          "items": [
+            {
+              "q": "Tilbyder I erhvervskonti?",
+              "a": "Erhvervskonti med faktura er under forberedelse. Kontakt vores erhvervsteam via siden Erhverv."
+            },
+            {
+              "q": "Kan jeg tilføje en firmareference?",
+              "a": "Ja, skriv den i beskeden til chaufføren, når du booker."
+            }
+          ]
+        },
+        "vehicles": {
+          "title": "Biler",
+          "items": [
+            {
+              "q": "Hvilken bil får jeg?",
+              "a": "En bil i den klasse, du har booket. Modellen på billedet er et eksempel; du kan få en tilsvarende bil i samme klasse."
+            },
+            {
+              "q": "Hvor mange passagerer og kufferter er der plads til?",
+              "a": "Hver bilklasse viser passagerer og bagage på siden Biler og i bookingformularen."
+            }
+          ]
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Kontakt os",
+      "text": "Spørgsmål om en booking, et særligt ønske eller noget helt andet? Vi svarer på e-mail.",
+      "metaTitle": "Kontakt | EU Limousine",
+      "formTitle": "Send os en besked",
+      "priceTitle": "Leder du efter en pris?",
+      "priceText": "Du får en fast pris på få trin i bookingformularen.",
+      "faqTitle": "Hurtige svar",
+      "faqText": "Mange spørgsmål om booking, priser og afhentning i lufthavnen er besvaret under Spørgsmål og svar.",
+      "faqLink": "Læs spørgsmål og svar"
+    },
+    "blog": {
+      "eyebrow": "Blog",
+      "title": "Rejsenoter",
+      "text": "Tips om lufthavnstransfer, erhvervsrejser og at komme rundt i København.",
+      "metaTitle": "Blog | EU Limousine",
+      "empty": "Vores første artikler er på vej."
+    },
+    "enquiry": {
+      "name": "Dit navn",
+      "email": "E-mail",
+      "phone": "Telefon",
+      "company": "Virksomhed",
+      "reference": "Bookingnummer",
+      "message": "Besked",
+      "optional": "valgfrit",
+      "volume": "Forventede ture pr. måned",
+      "volumes": {
+        "choose": "Vælg…",
+        "few": "1–5",
+        "some": "6–20",
+        "many": "Mere end 20"
+      },
+      "placeholders": {
+        "GENERAL": "Hvordan kan vi hjælpe?",
+        "BUSINESS": "Fortæl os om jeres virksomhed og den transport, I har brug for.",
+        "EVENT": "Dato, steder, tidspunkter og antal gæster."
+      },
+      "privacy": "Vi bruger kun dine oplysninger til at besvare din besked. Se vores privatlivspolitik.",
+      "send": "Send besked",
+      "sending": "Sender…",
+      "sentTitle": "Tak, vi har modtaget din besked",
+      "sentText": "Vores team svarer på e-mail.",
+      "errors": {
+        "name": "Indtast dit navn.",
+        "email": "Indtast en gyldig e-mailadresse.",
+        "phone": "Indtast et gyldigt telefonnummer, fx +45 12 34 56 78.",
+        "company": "Indtast navnet på din virksomhed.",
+        "reference": "Bookingnumre ser sådan ud: EUL-ABC123.",
+        "message": "Skriv en besked på mindst 10 tegn.",
+        "check": "Tjek venligst dette felt.",
+        "botCheck": "Gennemfør sikkerhedstjekket, og prøv igen.",
+        "tooMany": "For mange beskeder. Vent et minut, og prøv igen.",
+        "generic": "Din besked kunne ikke sendes. Prøv igen.",
+        "network": "Ingen forbindelse. Tjek din internetforbindelse, og prøv igen."
+      }
+    },
+    "errors": {
+      "notFoundTitle": "Siden blev ikke fundet",
+      "notFoundText": "Siden, du leder efter, findes ikke eller er flyttet.",
+      "errorTitle": "Noget gik galt",
+      "errorText": "Prøv igen om et øjeblik.",
+      "retry": "Prøv igen",
+      "home": "Gå til forsiden",
+      "book": "Book en tur"
+    }
+  },
+  "consent": {
+    "title": "Dine valg om cookies",
+    "text": "Vi bruger cookies, som hjemmesiden har brug for for at virke. Med din tilladelse vil vi også gerne bruge valgfrie cookies. Intet valgfrit bruges, før du har valgt.",
+    "policyLink": "Læs vores cookiepolitik",
+    "acceptAll": "Accepter alle",
+    "rejectAll": "Afvis alle",
+    "choose": "Vælg cookies",
+    "settingsTitle": "Cookieindstillinger",
+    "settingsText": "Vælg, hvilke valgfrie cookies vi må bruge. Du kan til enhver tid ændre dit valg under \"Cookieindstillinger\" nederst på hver side.",
+    "settingsLink": "Cookieindstillinger",
+    "alwaysOn": "Altid slået til",
+    "save": "Gem mine valg",
+    "categories": {
+      "necessary": {
+        "title": "Nødvendige",
+        "text": "Husker dit sprog, gemmer en booking i gang og beskytter vores formularer mod misbrug. Hjemmesiden kan ikke virke uden dem."
+      },
+      "statistics": {
+        "title": "Statistik",
+        "text": "Hjælper os med at forstå, hvordan besøgende bruger hjemmesiden, så vi kan forbedre den."
+      },
+      "marketing": {
+        "title": "Markedsføring",
+        "text": "Bruges til at måle vores annoncering og vise relevante tilbud på andre hjemmesider."
+      }
+    }
   }
 }

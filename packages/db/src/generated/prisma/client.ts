@@ -144,3 +144,8 @@ export type DispatchSettings = Prisma.DispatchSettingsModel
  * 
  */
 export type NotificationLog = Prisma.NotificationLogModel
+/**
+ * Model Enquiry
+ * * A message from the website's contact, business or event forms. Staff are emailed; nothing is auto-answered.
+ */
+export type Enquiry = Prisma.EnquiryModel

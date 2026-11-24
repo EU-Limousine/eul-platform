@@ -2,6 +2,7 @@ import {
   CalendarCheck,
   CalendarClock,
   Car,
+  Inbox,
   LayoutDashboard,
   type LucideIcon,
   Radio,
@@ -11,7 +12,7 @@ import {
   Users,
 } from 'lucide-react';
 
-type AppPath = '/' | '/bookings' | '/dispatch' | '/spares' | '/drivers' | '/vehicles' | '/pricing' | '/users' | '/audit';
+type AppPath = '/' | '/bookings' | '/enquiries' | '/dispatch' | '/spares' | '/drivers' | '/vehicles' | '/pricing' | '/users' | '/audit';
 
 export interface NavItem {
   to: AppPath;
@@ -23,6 +24,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { to: '/', labelKey: 'nav.overview', icon: LayoutDashboard },
   { to: '/bookings', labelKey: 'nav.bookings', icon: CalendarClock, permission: 'bookings.read' },
+  { to: '/enquiries', labelKey: 'nav.enquiries', icon: Inbox, permission: 'enquiries.read' },
   { to: '/dispatch', labelKey: 'nav.dispatch', icon: Radio, permission: 'dispatch.assign' },
   { to: '/spares', labelKey: 'nav.spares', icon: CalendarCheck, permission: 'drivers.read' },
   { to: '/drivers', labelKey: 'nav.drivers', icon: Users, permission: 'drivers.read' },

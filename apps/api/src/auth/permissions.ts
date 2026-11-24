@@ -30,6 +30,8 @@ export const PERMISSIONS = [
   'users.write',
   'roles.assign',
   'customers.read',
+  'enquiries.read',
+  'enquiries.write',
   'data.export',
   'system.read',
   'system.write',
@@ -91,6 +93,8 @@ export const ROLE_PERMISSIONS: Record<StaffRole, readonly Permission[]> = {
     'users.write',
     'roles.assign',
     'customers.read',
+    'enquiries.read',
+    'enquiries.write',
     'data.export',
   ],
   DISPATCHER: [
@@ -106,6 +110,8 @@ export const ROLE_PERMISSIONS: Record<StaffRole, readonly Permission[]> = {
     'notifications.read',
     'reports.read.basic',
     'customers.read',
+    'enquiries.read',
+    'enquiries.write',
   ],
   DRIVER: DRIVER_ONLY,
 };

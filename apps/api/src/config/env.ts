@@ -30,6 +30,8 @@ export interface Env {
   CHECKOUT_TTL_MINUTES: number;
   /** D-07 open: shortest time between booking and pickup. */
   MIN_BOOKING_LEAD_MINUTES: number;
+  /** Staff inbox for website enquiries (contact/business/event forms). Empty = stored only, no email. */
+  ENQUIRY_EMAIL: string;
 }
 
 /** Cloudflare's documented test secret: every token passes. Never allowed in production. */
@@ -100,5 +102,6 @@ export function validateEnv(raw: Record<string, unknown>): Env {
     QUOTE_TTL_MINUTES: int(raw, 'QUOTE_TTL_MINUTES', 30),
     CHECKOUT_TTL_MINUTES: int(raw, 'CHECKOUT_TTL_MINUTES', 30),
     MIN_BOOKING_LEAD_MINUTES: int(raw, 'MIN_BOOKING_LEAD_MINUTES', 60),
+    ENQUIRY_EMAIL: str(raw, 'ENQUIRY_EMAIL', ''),
   };
 }

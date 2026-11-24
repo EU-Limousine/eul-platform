@@ -417,7 +417,8 @@ export const ModelName = {
   BookingDriverNotification: 'BookingDriverNotification',
   BookingAssignment: 'BookingAssignment',
   DispatchSettings: 'DispatchSettings',
-  NotificationLog: 'NotificationLog'
+  NotificationLog: 'NotificationLog',
+  Enquiry: 'Enquiry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "refreshToken" | "auditLog" | "customer" | "vehicleCategory" | "vehicle" | "driver" | "driverSpareDay" | "pricingRule" | "quote" | "checkoutSession" | "payment" | "paymentEvent" | "refund" | "booking" | "bookingStatusHistory" | "bookingDriverNotification" | "bookingAssignment" | "dispatchSettings" | "notificationLog"
+    modelProps: "user" | "userRole" | "refreshToken" | "auditLog" | "customer" | "vehicleCategory" | "vehicle" | "driver" | "driverSpareDay" | "pricingRule" | "quote" | "checkoutSession" | "payment" | "paymentEvent" | "refund" | "booking" | "bookingStatusHistory" | "bookingDriverNotification" | "bookingAssignment" | "dispatchSettings" | "notificationLog" | "enquiry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1991,6 +1992,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Enquiry: {
+      payload: Prisma.$EnquiryPayload<ExtArgs>
+      fields: Prisma.EnquiryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EnquiryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EnquiryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        findFirst: {
+          args: Prisma.EnquiryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EnquiryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        findMany: {
+          args: Prisma.EnquiryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>[]
+        }
+        create: {
+          args: Prisma.EnquiryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        createMany: {
+          args: Prisma.EnquiryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EnquiryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>[]
+        }
+        delete: {
+          args: Prisma.EnquiryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        update: {
+          args: Prisma.EnquiryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        deleteMany: {
+          args: Prisma.EnquiryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EnquiryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EnquiryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>[]
+        }
+        upsert: {
+          args: Prisma.EnquiryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EnquiryPayload>
+        }
+        aggregate: {
+          args: Prisma.EnquiryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEnquiry>
+        }
+        groupBy: {
+          args: Prisma.EnquiryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EnquiryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EnquiryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EnquiryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2376,6 +2451,25 @@ export const NotificationLogScalarFieldEnum = {
 export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldEnum)[keyof typeof NotificationLogScalarFieldEnum]
 
 
+export const EnquiryScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  status: 'status',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  company: 'company',
+  bookingReference: 'bookingReference',
+  topic: 'topic',
+  message: 'message',
+  language: 'language',
+  createdAt: 'createdAt',
+  handledAt: 'handledAt'
+} as const
+
+export type EnquiryScalarFieldEnum = (typeof EnquiryScalarFieldEnum)[keyof typeof EnquiryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2716,6 +2810,34 @@ export type EnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 export type ListEnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'EnquiryType'
+ */
+export type EnumEnquiryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryType'>
+    
+
+
+/**
+ * Reference to a field of type 'EnquiryType[]'
+ */
+export type ListEnumEnquiryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EnquiryStatus'
+ */
+export type EnumEnquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EnquiryStatus[]'
+ */
+export type ListEnumEnquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2888,6 +3010,7 @@ export type GlobalOmitConfig = {
   bookingAssignment?: Prisma.BookingAssignmentOmit
   dispatchSettings?: Prisma.DispatchSettingsOmit
   notificationLog?: Prisma.NotificationLogOmit
+  enquiry?: Prisma.EnquiryOmit
 }
 
 /* Types for Logging */

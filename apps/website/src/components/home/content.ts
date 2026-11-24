@@ -25,7 +25,9 @@ import {
   UserCheck,
 } from 'lucide-react';
 
-const P = '/images/placeholders'; // TODO(content): replace placeholder photos with real, licensed photos
+// Stock photos: Unsplash License (free, commercial use, no credit required). Fleet: EU Limousine's own car.
+const S = '/images/site';
+const FLEET = '/images/fleet';
 
 // ───────── Services ─────────
 export const SERVICE_KEYS = ['airport', 'corporate', 'hourly', 'events', 'cityToCity', 'vip'] as const;
@@ -41,10 +43,10 @@ export const SERVICE_ICONS: Record<ServiceKey, LucideIcon> = {
 };
 
 export const SERVICE_IMAGES: Partial<Record<ServiceKey, string>> = {
-  airport: `${P}/service-airport.jpg`,
-  corporate: `${P}/service-corporate.jpg`,
-  events: `${P}/service-events.jpg`,
-  hourly: `${P}/service-hourly.jpg`,
+  airport: `${S}/service-airport.jpg`,
+  corporate: `${S}/service-corporate.jpg`,
+  events: `${S}/service-events.jpg`,
+  hourly: `${S}/service-hourly.jpg`,
 };
 
 // ───────── Hero highlights (small icon row under the hero text) ─────────
@@ -98,23 +100,26 @@ export const PARTNERS: { name: string; logo: string; url?: string }[] = [];
 
 // ───────── Photos ─────────
 export const IMAGES = {
-  classicHero: `${P}/classic-hero.jpg`,
-  noirHero: `${P}/noir-hero.jpg`,
-  classicAbout: `${P}/classic-about.jpg`,
-  noirAbout: `${P}/noir-about.jpg`,
-  classicHow: `${P}/classic-how.jpg`,
+  classicHero: `${S}/hero-classic.jpg`,
+  noirHero: `${S}/hero-noir.jpg`,
+  classicAbout: `${S}/about-classic.jpg`,
+  noirAbout: `${S}/about-noir.jpg`,
+  classicHow: `${S}/how-it-works.jpg`,
 };
 
-export const GALLERY: string[] = [1, 2, 3, 4, 5].map((n) => `${P}/gallery-${n}.jpg`);
+export const GALLERY: string[] = [1, 2, 3, 4, 5].map((n) => `${S}/gallery-${n}.jpg`);
 
-/** Photo per vehicle class code (from the dashboard). Unknown codes use the first photo. */
+/**
+ * Photo per vehicle class code (from the dashboard). Unknown codes use the generic photo.
+ * Sedans: our own Mercedes EQS. TODO(content): real photos of the vans, shuttle and coach (D-09).
+ */
 export const FLEET_IMAGES: Record<string, string> = {
-  BUSINESS: `${P}/fleet-1.jpg`,
-  ELECTRIC: `${P}/fleet-1.jpg`,
-  FIRST: `${P}/fleet-2.jpg`,
-  PREMIUM_ELECTRIC_VAN: `${P}/fleet-4.jpg`,
-  PREMIUM_MINIVAN: `${P}/fleet-4.jpg`,
-  GROUP_SHUTTLE: `${P}/fleet-4.jpg`,
-  LUXURY_COACH: `${P}/fleet-4.jpg`,
+  ELECTRIC: `${FLEET}/eqs-front.jpg`,
+  BUSINESS: `${FLEET}/eqs-rear.jpg`,
+  FIRST: `${FLEET}/eqs-rear-seats.jpg`,
+  PREMIUM_ELECTRIC_VAN: `${FLEET}/generic-mercedes.jpg`,
+  PREMIUM_MINIVAN: `${FLEET}/generic-mercedes.jpg`,
+  GROUP_SHUTTLE: `${FLEET}/generic-mercedes.jpg`,
+  LUXURY_COACH: `${FLEET}/generic-mercedes.jpg`,
 };
-export const fleetImage = (code: string) => FLEET_IMAGES[code] ?? `${P}/fleet-1.jpg`;
+export const fleetImage = (code: string) => FLEET_IMAGES[code] ?? `${FLEET}/generic-mercedes.jpg`;

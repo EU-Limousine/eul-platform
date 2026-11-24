@@ -135,6 +135,7 @@ model User {
   rolesGranted  UserRole[]     @relation("RoleGrantedBy")
   refreshTokens RefreshToken[]
   driver        Driver?
+  enquiriesHandled Enquiry[]   @relation("EnquiryHandledBy")
 
   @@map("users")
 }
@@ -545,4 +546,41 @@ model NotificationLog {
   @@index([bookingId])
   @@index([createdAt])
   @@map("notification_logs")
+}
+
+// ───────── Website enquiries (contact, business, events/groups) ─────────
+
+enum EnquiryType {
+  GENERAL
+  BUSINESS
+  EVENT
+}
+
+enum EnquiryStatus {
+  NEW
+  HANDLED
+}
+
+/// A message from the website's contact, business or event forms. Staff are emailed; nothing is auto-answered.
+model Enquiry {
+  id               String        @id @default(uuid()) @db.Uuid
+  type             EnquiryType
+  status           EnquiryStatus @default(NEW)
+  name             String
+  email            String
+  phone            String?
+  company          String?
+  bookingReference String?       @map("booking_reference")
+  /// Where the form was sent from, e.g. the service page "events-weddings"
+  topic            String?
+  message          String
+  language         String        @default("en")
+  createdAt        DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  handledAt        DateTime?     @map("handled_at") @db.Timestamptz
+  handledById      String?       @map("handled_by_id") @db.Uuid
+
+  handledBy User? @relation("EnquiryHandledBy", fields: [handledById], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@map("enquiries")
 }

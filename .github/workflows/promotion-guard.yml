@@ -1,0 +1,31 @@
+name: Promotion guard
+
+# Only two kinds of branches may be merged into main:
+#   dev        → the normal release (already tested on staging)
+#   hotfix/*   → an urgent fix (must also be verified on staging first, see docs/release-process.md)
+# Branch protection on main requires this check, so any other PR into main cannot be merged.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  promotion-guard:
+    name: promotion-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Source branch is dev or hotfix/*
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          case "$HEAD_REF" in
+            dev|hotfix/*) echo "✓ $HEAD_REF may be merged into main" ;;
+            *) echo "::error::Only 'dev' or 'hotfix/*' may be merged into main (this PR comes from '$HEAD_REF'). Merge it into dev first."; exit 1 ;;
+          esac
+      - name: Reminder
+        run: |
+          echo "Merge with 'Create a merge commit' (not squash) so dev and main keep the same history."
+          echo "The 'staging/verified' check must be green: this exact commit passed the tests on staging."

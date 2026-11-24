@@ -1,6 +1,13 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
+/**
+ * Where the tests run: "local" (default, everything on your machine) or "staging"
+ * (the deploy-staging workflow sets E2E_TARGET=staging and the staging URLs).
+ */
+export const TARGET = (process.env.E2E_TARGET ?? 'local') as 'local' | 'staging';
+export const IS_LOCAL = TARGET === 'local';
+
 /** Local addresses. Override with env vars if your ports differ. */
 export const URLS = {
   website: process.env.E2E_WEBSITE_URL ?? 'http://localhost:3000',
@@ -8,6 +15,14 @@ export const URLS = {
   api: process.env.E2E_API_URL ?? 'http://localhost:8080',
   mailpit: process.env.E2E_MAILPIT_URL ?? 'http://localhost:8025',
 };
+
+// These tests create bookings, drivers and vehicles. They must never touch production.
+const PRODUCTION_HOSTS = ['eulimousine.com', 'www.eulimousine.com', 'app.eulimousine.com', 'api.eulimousine.com'];
+for (const url of Object.values(URLS)) {
+  if (PRODUCTION_HOSTS.includes(new URL(url).hostname)) {
+    throw new Error(`Refusing to run end-to-end tests against production (${url}). Use staging or local.`);
+  }
+}
 
 /** Reads the admin login from the repo's .env (never hard-coded here). */
 function readDotEnv(): Record<string, string> {

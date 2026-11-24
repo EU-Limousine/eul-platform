@@ -52,7 +52,8 @@ export function usePrice(
     const pickupAt = draft.quote?.pickupAt;
     const currency = draft.currency ?? defaultCurrency(locale);
     const body = pickupAt ? quoteRequest(draft, pickupAt, currency) : null;
-    if (!body || !draft.categoryId) {
+    // `pickupAt` checked again so TypeScript knows it is a string below.
+    if (!body || !pickupAt || !draft.categoryId) {
       setPrice({ status: 'unavailable' });
       return;
     }

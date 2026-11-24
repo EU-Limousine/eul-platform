@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { HOME_VARIANT } from '@/config/site';
+import { ConsentProvider } from '@/features/consent/consent-provider';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
 
@@ -48,9 +49,12 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${inter.variable} ${playfair.variable} theme-${HOME_VARIANT}`}>
       <body>
         <NextIntlClientProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
+          {/* Cookie choices; every optional script must sit inside <ConsentGate>. */}
+          <ConsentProvider>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </ConsentProvider>
         </NextIntlClientProvider>
       </body>
     </html>
