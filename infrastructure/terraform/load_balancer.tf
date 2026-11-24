@@ -30,6 +30,7 @@ resource "google_compute_region_network_endpoint_group" "neg" {
   cloud_run {
     service = each.value
   }
+  depends_on = [google_project_service.apis] # Compute Engine API must be on first
 }
 
 resource "google_compute_backend_service" "be" {
@@ -93,6 +94,7 @@ resource "google_compute_managed_ssl_certificate" "main" {
   managed {
     domains = local.cert_domains
   }
+  depends_on = [google_project_service.apis]
 }
 
 resource "google_compute_target_https_proxy" "main" {
@@ -120,6 +122,7 @@ resource "google_compute_url_map" "http_redirect" {
     redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
     strip_query            = false
   }
+  depends_on = [google_project_service.apis]
 }
 
 resource "google_compute_target_http_proxy" "redirect" {

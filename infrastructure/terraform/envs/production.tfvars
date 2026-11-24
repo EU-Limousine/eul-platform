@@ -16,6 +16,6 @@ noindex = false
 # Then set true, apply, add the printed DNS records in Cloudflare, and re-run the production deploy.
 enable_load_balancer = false
 enable_monitoring    = true
-alert_email          = "" # EDIT: e.g. "ops@eulimousine.com" (uptime alerts start with the load balancer)
+alert_email          = "info@eulimousine.com" # uptime alerts start with the load balancer; worker alert from day one
 
-budget_amount = 250 # in budget_currency
+budget_amount = 1600 # DKK ≈ 250 USD (estimate ≈ 1,240 DKK/month, ≈ 1,100 before launch)

@@ -1,12 +1,12 @@
 name: Deploy staging
 
-# Merge into dev → CI → deploy to staging → end-to-end tests ON staging →
+# Merge into develop → CI → deploy to staging → end-to-end tests ON staging →
 # commit status "staging/verified" on that exact commit. Branch protection on main requires
 # that status, so only code that passed on staging can be merged into main.
 # Run manually to verify a hotfix/* branch on staging before it goes to main.
 on:
   push:
-    branches: [dev]
+    branches: [develop]
   workflow_dispatch:
     inputs:
       seed:
