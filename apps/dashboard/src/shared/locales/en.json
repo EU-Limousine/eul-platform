@@ -40,7 +40,8 @@
     "mainMenu": "Main menu",
     "spares": "Spare drivers",
     "openMenu": "Open menu",
-    "collapse": "Collapse or expand the menu"
+    "collapse": "Collapse or expand the menu",
+    "enquiries": "Enquiries"
   },
   "common": {
     "notBuilt": "This screen is not built yet.",
@@ -381,5 +382,71 @@
         "set": "Spare drivers updated"
       }
     }
+  },
+  "enquiries": {
+    "title": "Enquiries",
+    "intro": "Messages from the website's contact, business and event forms. Reply by email, then mark them handled.",
+    "newCount_one": "{{count}} new message",
+    "newCount_other": "{{count}} new messages",
+    "tabs": {
+      "new": "New",
+      "handled": "Handled",
+      "all": "All"
+    },
+    "filters": {
+      "status": "Status",
+      "type": "Type"
+    },
+    "allTypes": "All types",
+    "types": {
+      "GENERAL": "Contact message",
+      "BUSINESS": "Business enquiry",
+      "EVENT": "Event or group enquiry"
+    },
+    "status": {
+      "NEW": "New",
+      "HANDLED": "Handled"
+    },
+    "search": "Search enquiries",
+    "searchPlaceholder": "Name, email, company, reference…",
+    "empty": {
+      "new": "No new messages. You're all caught up.",
+      "handled": "No handled messages yet.",
+      "all": "No messages yet."
+    },
+    "emptyFiltered": "No messages match these filters.",
+    "open": "Open message from {{name}}",
+    "fields": {
+      "received": "Received",
+      "from": "From",
+      "type": "Type",
+      "message": "Message",
+      "status": "Status",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company",
+      "reference": "Booking reference",
+      "topic": "Sent from",
+      "language": "Website language"
+    },
+    "topics": {
+      "contact": "Contact page",
+      "business": "Business page",
+      "airport-transfers": "Airport transfers page",
+      "hourly-chauffeur": "Chauffeur by the hour page",
+      "city-to-city": "City to city page",
+      "vip-chauffeur": "VIP chauffeur page",
+      "events-weddings": "Events and weddings page",
+      "tours": "Tours page",
+      "group-transport": "Group transport page"
+    },
+    "reply": "Reply by email",
+    "replySubject": "Re: Your message to EU Limousine",
+    "replySubjectWithRef": "Re: Your message about booking {{reference}}",
+    "markHandled": "Mark handled",
+    "reopen": "Reopen",
+    "handledBy": "by {{name}}, {{when}}",
+    "someone": "a former user"
   }
 }

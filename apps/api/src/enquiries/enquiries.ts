@@ -10,6 +10,7 @@ import { TurnstileGuard } from '../common/turnstile.guard';
 import type { Env } from '../config/env';
 import { EmailQueue } from '../notifications/email-queue';
 import { PrismaService } from '../prisma/prisma.service';
+import { EnquiriesController, EnquiriesInboxService } from './enquiries-inbox';
 import { renderEnquiryEmail } from './enquiry-email';
 
 const LANGUAGES = ['en', 'da', 'de', 'fr', 'es', 'it', 'rm'] as const;
@@ -97,7 +98,7 @@ export class EnquiriesService {
 
 @ApiTags('public')
 @Controller()
-export class EnquiriesController {
+export class PublicEnquiriesController {
   constructor(private readonly enquiries: EnquiriesService) {}
 
   /** Contact, business and event/group forms on the website. */
@@ -113,8 +114,9 @@ export class EnquiriesController {
   }
 }
 
+/** Website forms (public) + the dashboard inbox (staff, enquiries.* permissions). */
 @Module({
-  controllers: [EnquiriesController],
-  providers: [EnquiriesService],
+  controllers: [PublicEnquiriesController, EnquiriesController],
+  providers: [EnquiriesService, EnquiriesInboxService],
 })
 export class EnquiriesModule {}

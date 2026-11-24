@@ -341,6 +341,25 @@
           ]
         },
         {
+          "name": "Enquiries without token → 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/enquiries"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "Wrong password → 401",
           "request": {
             "method": "POST",
@@ -799,6 +818,57 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('200 OK', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiries inbox (new)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=NEW&page=1&pageSize=10"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const p = pm.response.json();",
+                  "pm.test('page shape', () => { pm.expect(p.items).to.be.an('array'); ['total','page','pageSize','newCount'].forEach(k => pm.expect(p[k]).to.be.a('number')); });",
+                  "pm.test('only NEW items', () => p.items.forEach(e => pm.expect(e.status).to.eql('NEW')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiries: unknown status → 422",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=SPAM"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('422', () => pm.response.to.have.status(422));"
                 ]
               }
             }
@@ -1671,6 +1741,148 @@
                 "exec": [
                   "pm.test('201', () => pm.response.to.have.status(201));",
                   "pm.test('received', () => pm.expect(pm.response.json()).to.eql({ received: true }));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Find the Postman enquiry in the inbox",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries?status=NEW&search=postman@example.com&pageSize=1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const p = pm.response.json();",
+                  "pm.test('found', () => pm.expect(p.items.length).to.eql(1));",
+                  "if (p.items[0]) pm.environment.set('enquiryId', p.items[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark enquiry handled",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/{{enquiryId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const e = pm.response.json();",
+                  "pm.test('handled with who and when', () => { pm.expect(e.status).to.eql('HANDLED'); pm.expect(e.handledAt).to.be.a('string'); pm.expect(e.handledByName).to.be.a('string'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark handled again → no change",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/{{enquiryId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "pm.test('still handled', () => pm.expect(pm.response.json().status).to.eql('HANDLED'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Enquiry: unknown id → 404",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enquiries/00000000-0000-4000-8000-000000000000",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HANDLED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));",
+                  "pm.test('code', () => pm.expect(pm.response.json().code).to.eql('ENQUIRY_NOT_FOUND'));"
                 ]
               }
             }

@@ -20,6 +20,8 @@ describe('permissionsFor', () => {
       'users.write',
       'roles.assign',
       'data.export',
+      'enquiries.read',
+      'enquiries.write',
     ] as const) {
       expect(dev).not.toContain(p);
     }
@@ -35,6 +37,18 @@ describe('permissionsFor', () => {
     const perms = permissionsFor([StaffRole.DISPATCHER]);
     expect(perms).not.toContain('payments.refund');
     expect(perms).not.toContain('pricing.write');
+  });
+});
+
+describe('enquiries (website messages: personal data)', () => {
+  it('lets ADMIN and DISPATCHER read and handle them', () => {
+    for (const role of [StaffRole.ADMIN, StaffRole.DISPATCHER, StaffRole.SUPER_ADMIN]) {
+      expect(ROLE_PERMISSIONS[role]).toEqual(expect.arrayContaining(['enquiries.read', 'enquiries.write']));
+    }
+  });
+
+  it('keeps them away from DRIVER', () => {
+    expect(ROLE_PERMISSIONS.DRIVER).not.toContain('enquiries.read');
   });
 });
 

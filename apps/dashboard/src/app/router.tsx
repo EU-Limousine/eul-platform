@@ -5,6 +5,8 @@ import { BookingDetailPage } from '@/features/bookings/booking-detail-page';
 import { BookingsPage } from '@/features/bookings/bookings-page';
 import { validateBookingsSearch } from '@/features/bookings/bookings-search';
 import { DriversPage } from '@/features/drivers/drivers-page';
+import { EnquiriesPage } from '@/features/enquiries/enquiries-page';
+import { validateEnquiriesSearch } from '@/features/enquiries/enquiries-search';
 import { OverviewPage } from '@/features/overview/overview-page';
 import { PricingPage } from '@/features/pricing/pricing-page';
 import { SparesPage } from '@/features/spares/spares-page';
@@ -73,6 +75,15 @@ const vehiclesRoute = createRoute({
   },
 });
 
+const enquiriesRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/enquiries',
+  validateSearch: validateEnquiriesSearch,
+  component: function EnquiriesRoute() {
+    return <EnquiriesPage search={enquiriesRoute.useSearch()} />;
+  },
+});
+
 const sparesRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/spares',
@@ -90,6 +101,7 @@ const routeTree = rootRoute.addChildren([
     createRoute({ getParentRoute: () => appRoute, path: '/', component: OverviewPage }),
     bookingsRoute,
     bookingDetailRoute,
+    enquiriesRoute,
     driversRoute,
     vehiclesRoute,
     sparesRoute,
