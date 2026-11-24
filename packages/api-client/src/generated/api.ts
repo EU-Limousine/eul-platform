@@ -811,6 +811,47 @@ export interface OverviewDto {
   activity?: ActivityDto[] | null;
 }
 
+export type EnquiryType = typeof EnquiryType[keyof typeof EnquiryType];
+
+
+export const EnquiryType = {
+  GENERAL: 'GENERAL',
+  BUSINESS: 'BUSINESS',
+  EVENT: 'EVENT',
+} as const;
+
+export type CreateEnquiryDtoLanguage = typeof CreateEnquiryDtoLanguage[keyof typeof CreateEnquiryDtoLanguage];
+
+
+export const CreateEnquiryDtoLanguage = {
+  en: 'en',
+  da: 'da',
+  de: 'de',
+  fr: 'fr',
+  es: 'es',
+  it: 'it',
+  rm: 'rm',
+} as const;
+
+export interface CreateEnquiryDto {
+  type: EnquiryType;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  bookingReference?: string;
+  /** Where the form was sent from, e.g. "events-weddings" */
+  topic?: string;
+  message: string;
+  language?: CreateEnquiryDtoLanguage;
+  /** Leave empty */
+  website?: string;
+}
+
+export interface EnquiryCreatedDto {
+  received: boolean;
+}
+
 export type HealthCheck200Status = typeof HealthCheck200Status[keyof typeof HealthCheck200Status];
 
 
@@ -4362,3 +4403,91 @@ export function useOverviewGet<TData = Awaited<ReturnType<typeof overviewGet>>, 
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+
+
+
+
+
+
+export const getEnquiriesCreateUrl = () => {
+
+
+
+
+  return `/public/enquiries`
+}
+
+export const enquiriesCreate = async (createEnquiryDto: CreateEnquiryDto, options?: Parameters<typeof http>[1]): Promise<EnquiryCreatedDto> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return http<EnquiryCreatedDto>(getEnquiriesCreateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createEnquiryDto)
+  }
+);}
+
+
+
+
+
+export const getEnquiriesCreateMutationKey = () => ['enquiriesCreate'] as const;
+
+export const getEnquiriesCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+): UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext> => {
+
+const mutationKey = getEnquiriesCreateMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof enquiriesCreate>>, EnquiriesCreateMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  enquiriesCreate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type EnquiriesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof enquiriesCreate>>>
+    export type EnquiriesCreateMutationBody = CreateEnquiryDto
+    export type EnquiriesCreateMutationError = unknown
+    export type EnquiriesCreateMutationVariables = {data: CreateEnquiryDto}
+
+    export const useEnquiriesCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof enquiriesCreate>>, TError,EnquiriesCreateMutationVariables, TContext>, request?: SecondParameter<typeof http>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof enquiriesCreate>>,
+        TError,
+        EnquiriesCreateMutationVariables,
+        TContext
+      > => {
+      return useMutation(getEnquiriesCreateMutationOptions(options), queryClient);
+    }

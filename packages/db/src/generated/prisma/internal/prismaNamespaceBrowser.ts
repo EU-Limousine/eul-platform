@@ -71,7 +71,8 @@ export const ModelName = {
   BookingDriverNotification: 'BookingDriverNotification',
   BookingAssignment: 'BookingAssignment',
   DispatchSettings: 'DispatchSettings',
-  NotificationLog: 'NotificationLog'
+  NotificationLog: 'NotificationLog',
+  Enquiry: 'Enquiry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,6 +435,25 @@ export const NotificationLogScalarFieldEnum = {
 } as const
 
 export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldEnum)[keyof typeof NotificationLogScalarFieldEnum]
+
+
+export const EnquiryScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  status: 'status',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  company: 'company',
+  bookingReference: 'bookingReference',
+  topic: 'topic',
+  message: 'message',
+  language: 'language',
+  createdAt: 'createdAt',
+  handledAt: 'handledAt'
+} as const
+
+export type EnquiryScalarFieldEnum = (typeof EnquiryScalarFieldEnum)[keyof typeof EnquiryScalarFieldEnum]
 
 
 export const SortOrder = {

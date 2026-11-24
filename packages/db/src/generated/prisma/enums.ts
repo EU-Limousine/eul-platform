@@ -156,3 +156,20 @@ export const NotificationStatus = {
 } as const
 
 export type NotificationStatus = (typeof NotificationStatus)[keyof typeof NotificationStatus]
+
+
+export const EnquiryType = {
+  GENERAL: 'GENERAL',
+  BUSINESS: 'BUSINESS',
+  EVENT: 'EVENT'
+} as const
+
+export type EnquiryType = (typeof EnquiryType)[keyof typeof EnquiryType]
+
+
+export const EnquiryStatus = {
+  NEW: 'NEW',
+  HANDLED: 'HANDLED'
+} as const
+
+export type EnquiryStatus = (typeof EnquiryStatus)[keyof typeof EnquiryStatus]
