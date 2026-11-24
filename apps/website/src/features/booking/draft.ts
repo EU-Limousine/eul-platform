@@ -41,7 +41,16 @@ export interface BookingDraft {
   date?: string; // YYYY-MM-DD, Copenhagen
   time?: string; // HH:mm, Copenhagen
   passengers: number;
-  quote?: { pickupAt: string; distanceMeters: number; durationSeconds: number; options: QuoteOptionDto[] };
+  /** Latest API quote: route from the map + one price per vehicle class that fits the passengers. */
+  quote?: {
+    pickupAt: string;
+    distanceMeters: number;
+    durationSeconds: number;
+    distanceSource?: 'google' | 'estimate';
+    options: QuoteOptionDto[];
+  };
+  /** Chosen vehicle class. Stays the same when the price is recalculated (new quote, new quoteId). */
+  categoryId?: string;
   quoteId?: string;
   details?: Details;
   /** One key per chosen quote: a double click or retry never pays twice. */
@@ -110,4 +119,9 @@ export function newIdempotencyKey(): string {
 
 export function selectedOption(draft: BookingDraft): QuoteOptionDto | undefined {
   return draft.quote?.options.find((o) => o.quoteId === draft.quoteId);
+}
+
+/** A price is usable until shortly before it expires (leaves time to reach the payment page). */
+export function isFresh(option: QuoteOptionDto, marginMs = 60_000): boolean {
+  return new Date(option.expiresAt).getTime() - marginMs > Date.now();
 }

@@ -260,8 +260,8 @@
       "time": "Pickup time",
       "timeHint": "Copenhagen time",
       "passengers": "Passengers",
-      "submit": "See prices",
-      "loading": "Getting prices…",
+      "submit": "See vehicles",
+      "loading": "Checking your route…",
       "noResults": "No addresses found.",
       "searchFailed": "Address search is not available right now. Please try again.",
       "errors": {
@@ -281,11 +281,11 @@
       "trip": "{km} km · about {duration}",
       "orSimilar": "{model} or similar",
       "seats": "Up to {count} passengers",
-      "priceNote": "Prices are fixed and include the whole trip.",
-      "expired": "These prices have expired. Please get new prices.",
-      "refresh": "Get new prices",
+      "priceNote": "Your fixed price is calculated from the route, the vehicle and the passengers on the next step.",
       "back": "Back",
-      "continue": "Continue"
+      "continue": "Continue",
+      "passengers_one": "{count} passenger",
+      "passengers_other": "{count} passengers"
     },
     "details": {
       "title": "Your details",
@@ -350,6 +350,25 @@
       "pendingHint": "You will receive an email as soon as it is confirmed. You do not need to pay again.",
       "notFound": "We could not find this booking.",
       "startBooking": "Start a new booking"
+    },
+    "price": {
+      "title": "Your trip and price",
+      "route": "{km} km · about {duration}",
+      "estimated": "estimated distance",
+      "passengers_one": "{count} passenger",
+      "passengers_other": "{count} passengers",
+      "changeJourney": "Change journey",
+      "changeVehicle": "Change vehicle",
+      "calculating": "Calculating your price from the route…",
+      "unavailable": "This vehicle is no longer available for this trip. Please choose another vehicle.",
+      "error": "We could not calculate the price right now.",
+      "retry": "Try again",
+      "baseFare": "Base fare",
+      "distance": "Distance ({km} km)",
+      "time": "Time ({duration})",
+      "minimum": "Minimum fare applies",
+      "total": "Total price",
+      "fixedNote": "Fixed price for the whole trip."
     }
   },
   "legal": {

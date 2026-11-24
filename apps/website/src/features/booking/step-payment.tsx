@@ -5,9 +5,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { isLocale } from '@eul/i18n';
 import { Link } from '@/i18n/navigation';
 import { BookingApiError, createCheckout } from './api';
-import { newIdempotencyKey, selectedOption, type BookingDraft } from './draft';
+import { newIdempotencyKey, type BookingDraft } from './draft';
 import { formatPickup, formatPrice } from './format';
 import { Alert, BackButton, PrimaryButton } from './ui';
+import { usePrice } from './use-price';
 
 /**
  * Step 4: summary and payment (§4.10). The customer is sent to the payment provider's page.
@@ -20,9 +21,23 @@ export function StepPayment({ draft, update, back, restart }: { draft: BookingDr
   const [error, setError] = useState<{ message: string; expired: boolean } | null>(null);
   const [paying, setPaying] = useState(false);
 
-  const option = selectedOption(draft);
+  // Same price as on the details step; recalculated only if it expired while the customer was away.
+  const { price, retry } = usePrice(draft, update, 'ifExpired');
+  const option = price.status === 'ready' ? price.option : undefined;
   const details = draft.details;
-  if (!option || !details || !draft.quote || !draft.pickup || !draft.dropoff) return null;
+  if (!details || !draft.quote || !draft.pickup || !draft.dropoff) return null;
+  if (!option) {
+    return price.status === 'loading' ? (
+      <div className="h-64 animate-pulse rounded-card bg-canvas" aria-busy="true" />
+    ) : (
+      <Alert>
+        <p>{price.status === 'error' && price.message ? price.message : t('errors.generic')}</p>
+        <button type="button" onClick={price.status === 'error' && !price.pickupTooSoon ? retry : restart} className="mt-2 font-medium underline">
+          {t('getNewPrice')}
+        </button>
+      </Alert>
+    );
+  }
 
   async function pay() {
     if (!option || !details) return;

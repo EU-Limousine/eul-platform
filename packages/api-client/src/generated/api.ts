@@ -400,11 +400,23 @@ export interface QuoteCategoryDto {
   description?: string | null;
 }
 
+export interface QuoteBreakdownDto {
+  baseFareMinor: number;
+  /** Per-km rate × route distance */
+  distanceMinor: number;
+  /** Per-minute rate × route duration */
+  timeMinor: number;
+  minimumFareMinor: number;
+  /** True when the minimum fare replaced a lower calculated price */
+  minimumApplied: boolean;
+}
+
 export interface QuoteOptionDto {
   quoteId: string;
   category: QuoteCategoryDto;
   /** Total in minor units (øre / cents) */
   amountMinor: number;
+  breakdown: QuoteBreakdownDto;
   currency: Currency;
   expiresAt: string;
 }

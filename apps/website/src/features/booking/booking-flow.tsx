@@ -14,13 +14,14 @@ import { StepVehicle } from './step-vehicle';
 /** Furthest step the draft allows (you can't open "payment" without a vehicle and details). */
 function allowedStep(draft: BookingDraft, wanted: Step): Step {
   if (wanted === 'journey' || !draft.quote) return 'journey';
-  if (wanted === 'vehicle' || !selectedOption(draft)) return 'vehicle';
-  if (wanted === 'details' || !draft.details) return 'details';
+  if (wanted === 'vehicle' || !draft.categoryId) return 'vehicle';
+  if (wanted === 'details' || !draft.details || !selectedOption(draft)) return 'details';
   return 'payment';
 }
 
 /**
  * The booking flow (D-18): journey → vehicle → details → payment → confirmation.
+ * Prices are shown from the details step on, calculated from the map route, vehicle and passengers.
  * The step is in the URL (?step=), so the language switcher keeps the customer on the same step.
  */
 export function BookingFlow() {
@@ -54,7 +55,7 @@ export function BookingFlow() {
         ) : step === 'vehicle' ? (
           <StepVehicle draft={draft} update={update} next={() => go('details')} back={() => go('journey')} />
         ) : step === 'details' ? (
-          <StepDetails draft={draft} update={update} next={() => go('payment')} back={() => go('vehicle')} />
+          <StepDetails draft={draft} update={update} next={() => go('payment')} back={() => go('vehicle')} toJourney={() => go('journey')} />
         ) : (
           <StepPayment draft={draft} update={update} back={() => go('details')} restart={() => go('journey')} />
         )}

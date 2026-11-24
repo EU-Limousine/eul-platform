@@ -91,6 +91,13 @@ export class QuotesService {
           description: category.description,
         },
         amountMinor: price.totalMinor,
+        breakdown: {
+          baseFareMinor: price.baseFareMinor,
+          distanceMinor: price.distanceMinor,
+          timeMinor: price.timeMinor,
+          minimumFareMinor: price.minimumFareMinor,
+          minimumApplied: price.minimumApplied,
+        },
         currency,
         expiresAt: expiresAt.toISOString(),
       });

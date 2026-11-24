@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { BookingDraft, Details } from './draft';
+import { PriceSummary } from './price-summary';
 import { BackButton, Field, PrimaryButton, fieldClass } from './ui';
+import { usePrice } from './use-price';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE = /^\+?[0-9 ()-]{6,20}$/;
@@ -11,9 +13,25 @@ const FLIGHT = /^[A-Z0-9]{2,3}[0-9]{1,4}[A-Z]?$/;
 
 const EMPTY: Details = { name: '', email: '', phone: '', passengerName: '', passengerPhone: '', flightNumber: '', notes: '' };
 
-/** Step 3: who books and who travels. The API validates everything again. */
-export function StepDetails({ draft, update, next, back }: { draft: BookingDraft; update: (p: Partial<BookingDraft>) => void; next: () => void; back: () => void }) {
+/**
+ * Step 3: your price + who books and who travels. On arrival the API recalculates the price from
+ * the map route, the chosen vehicle class and the passengers. The API validates everything again.
+ */
+export function StepDetails({
+  draft,
+  update,
+  next,
+  back,
+  toJourney,
+}: {
+  draft: BookingDraft;
+  update: (p: Partial<BookingDraft>) => void;
+  next: () => void;
+  back: () => void;
+  toJourney: () => void;
+}) {
   const t = useTranslations('booking.details');
+  const { price, retry } = usePrice(draft, update, 'always');
   const d = { ...EMPTY, ...draft.details };
   const [errors, setErrors] = useState<Partial<Record<keyof Details, string>>>({});
   const [someoneElse, setSomeoneElse] = useState(!!d.passengerName);
@@ -30,7 +48,7 @@ export function StepDetails({ draft, update, next, back }: { draft: BookingDraft
     const flight = d.flightNumber.toUpperCase().replace(/\s+/g, '');
     if (flight && !FLIGHT.test(flight)) e.flightNumber = t('errors.flight');
     setErrors(e);
-    if (Object.keys(e).length) return;
+    if (Object.keys(e).length || price.status !== 'ready') return;
     if (!someoneElse) set({ passengerName: '', passengerPhone: '' });
     next();
   }
@@ -57,6 +75,8 @@ export function StepDetails({ draft, update, next, back }: { draft: BookingDraft
         submit();
       }}
     >
+      <PriceSummary draft={draft} price={price} onRetry={retry} onChangeVehicle={back} onChangeJourney={toJourney} />
+
       <h2 className="text-2xl font-semibold text-text">{t('title')}</h2>
 
       <Field id="name" label={t('name')} error={errors.name}>{input('name', 'text', 'name')}</Field>
@@ -83,7 +103,7 @@ export function StepDetails({ draft, update, next, back }: { draft: BookingDraft
 
       <div className="flex flex-col-reverse items-center gap-2 sm:flex-row sm:justify-between">
         <BackButton onClick={back}>{t('back')}</BackButton>
-        <PrimaryButton type="submit">{t('continue')}</PrimaryButton>
+        <PrimaryButton type="submit" disabled={price.status !== 'ready'}>{t('continue')}</PrimaryButton>
       </div>
     </form>
   );

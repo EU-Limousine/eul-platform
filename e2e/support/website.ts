@@ -35,7 +35,7 @@ export async function bookUntilDetails(page: Page, passengers = 2): Promise<stri
   await page.locator('#time').fill('10:00');
   await page.locator('#passengers').fill(String(passengers));
   await page.locator('label', { hasText: /^EUR$/ }).click(); // seeded prices are in EUR
-  await page.getByRole('button', { name: 'See prices' }).click();
+  await page.getByRole('button', { name: 'See vehicles' }).click();
 
   // Step 2: vehicle
   await expect(page.getByRole('heading', { name: 'Choose your vehicle' })).toBeVisible();
@@ -51,8 +51,9 @@ export async function bookUntilDetails(page: Page, passengers = 2): Promise<stri
 export async function bookUntilPayment(page: Page, input: BookingInput): Promise<string> {
   const className = await bookUntilDetails(page, input.passengers);
 
-  // Step 3: details
+  // Step 3: price (calculated from the route) + details
   await expect(page.getByRole('heading', { name: 'Your details' })).toBeVisible();
+  await expect(page.getByText('Total price')).toBeVisible({ timeout: 20_000 });
   await page.getByLabel('Full name').fill(input.name);
   await page.getByLabel('Email', { exact: true }).fill(input.email);
   await page.getByLabel('Mobile phone').fill(input.phone ?? '+45 12 34 56 78');
