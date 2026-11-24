@@ -83,6 +83,16 @@ variable "budget_amount" {
   description = "Monthly budget in budget_currency (whole units)."
   type        = number
 }
+variable "billing_account" {
+  description = "Billing account id (XXXXXX-XXXXXX-XXXXXX). tf.sh fills it in from gcloud."
+  type        = string
+  default     = ""
+}
+variable "enable_budget" {
+  description = "Create the monthly budget. tf.sh turns it off when your login cannot read the billing account."
+  type        = bool
+  default     = true
+}
 variable "budget_currency" {
   description = "Must be the billing account's currency (Console → Billing → Account management); tf.sh checks it."
   type        = string

@@ -33,8 +33,26 @@ Cloud Shell or typed hidden), so passwords never land in the Terraform state. On
 does not let us avoid: the Redis AUTH string is readable from the Redis resource, so it is in the
 state. The state bucket is therefore private (project owners only) and versioned.
 
-Everything runs in **Google Cloud Shell** (console.cloud.google.com → `>_`): it already has
-`terraform` and `gcloud`, and is logged in as you. Never paste a secret into chat, the repo or GitHub.
+Everything runs in **Google Cloud Shell** (console.cloud.google.com → `>_`): it has `gcloud` and is
+logged in as you. Never paste a secret into chat, the repo or GitHub.
+
+**Terraform in Cloud Shell** (once; the second block keeps it installed after Cloud Shell restarts):
+```bash
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor --yes -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install -y terraform
+
+cat > ~/.customize_environment <<'EOF'
+#!/bin/sh
+wget -O - https://apt.releases.hashicorp.com/gpg | gpg --dearmor --yes -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" > /etc/apt/sources.list.d/hashicorp.list
+apt-get update && apt-get install -y terraform
+EOF
+```
+
+**Budgets need billing-account permission.** Owning the project is not enough: creating a budget needs
+*Billing Account Costs Manager* on the billing account. Without it, `tf.sh` skips the budget (and says so)
+and creates everything else; run `apply` again once the permission is granted.
 
 ## Files
 
@@ -85,7 +103,7 @@ Open the PR `feat/deployment-build → develop`, but do not merge yet.
 ```bash
 git clone -b feat/deployment-build https://github.com/EU-Limousine/eul-platform.git && cd eul-platform
 EUL_ENV=staging bash infrastructure/terraform/tf.sh bootstrap   # state bucket (once)
-EUL_ENV=staging bash infrastructure/terraform/tf.sh plan        # read it: about 85 to add, 0 to change, 0 to destroy
+EUL_ENV=staging bash infrastructure/terraform/tf.sh plan        # read it: about 84–85 to add, 0 to change, 0 to destroy
 EUL_ENV=staging bash infrastructure/terraform/tf.sh apply       # type "yes"; ~15 min; billing starts here
 EUL_ENV=staging bash infrastructure/gcp/secrets.sh              # SMTP password, Maps key, Turnstile empty, admin password = the one from A
 EUL_ENV=staging bash infrastructure/terraform/tf.sh output      # GitHub variables + DNS records

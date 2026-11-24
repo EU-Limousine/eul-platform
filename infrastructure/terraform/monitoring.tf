@@ -2,8 +2,10 @@
 
 # ── Budget: only warns, never switches anything off ─────────────────────────────
 # Alerts go to the billing account's admins at 50 %, 90 %, 100 % and when Google forecasts > 100 %.
+# Needs a login that may manage budgets on the billing account (Billing Account Costs Manager).
 resource "google_billing_budget" "monthly" {
-  billing_account = data.google_project.this.billing_account
+  count           = var.enable_budget && var.billing_account != "" ? 1 : 0
+  billing_account = var.billing_account
   display_name    = "EU Limousine ${var.environment} (monthly)"
 
   budget_filter {

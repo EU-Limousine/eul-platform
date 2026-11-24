@@ -31,7 +31,8 @@ if [ "$CMD" = "bootstrap" ]; then
   exit 0
 fi
 
-# The budget must be in the billing account's own currency, or Google rejects it.
+# Billing account for the budget. The budget must be in the billing account's own currency,
+# and creating it needs permission on the billing account itself (not only on the project).
 if [ "$CMD" = "plan" ] || [ "$CMD" = "apply" ]; then
   WANT=$(sed -nE 's/^budget_currency *= *"([^"]+)".*/\1/p' envs/common.tfvars)
   ACCOUNT=$(gcloud billing projects describe "$PROJECT_ID" --format='value(billingAccountName)' 2>/dev/null | sed 's#billingAccounts/##')
@@ -39,7 +40,10 @@ if [ "$CMD" = "plan" ] || [ "$CMD" = "apply" ]; then
   if [ -z "$ACCOUNT" ]; then
     echo "  ! $PROJECT_ID has no billing account linked (Console → Billing)."; exit 1
   elif [ -z "$HAVE" ]; then
-    echo "  ! Could not read the billing account's currency (needs Billing Account Viewer). Assuming ${WANT}."
+    echo "  ! Your login cannot read billing account ${ACCOUNT}: the monthly budget is SKIPPED this time."
+    echo "    Everything else is created. To add the budget later, the billing account owner gives your login"
+    echo "    'Billing Account Costs Manager' (Console → Billing → Account management → Permissions), then run apply again."
+    export TF_VAR_enable_budget=false
   elif [ "$HAVE" != "$WANT" ]; then
     echo "  ✗ Your billing account ${ACCOUNT} is in ${HAVE}, but envs/common.tfvars says budget_currency = \"${WANT}\"."
     echo "    Set budget_currency = \"${HAVE}\" there and budget_amount in envs/*.tfvars in ${HAVE}."
@@ -48,6 +52,7 @@ if [ "$CMD" = "plan" ] || [ "$CMD" = "apply" ]; then
   else
     echo "  ✓ billing account ${ACCOUNT} is in ${HAVE}"
   fi
+  export TF_VAR_billing_account="$ACCOUNT"
 fi
 
 terraform init -input=false -reconfigure \
